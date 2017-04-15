@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "512987600659",
+    "firebase_url": "https://suicideprevention-765f6.firebaseio.com",
+    "project_id": "suicideprevention-765f6",
+    "storage_bucket": "suicideprevention-765f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512987600659:android:4c12c85c8dbcecdc",
+        "android_client_info": {
+          "package_name": "net.net16.xhoemawn.suicideprevention"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512987600659-i7q69f3tis45p60ecm3l8rfqbdl0317m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.net16.xhoemawn.suicideprevention",
+            "certificate_hash": "4bef7598d1a05272754dd4e04f4bad886cbb1264"
+          }
+        },
+        {
+          "client_id": "512987600659-b2or742p1p8fluihvlfnumcc3lqsnm4f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.net16.xhoemawn.suicideprevention",
+            "certificate_hash": "d798305d3fd49a376a3174f5958f0993eaccb920"
+          }
+        },
+        {
+          "client_id": "512987600659-fhknpsm78grds2bh933rqk6ea2c4qbfn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpFoVOztISHimiD4NEqaa22Jjzjxy3HV4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512987600659-fhknpsm78grds2bh933rqk6ea2c4qbfn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
