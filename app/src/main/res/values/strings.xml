@@ -4,7 +4,7 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name= "lorem">
+    <string name="lorem">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lacinia in nulla bibendum vestibulum. Phasellus quis libero tristique, aliquam dui lobortis, venenatis purus. Maecenas euismod risus eget massa hendrerit efficitur. Maecenas sodales id tellus molestie accumsan. Duis viverra lorem sit amet lobortis iaculis. Phasellus accumsan enim augue, sed laoreet sapien interdum vel. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin tristique luctus ultrices. Pellentesque ac placerat erat, vel vestibulum arcu. Nullam felis magna, convallis vel turpis non, dictum fermentum magna. Nunc in felis at ex euismod aliquet vestibulum non sapien. Vivamus in enim a orci vestibulum volutpat sit amet semper tellus. Sed tempor finibus commodo. Quisque at sollicitudin libero, ac ullamcorper purus.
 
 Praesent blandit tellus aliquet neque rhoncus, sed finibus nibh venenatis. Nam lobortis urna id mauris lacinia, sed ultrices est tempus. Morbi quis risus et nisl imperdiet laoreet et id libero. Vivamus vitae auctor justo, et porta metus. Aliquam placerat volutpat lacus at faucibus. Fusce ipsum est, suscipit eu volutpat eu, eleifend nec neque. Morbi ut rutrum magna. Ut venenatis arcu a tellus rhoncus mattis. Sed est mauris, facilisis eget interdum molestie, lobortis et velit. Ut gravida augue at finibus consequat.
@@ -31,4 +31,5 @@ Praesent lectus quam, tempor sit amet sagittis a, scelerisque eget nunc. Praesen
 
 Pellentesque at ultrices tortor, et consectetur leo. Ut iaculis, est in dapibus aliquet, nulla est dapibus purus, et interdum odio velit sed ex. Curabitur porta, ipsum non blandit molestie, justo ex molestie leo, ut tristique nunc metus ac ipsum. Fusce sed egestas ex, vel sagittis tellus. In placerat feugiat ullamcorper. Fusce eget molestie leo, eu semper nibh. Donec varius posuere ligula, id vehicula ex faucibus vitae. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec tristique quis ante rutrum bibendum. Morbi venenatis feugiat risus a hendrerit. Sed at blandit sem, non porttitor justo.
 
-    </string></resources>
+    </string>
+</resources>

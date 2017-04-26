@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,14 +37,12 @@ import java.util.Iterator;
 
 public class ChatFragment extends Fragment{
 
-    public ProgressBar progressBar ;
-    public ArrayList<Chat> arr = new ArrayList<>();
-    public ChatFragment(){
-
-    }
+    private ProgressBar progressBar ;
+    private ArrayList<Chat> arr = new ArrayList<>();
+    private static FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
     public static ChatFragment  newInstance(){
-
+        System.out.println("SADSADSAD||"+firebaseUser);
         return new ChatFragment();
     }
 

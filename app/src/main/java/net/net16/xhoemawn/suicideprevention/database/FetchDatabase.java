@@ -1,7 +1,9 @@
 package net.net16.xhoemawn.suicideprevention.database;
 
 import android.net.ConnectivityManager;
+import android.support.annotation.NonNull;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -21,6 +23,13 @@ public class FetchDatabase {
         FetchDatabase fetchDatabase = new FetchDatabase();
         firebaseDatabase  = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                //
+            }
+        });
         return new FetchDatabase();
     }
 
