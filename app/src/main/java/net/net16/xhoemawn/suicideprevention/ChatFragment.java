@@ -2,8 +2,6 @@ package net.net16.xhoemawn.suicideprevention;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.transition.Visibility;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +27,6 @@ import net.net16.xhoemawn.suicideprevention.Model.Chat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Created by xhoemawn on 4/12/2017.
@@ -48,9 +45,11 @@ public class ChatFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View  rootView = inflater.inflate(R.layout.recycler_view, container, false);
+        View  rootView = inflater.inflate(R.layout.chat_recycler, container, false);
         final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view1);
+
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
         progressBar = (ProgressBar)rootView.findViewById(R.id.progressBar2);
         final EditText edit = (EditText)rootView.findViewById(R.id.editText3);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

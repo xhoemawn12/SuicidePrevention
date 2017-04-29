@@ -5,6 +5,7 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_style"
     android:fitsSystemWindows="true"
     android:windowSoftInputMode="adjustPan|adjustResize"
     tools:context="net.net16.xhoemawn.suicideprevention.HomeActivity">
@@ -20,7 +21,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:elevation="4dp"
+
             android:padding="0dp"
             android:theme="@style/ThemeOverlay.AppCompat.Light"
 

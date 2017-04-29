@@ -11,6 +11,7 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -21,7 +22,7 @@ public class WelcomeActivity extends AppCompatActivity {
         findViewById(R.id.textView3).setAnimation(animate(0));
         findViewById(R.id.textView).setAnimation(animate(0));
         FirebaseApp.initializeApp(getApplicationContext());
-
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
          new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

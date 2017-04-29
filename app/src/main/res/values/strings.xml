@@ -32,4 +32,14 @@ Praesent lectus quam, tempor sit amet sagittis a, scelerisque eget nunc. Praesen
 Pellentesque at ultrices tortor, et consectetur leo. Ut iaculis, est in dapibus aliquet, nulla est dapibus purus, et interdum odio velit sed ex. Curabitur porta, ipsum non blandit molestie, justo ex molestie leo, ut tristique nunc metus ac ipsum. Fusce sed egestas ex, vel sagittis tellus. In placerat feugiat ullamcorper. Fusce eget molestie leo, eu semper nibh. Donec varius posuere ligula, id vehicula ex faucibus vitae. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec tristique quis ante rutrum bibendum. Morbi venenatis feugiat risus a hendrerit. Sed at blandit sem, non porttitor justo.
 
     </string>
+    <string name="login">LOGIN</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="not_a_user">Not A User?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="password">Password</string>
+    <string name="email_address">Email Address</string>
+    <string name="cancel">Cancel</string>
+    <string name="signup">SIGNUP</string>
+    <string name="name">Name</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>

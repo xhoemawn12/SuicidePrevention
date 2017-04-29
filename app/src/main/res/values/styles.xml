@@ -6,7 +6,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:fadeScrollbars">false</item>
-
+        <item name="android:buttonStyle">@style/Button</item>
     </style>
-
+    <style name="Button" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">#DCEDC8</item>
+    </style>
 </resources>

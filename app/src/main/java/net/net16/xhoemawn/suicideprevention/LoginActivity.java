@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("SAD","ASDASD");
                     intent = new Intent(LoginActivity.this, HomeActivity.class);
                     progressDialog.dismiss();
-                    intent.putExtra("USERNAME", "WTF");
+                    intent.putExtra("USERNAME",firebaseUser.getEmail());
                     startActivity(intent);
                     finish();
                 }
@@ -142,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                                 alertDialog.dismiss();
                                editText.requestFocus();
                             }
-                        },1000);
+                        },3000);
 
                     }
                 }

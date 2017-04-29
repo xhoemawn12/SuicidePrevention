@@ -2,247 +2,247 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/40ce29148952db9bfbb5a6540e966b2351966fa1/output/jars/classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/d49875fa671f73d1fd7a5da428085f324e237347/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
-        revision="25.0.2"
-        sha1="399f75732ff1ac159f9e73611536f1508bf18d3b">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_a4465ef46e5ca0bc8b6194de2179d8d05cc5e145/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/Android/Sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/constraint-layout-solver-1.0.2_62b596d6221ff3e95985b96a5b8947ac034e41ae/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/30e8881a4fe6ea098a8d91a596abc7bcb09c4a15/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_9e632625200a95cca4a3b24e97eeeebb9ac012c7/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/3573c99f6d0d9c8f18d5a560b043e2af566a4ab0/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_9cf6143225d9307e952d7c548acb3e1ee5956e1d/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/1e0a8b63ad3e3891a7aab1f9edc86b99e74a69af/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="2a7ffe939ffd830b5d4052f3c1c4c235923790ce">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6660cb16f19f1570bc359475703e0d0b16f0dcb9/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/b131d82ed1560a2bf31ead75553392c481d60c5f/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_8ac8f72731e6cb9950bdd41711ab6edeb85f6d11/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/9b3ebe3f34cce9bb5fb208e86d304bd0d4805736/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d0a843615f3b5fa3a080497709f5436696149a09">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_ade6b89f5cf61e06fd04edb0ccc3bacb103dd19e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_ccf4bff4a27e7273974b2b2bcfc1755e5cb5aae0/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/fdcf29286f22ec2146a3e414c39ccf9170b7d37f/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_08e9579a13772cc66462cb7a707a23d06d5756c7/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/3d724730e5624f0224a113654e992e756a23ef01/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_5c42b598e959225ef6f515314db8da28824908d9/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/a5476dbadd29062152990eb9290d7ede16210e99/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="888983f51cf34f57a93ff16832552f2f15937212">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_f4d93ec4d776f14973975641c01c8ac6e37fece6/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/f50721aef2b399498ed97168d71b6f5c99235dff/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="19696dc358ac668e341f28c41e3387d61ccdb81d">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_e336f5a5a83fab207eed5a5226524c20cf0996d7/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/5cacbc18779e912da2cd7da1db3d0497d18548fe/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4b42a61cd5924f28e95894e859e6abe57847e2f3">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_fb47ebdddc2dbe50572e1626a5258209e4b76d01/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/14225948acbfdb4ea065479872b769b6b167d946/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_68b2de487f755ed6af10012a541ae2af15bb5285/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.1/support-annotations-25.3.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.3.1_43d5f329114c7b43b93bcb02b7a9215834a6eacb/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/0bdd90ec0db53f332f5809d59244e5d4ec4db855/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6b6a52f2cc1cea2a749453d75d388bc5a632dabe/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/024693d5f3004f5d6849ec21a40770350fe292db/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_5dde7b9564ca80f5b864bc4f6bf7e133adfe7797/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/4c1b2d04bf7aa91463ea19109d25adebe26af3bc/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="6003d64df88a6ce5e961fa2bad7f1b9b97689ac1">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_aebccd0549dcd5ee7d2d0e1f49197eea3f5f2cac/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/421e103a6dfca08749885063a77d70e517043213/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_8c60fd3c356226c36db31f4ff9d5aeb463092b98/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/ab1672325c2644e04ad0274dc3fd54277c827627/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6f730ab38e44fda41535230cd9f28c69fc05baa2/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/5d22718813a9b8b1d14be5c021c8479c1f0da810/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="a1aa1dd9917e887bfe732cc5e561ae6ae8f9a84a">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_fc6c674b92ee3c71c6038f1ef5056198401d8af4/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="9936bfa27b61d61ae6819db2ab16ae6daba91ac5">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_bc2df6a0e1c06c83bf1c754bc711539d4172d4ca/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/a8887ad1d495b3205e32e0eeeb011a164e7db091/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_8bd235e8fc1cf41b37332cdcbcdfae086310b4e7/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/d91337d96bf4e64a80ca525d03c59ec5ddbf1a3a/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="0a5d5553c308643a9022f15513ebdd59e9c78d82">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_eb224d5b8957c4fe66a8d42c269c7837eb1d9a14/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/bb5500a7e4b981907aa1533003ec6af1bd85d52b/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="bdcc2a9572f18b8c90a3a157cab6cdfc97c6c736">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_16d702b6359ce2e3e7512719764e2d429f1f4e62/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/aa00296cd4c0ba8ecf69182add174c5060f2b5d6/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="95519720620b553f63afc789beba9ad582807f7c">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_7f2f2a1b7583495ad138df61bf68ea954d607ed0/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/.android/build-cache/9f80584aab0d38631d301f9e2617381d8c30bffe/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
+        revision="25.0.3"
         sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/home/xhoemawn12/StudioProjects/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4ba14a1d54527902d89d8f76629239ed35f37a61/classes.dex" />
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_93e3f7e092f062e1b9112a13fff5a8f2c0a8aabe.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.1/support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/support-annotations-25.3.1_43d5f329114c7b43b93bcb02b7a9215834a6eacb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/c9e14dc0848ea5bf6f839391b950dbbd4d5bdc41/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4b42a61cd5924f28e95894e859e6abe57847e2f3">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_5518c3ed5ac3efc376c61a660746de6ce404dabb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/b9308eaba5c369b61856998fc6795bceb04374a3/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="19696dc358ac668e341f28c41e3387d61ccdb81d">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_a4d3fe46e95907990e5644047ef5fd82ebac9e05.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/750ccee7ba7400b7343eafbc782632c7abfe19f2/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="0a5d5553c308643a9022f15513ebdd59e9c78d82">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_3672f94082b6a1e5de1656d2236fec0a9f71b5c5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/f70f4ae15cbe2dd2443b7c58ecfaed0845b04040/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6003d64df88a6ce5e961fa2bad7f1b9b97689ac1">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_d53dab174ec09da708d07085edb1be6c141ebea2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/e6c653f690a5f44d96366d9f576b93df4226ca9b/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_619f4a835db27922778a2f6b20cc1a1abc63f8a9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/c42647d64020ff56a80258917faf180141ca1551/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bdcc2a9572f18b8c90a3a157cab6cdfc97c6c736">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_719d3bf70168c83fee10fcea4315506993db9d5d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/440aa66d610bf9cce672b6fccfee19a258303dce/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_d26f4d0da2dbdb9db803fc63bc6cf16fec252643.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/0c85627e9dd4bd400fec5144cd3da5b6de6e7c4d/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_88dcf03a1b0d53db3586fe4d7ab599d6ddef7c90.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/4d970d235e4f1cc8b0772b3bfb72e34df3486676/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_0fa84db7b8eba36477013dc8e5ab5870b80b037d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/0e910f06f9fc2c227bae18c74602b73ed0511973/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_466883d7e033789f09ce0c395c527beafa44e8fe.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/a9144a740092819ae63deaa38070a44c3031cd91/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_7740e0e0a9db660dbcd656b27bf0f1268ece75de.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/320b775948e8ddac3214e44bfb2d1b9da4f02efc/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_b93807a9593135d579e3248a415b00ce484645e3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/Android/Sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/constraint-layout-solver-1.0.2_62b596d6221ff3e95985b96a5b8947ac034e41ae.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/02afd18330ea98e65e99a423905a83d21352c77a/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d0a843615f3b5fa3a080497709f5436696149a09">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_4a3fffc0e955b8e6bb2cce52ccf2e9a05967f2c1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/b40f2d9bf29c744fd6e20cbb2f3868b5a4d35e3d/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_751b6fa41b832794df1e860f07f22bdc16d51c0f.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_062036aca8c01e73d0ae8e13243f3ca4ea571230/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/ef0e845a18fa86f9c74a1a4b13acd5b56a6ae971/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a1aa1dd9917e887bfe732cc5e561ae6ae8f9a84a">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_d6171c410bbf38f178d50cc501e09ef3148b9273.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/a7c6f59a8ea99e426499837be9439220a15570b7/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_a87d6b3f14aebfc13a8993de5bd8f14753b88bbc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/c0f41d0460cfc9d01bdb96a881d7583fa884821b/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="888983f51cf34f57a93ff16832552f2f15937212">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_9ce47dea2b81adda34cb6780f31228bd3b446fbb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/0aa87116e865eb288c1c2a226058c910d24102fc/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="2a7ffe939ffd830b5d4052f3c1c4c235923790ce">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_059b68069585fc436f30f1a533168ed7b03a801a.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="505b739fbf2a618951a24d1bcebb3a30eb0c1c70">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8ae790a29ba210fd05539379f401a2822a33fe2e/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/58a8850690e4aee195c30533a2b7f16d5dc4721a/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_c7fad0606faa7859ddd6d7c9b637ac25479c1544.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/5c6ad573f289440a61d8c1a0d32d6e89afd06a47/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="399f75732ff1ac159f9e73611536f1508bf18d3b">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_faad50bd1d1a930f05abae4b11ce1e3420d9f8f7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/f04ee3d82693f8905d26d4fff02b32c6e422c4d6/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_2ce36fce9b10acba9b65cd73b421ee82460f0b40.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/756ea87af8a2e219950edf527787012dc2019526/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/debug/classes_6c4fe0347f8252a77c46856b2e6a884bcfe5b137.jar" />
     </item>
 
 </items>
