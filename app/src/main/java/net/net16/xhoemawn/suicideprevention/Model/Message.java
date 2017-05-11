@@ -1,41 +1,42 @@
 package net.net16.xhoemawn.suicideprevention.Model;
 
+import android.net.Uri;
+
 /**
  * Created by xhoemawn12 on 5/1/17.
  */
 
 public class Message {
-    private String messageId;
+
     private String messageBody;
 
-    public String getImageURL() {
-        return imageURL;
+    private Uri imageURI;
+
+    public Uri getImageURI() {
+        return imageURI;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImageURI(Uri imageURL) {
+        this.imageURI = imageURL;
     }
 
-    private String imageURL;
     private String chatId;
     private String senderId;
-    private String timeStamp;
+    private long timeStamp;
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
     public Message(){
 
     }
-    public String getTimeStamp(){
-        return timeStamp;
-    }
-    public void setTimeStamp(String timeStamp){
-        this.timeStamp = timeStamp;
-    }
-    public String getMessageId() {
-        return messageId;
-    }
 
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
-    }
+
 
     public String getMessageBody() {
         return messageBody;

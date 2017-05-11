@@ -1,19 +1,14 @@
 package net.net16.xhoemawn.suicideprevention.fragment;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +22,6 @@ import net.net16.xhoemawn.suicideprevention.Model.Chat;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.adapter.ChatAdapter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -36,26 +30,30 @@ import java.util.HashMap;
 
 public class ChatFragment extends Fragment{
 
-    private ProgressBar progressBar ;
-    private ArrayList<Chat> arr = new ArrayList<>();
+   private HashMap<String,Chat> chatHashMap;
+    private HashMap<String,Boolean> userHashMap;
     private static FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    private static String USERID = "USERID";
 
-    public static ChatFragment  newInstance(){
-        System.out.println("SADSADSAD||"+firebaseUser);
-        return new ChatFragment();
+    public static ChatFragment  newInstance(String userId){
+        ChatFragment chatFragment = new ChatFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(USERID,userId);
+        chatFragment.setArguments(bundle);
+        return chatFragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View  rootView = inflater.inflate(R.layout.chat_recycler, container, false);
+        View  rootView = inflater.inflate(R.layout.chatfragment, container, false);
         final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view1);
-
+        userHashMap = new HashMap<>();
+        chatHashMap = new HashMap<>();
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
-        progressBar = (ProgressBar)rootView.findViewById(R.id.progressBar2);
-        final EditText edit = (EditText)rootView.findViewById(R.id.editText3);
+
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        final ChatAdapter chatAdapter = new ChatAdapter(arr);
+        final ChatAdapter chatAdapter = new ChatAdapter(chatHashMap);
 
         // layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
@@ -63,39 +61,38 @@ public class ChatFragment extends Fragment{
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHorizontalScrollBarEnabled(true);
         final DatabaseReference databaseReference = firebaseDatabase.getReference("Chat/");
-
-
-        progressBar.setVisibility(View.GONE);
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        String childKey = "users/"+firebaseUser.getUid();
+        System.out.println(childKey);
+        databaseReference.orderByChild(childKey).equalTo(true).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                HashMap<String,Chat> chat = new HashMap<>();
-                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    chat.put(dataSnapshot1.getKey(),dataSnapshot1.getValue(Chat.class));
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        System.out.println(dataSnapshot1.getKey());
+                        chatHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Chat.class));
 
+                    }
+                    recyclerView.setAdapter(chatAdapter);
                 }
 
-                System.out.println("HELLOW");
-                arr = new ArrayList<>(chat.values());
-                recyclerView.setAdapter(new ChatAdapter(arr));
-            }
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+        System.out.println(databaseReference.toString());
 
-        Log.e("ERRRRROR",chatAdapter.getItemCount()+"");
+/*
+
 
         edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-
-                    Chat tempChat = new Chat("1","1","1",edit.getText().toString(),"1");
+                    userHashMap.put(FirebaseAuth.getInstance().getCurrentUser().getUid(),true);
+                    userHashMap.put(USERID,true);
+                    Chat tempChat = new Chat(edit.getText().toString(),userHashMap);
                     databaseReference.push().setValue(tempChat);
                     chatAdapter.notifyDataSetChanged();
                     edit.setText("");
@@ -104,6 +101,7 @@ public class ChatFragment extends Fragment{
                 return false;
             }
         });
+*/
 
         return rootView;
 

@@ -19,15 +19,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginActivity" android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.SignupActivity"
-            android:theme="@style/AppTheme"
-            />
+        <activity
+            android:name=".activity.SignupActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".fragment.MessageActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.UserProfileActivity"></activity>
     </application>
 
 </manifest>

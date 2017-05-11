@@ -10,9 +10,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
 import net.net16.xhoemawn.suicideprevention.fragment.PlaceHolderFragment;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.fragment.ChatFragment;
+import net.net16.xhoemawn.suicideprevention.fragment.UserFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -23,9 +28,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getIntent().getExtras().getString("USERNAME"));
+        getSupportActionBar().setTitle(getIntent().getExtras().getString("USERNAME"));*/
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -38,14 +43,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
-    /**
-     * A placeholder fragment containing a simple view.
-     */
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -54,15 +52,14 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            switch (position){
+
+             switch (position){
                 case 0 :
 
-                    return  PlaceHolderFragment.newInstance();
+                    return  UserFragment.newInstance(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 case 1:
 
-                    return  ChatFragment.newInstance();
+                    return  ChatFragment.newInstance(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 case 2:
 
 

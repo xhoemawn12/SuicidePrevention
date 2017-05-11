@@ -1,19 +1,31 @@
 package net.net16.xhoemawn.suicideprevention.Model;
 
+import java.util.HashMap;
+
 /**
  * Created by xhoemawn on 4/8/2017.
  */
 
 public class Chat {
-    private String cid;
-    private String nameOfChat;
 
-    public String getCid() {
-        return cid;
+    private String nameOfChat;
+    private HashMap<String,Boolean> users;
+    private long timeStamp;
+
+    public long getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setCid(String cid) {
-        this.cid = cid;
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public HashMap<String, Boolean> getUsers() {
+        return users;
+    }
+
+    public void setUsers(HashMap<String, Boolean> users) {
+        this.users = users;
     }
 
     public String getNameOfChat() {
@@ -24,4 +36,12 @@ public class Chat {
         this.nameOfChat = nameOfChat;
     }
 
+
+    public Chat(String nameOfChat,HashMap hashMap) {
+        this.users = hashMap;
+        this.nameOfChat = nameOfChat;
+    }
+    public Chat(){
+
+    }
 }

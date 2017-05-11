@@ -22,11 +22,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.Query;
 
 import net.net16.xhoemawn.suicideprevention.R;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private boolean isLoggedIn = false;
     private  FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser firebaseUser =  null ;
@@ -35,30 +36,53 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editText;
     private Button signIn;
     private Button signUp;
+    EditText editText1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-       /* Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        toolbar.setTitle("Login");
-        setSupportActionBar(toolbar);*/
+        editText1 = (EditText) findViewById(R.id.editText2);
         progressDialog = new ProgressDialog(LoginActivity.this);
-      //  startActivity(intent);
          signIn = (Button)findViewById(R.id.button);
          signUp = (Button) findViewById(R.id.button2);
-        signIn.setOnClickListener(new View.OnClickListener() {
+         signIn.setOnClickListener(this);
+        editText1.setTransformationMethod(new PasswordTransformationMethod());
+         firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onClick(View v) {
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                firebaseUser =  firebaseAuth.getCurrentUser();
+                if(firebaseUser!=null){
+                    Log.d("SAD","ASDASD");
+                    intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    progressDialog.dismiss();
+                    intent.putExtra("USERNAME",firebaseUser.getEmail());
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+
+        signUp.setOnClickListener(this);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+    }
+
+    @Override
+    public void onClick(View v){
+        switch(v.getId()){
+            case R.id.button:
                 editText = (EditText)findViewById(R.id.editText);
-                EditText editText1 = (EditText) findViewById(R.id.editText2);
-                editText1.setTransformationMethod(new PasswordTransformationMethod());
+
                 final String USERNAME = editText.getText().toString();
                 final String PASSWORD = editText1.getText().toString();
                 //  intent.putExtra("USERNAME",USERNAME);
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                    inputMethodManager.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(),0);
+                inputMethodManager.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(),0);
                 if(!Patterns.EMAIL_ADDRESS.matcher(USERNAME).matches()){
                     editText.requestFocus();
                     editText.setError("Not a Email!");
@@ -75,37 +99,14 @@ public class LoginActivity extends AppCompatActivity {
                 else{
                     checkLogin(USERNAME,PASSWORD);
                 }
-                }
-        });
-        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                firebaseUser =  firebaseAuth.getCurrentUser();
-                if(firebaseUser!=null){
-                    Log.d("SAD","ASDASD");
-                    intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    progressDialog.dismiss();
-                    intent.putExtra("USERNAME",firebaseUser.getEmail());
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        });
-
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.button2:
                 startActivity(new Intent(LoginActivity.this,SignupActivity.class));
-            }
-        });
+                break;
+        }
     }
 
-    @Override
-    public void onStart(){
-        super.onStart();
 
-
-    }
     public void checkLogin(String email,String password){
         progressDialog.show();
         progressDialog.setCancelable(false);

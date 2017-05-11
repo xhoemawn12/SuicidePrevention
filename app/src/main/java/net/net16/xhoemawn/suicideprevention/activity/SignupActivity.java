@@ -27,7 +27,6 @@ import net.net16.xhoemawn.suicideprevention.R;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser firebaseUser;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private User newUser;
@@ -113,11 +112,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     public void signUpUser(final User user){
         firebaseAuth = FirebaseAuth.getInstance();
-
         firebaseAuth.createUserWithEmailAndPassword(user.getEmail(),user.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-
                 if(task.isSuccessful()){
 
                     databaseReference.child(task.getResult().getUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -134,9 +131,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     signUp.performClick();
                 }
                 else{
-
-
-
                     alertDialog.setMessage("Sorry, Unable to create Account.");
                     alertDialog.show();
                     alertDialog.setCancelable(true);

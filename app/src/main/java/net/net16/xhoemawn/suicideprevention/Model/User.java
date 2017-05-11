@@ -8,20 +8,19 @@ public class User {
     public static final Integer VICTIM = 0;
     public static final Integer MODERATOR = 1;
     public static final Integer HELPER = 2;
-    private String user_id;
+
     private String name;
     private String email;
     private long lastLogin;
-    private String username;
     private String password;
-    private boolean availabilty;
+    private boolean available;
 
-    public boolean isAvailabilty() {
-        return availabilty;
+    public boolean isAvailable() {
+        return available;
     }
 
-    public void setAvailabilty(boolean availabilty) {
-        this.availabilty = availabilty;
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     private Integer userType;
@@ -35,14 +34,6 @@ public class User {
 
     public void setUserType(Integer userType) {
         this.userType = userType;
-    }
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
     }
 
     public String getName() {
@@ -69,13 +60,6 @@ public class User {
         this.lastLogin = lastLogin;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getPassword() {
         return password;
