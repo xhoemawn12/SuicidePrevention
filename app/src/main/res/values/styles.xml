@@ -7,8 +7,23 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:fadeScrollbars">false</item>
         <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:alertDialogTheme">@style/AlertDialogCustom</item>
+        <item name="android:textViewStyle">@style/CustomFont</item>
+        <item name="android:textAppearance">@style/CustomFont</item>
+        <item name = "android:editTextPreferenceStyle">@style/CustomFont</item>
+
+    </style>
+<style name="CustomFont" parent="Platform.AppCompat.Light">
+    <item name="android:fontFamily">serif-monospace</item>
+
+</style>
+    <style name="AlertDialogCustom" parent="AlertDialog.AppCompat.Light">
+
+        <item name="android:fontFamily">serif-monospace</item>
+
     </style>
     <style name="Button" parent="Base.Widget.AppCompat.Button">
-        <item name="android:background">#DCEDC8</item>
+        <item name="android:background">@drawable/button_style</item>
+        <item name="android:fontFamily">serif-monospace</item>
     </style>
 </resources>

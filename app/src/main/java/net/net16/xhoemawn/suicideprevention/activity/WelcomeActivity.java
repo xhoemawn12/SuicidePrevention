@@ -1,4 +1,4 @@
-package net.net16.xhoemawn.suicideprevention;
+package net.net16.xhoemawn.suicideprevention.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,10 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.FirebaseDatabase;
+
+import net.net16.xhoemawn.suicideprevention.R;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -21,9 +24,14 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         findViewById(R.id.textView3).setAnimation(animate(0));
         findViewById(R.id.textView).setAnimation(animate(0));
-        FirebaseApp.initializeApp(getApplicationContext());
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-         new Handler().postDelayed(new Runnable() {
+        try {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
+        catch(DatabaseException database){
+            FirebaseDatabase.getInstance();
+        }
+
+            new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent(WelcomeActivity.this,LoginActivity.class);

@@ -1,36 +1,29 @@
-package net.net16.xhoemawn.suicideprevention;
+package net.net16.xhoemawn.suicideprevention.activity;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.inputmethodservice.Keyboard;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.support.design.widget.Snackbar;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import net.net16.xhoemawn.suicideprevention.database.FetchDatabase;
+import net.net16.xhoemawn.suicideprevention.R;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -59,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 editText = (EditText)findViewById(R.id.editText);
                 EditText editText1 = (EditText) findViewById(R.id.editText2);
-
+                editText1.setTransformationMethod(new PasswordTransformationMethod());
                 final String USERNAME = editText.getText().toString();
                 final String PASSWORD = editText1.getText().toString();
                 //  intent.putExtra("USERNAME",USERNAME);

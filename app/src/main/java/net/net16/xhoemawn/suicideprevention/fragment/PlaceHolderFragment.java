@@ -1,13 +1,9 @@
-package net.net16.xhoemawn.suicideprevention;
+package net.net16.xhoemawn.suicideprevention.fragment;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,9 +12,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import net.net16.xhoemawn.suicideprevention.Model.Chat;
-
-import java.util.ArrayList;
+import net.net16.xhoemawn.suicideprevention.R;
 
 /**
  * Created by xhoemawn on 4/12/2017.

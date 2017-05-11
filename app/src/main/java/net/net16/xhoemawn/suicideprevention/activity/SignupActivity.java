@@ -1,13 +1,13 @@
-package net.net16.xhoemawn.suicideprevention;
+package net.net16.xhoemawn.suicideprevention.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -17,15 +17,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import net.net16.xhoemawn.suicideprevention.Model.User;
-
-import java.util.HashMap;
+import net.net16.xhoemawn.suicideprevention.R;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth firebaseAuth;
@@ -64,6 +62,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         email = (EditText) findViewById(R.id.emailAddress);
         password = (EditText) findViewById(R.id.password);
         confirmPassword = (EditText) findViewById(R.id.confirmPassword);
+        password.setTransformationMethod(new PasswordTransformationMethod());
+        confirmPassword.setTransformationMethod(new PasswordTransformationMethod());
         name.requestFocus();
         cancel.setOnClickListener(this);
         signUp.setOnClickListener(this);

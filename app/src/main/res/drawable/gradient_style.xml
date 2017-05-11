@@ -5,12 +5,13 @@
 
     >
     <corners
-        android:radius="1dp"
+        android:radius="30dp"
         />
     <gradient
         android:angle="0"
-        android:startColor="#DCEDC8"
-        android:endColor="#689F38"
+        android:startColor="#DCED"
+        android:endColor="#689F"
         android:type="linear"
         />
+
 </shape>

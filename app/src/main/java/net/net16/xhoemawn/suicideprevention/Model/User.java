@@ -5,13 +5,38 @@ package net.net16.xhoemawn.suicideprevention.Model;
  */
 
 public class User {
-
+    public static final Integer VICTIM = 0;
+    public static final Integer MODERATOR = 1;
+    public static final Integer HELPER = 2;
     private String user_id;
     private String name;
     private String email;
     private long lastLogin;
     private String username;
     private String password;
+    private boolean availabilty;
+
+    public boolean isAvailabilty() {
+        return availabilty;
+    }
+
+    public void setAvailabilty(boolean availabilty) {
+        this.availabilty = availabilty;
+    }
+
+    private Integer userType;
+    public User(){
+
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
     public String getUser_id() {
         return user_id;
     }

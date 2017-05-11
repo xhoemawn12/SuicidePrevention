@@ -1,24 +1,18 @@
-package net.net16.xhoemawn.suicideprevention;
+package net.net16.xhoemawn.suicideprevention.adapter;
 
 
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.DrawableUtils;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.net16.xhoemawn.suicideprevention.Model.Chat;
-
-import org.xmlpull.v1.XmlPullParser;
+import net.net16.xhoemawn.suicideprevention.R;
 
 import java.util.ArrayList;
 

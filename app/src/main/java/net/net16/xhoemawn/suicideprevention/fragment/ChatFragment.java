@@ -1,4 +1,4 @@
-package net.net16.xhoemawn.suicideprevention;
+package net.net16.xhoemawn.suicideprevention.fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -24,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import net.net16.xhoemawn.suicideprevention.Model.Chat;
+import net.net16.xhoemawn.suicideprevention.R;
+import net.net16.xhoemawn.suicideprevention.adapter.ChatAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,9 +63,7 @@ public class ChatFragment extends Fragment{
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHorizontalScrollBarEnabled(true);
         final DatabaseReference databaseReference = firebaseDatabase.getReference("Chat/");
-        final ProgressDialog progressDialog =  new ProgressDialog(ChatFragment.super.getContext());
-        progressDialog.setMessage("Loading..");
-        progressDialog.show();
+
 
         progressBar.setVisibility(View.GONE);
 
@@ -76,7 +76,7 @@ public class ChatFragment extends Fragment{
                     chat.put(dataSnapshot1.getKey(),dataSnapshot1.getValue(Chat.class));
 
                 }
-                progressDialog.hide();
+
                 System.out.println("HELLOW");
                 arr = new ArrayList<>(chat.values());
                 recyclerView.setAdapter(new ChatAdapter(arr));

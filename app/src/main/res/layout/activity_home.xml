@@ -8,7 +8,7 @@
     android:background="@drawable/gradient_style"
     android:fitsSystemWindows="true"
     android:windowSoftInputMode="adjustPan|adjustResize"
-    tools:context="net.net16.xhoemawn.suicideprevention.HomeActivity">
+    tools:context="net.net16.xhoemawn.suicideprevention.activity.HomeActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
