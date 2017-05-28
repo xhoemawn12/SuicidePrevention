@@ -75,6 +75,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         switch(v.getId()){
             case R.id.cancelButton:
                 startActivity(new Intent(SignupActivity.this,LoginActivity.class));
+                finish();
                 break;
             case R.id.signupButton:
                 if(USEREXISTS==1){

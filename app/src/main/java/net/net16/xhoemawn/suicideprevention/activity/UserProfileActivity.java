@@ -13,15 +13,12 @@ import net.net16.xhoemawn.suicideprevention.fragment.UserFragment;
 
 public class UserProfileActivity extends AppCompatActivity {
 
-    private ConstraintLayout constraintLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        constraintLayout = (ConstraintLayout) findViewById(R.id.constraintUserProfile);
         Fragment fragment = UserFragment.newInstance(getIntent().getExtras().getString("USERID"));
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.constraintUserProfile, fragment);
-
+        fragmentTransaction.commit();
     }
 }

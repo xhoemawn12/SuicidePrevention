@@ -48,11 +48,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
          signUp = (Button) findViewById(R.id.button2);
          signIn.setOnClickListener(this);
         editText1.setTransformationMethod(new PasswordTransformationMethod());
+
          firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 firebaseUser =  firebaseAuth.getCurrentUser();
-                if(firebaseUser!=null){
+                if(firebaseUser!=null && !isLoggedIn){
                     Log.d("SAD","ASDASD");
                     intent = new Intent(LoginActivity.this, HomeActivity.class);
                     progressDialog.dismiss();
@@ -102,6 +103,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.button2:
                 startActivity(new Intent(LoginActivity.this,SignupActivity.class));
+                finish();
                 break;
         }
     }
@@ -118,9 +120,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     System.out.println(task.isSuccessful()+"");
                     if (task.isSuccessful()) {
-
                         Snackbar.make(findViewById(R.id.button), "Logging in", Snackbar.LENGTH_LONG).show();
-
                         isLoggedIn = true;
                     } else {
                         Log.d("SAD",task.toString());
@@ -144,6 +144,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
     }
+
+    public void listUsers(){
+
+    }
+
+    public void viewPosts(){
+
+    }
+
+
 
 
 

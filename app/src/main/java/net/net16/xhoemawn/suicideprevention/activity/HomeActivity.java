@@ -18,12 +18,13 @@ import net.net16.xhoemawn.suicideprevention.fragment.PlaceHolderFragment;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.fragment.ChatFragment;
 import net.net16.xhoemawn.suicideprevention.fragment.UserFragment;
+import net.net16.xhoemawn.suicideprevention.fragment.UserListFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-
+    private FirebaseUser firebaseUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
        /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getIntent().getExtras().getString("USERNAME"));*/
-
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -40,7 +41,9 @@ public class HomeActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-
+        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_chat_black_24dp);
+        tabLayout.getTabAt(0).setIcon(R.mipmap.ic_group_black_48dp);
+        tabLayout.getTabAt(2).setIcon(R.mipmap.ic_person_black_48dp);
 
     }
 
@@ -55,15 +58,11 @@ public class HomeActivity extends AppCompatActivity {
 
              switch (position){
                 case 0 :
-
-                    return  UserFragment.newInstance(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    return UserListFragment.getInstance();
                 case 1:
-
-                    return  ChatFragment.newInstance(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    return  ChatFragment.newInstance(firebaseUser.getUid());
                 case 2:
-
-
-                    return  PlaceHolderFragment.newInstance();
+                    return   UserFragment.newInstance(firebaseUser.getUid());
             }
             return null;
         }
@@ -74,17 +73,5 @@ public class HomeActivity extends AppCompatActivity {
             return 3;
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "Home";
-                case 1:
-                    return "Messages";
-                case 2:
-                    return "Profile";
-            }
-            return null;
-        }
     }
 }

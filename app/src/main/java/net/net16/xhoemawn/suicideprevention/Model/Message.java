@@ -9,34 +9,7 @@ import android.net.Uri;
 public class Message {
 
     private String messageBody;
-
     private Uri imageURI;
-
-    public Uri getImageURI() {
-        return imageURI;
-    }
-
-    public void setImageURI(Uri imageURL) {
-        this.imageURI = imageURL;
-    }
-
-    private String chatId;
-    private String senderId;
-    private long timeStamp;
-
-    public long getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(long timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
-    public Message(){
-
-    }
-
-
 
     public String getMessageBody() {
         return messageBody;
@@ -44,6 +17,14 @@ public class Message {
 
     public void setMessageBody(String messageBody) {
         this.messageBody = messageBody;
+    }
+
+    public Uri getImageURI() {
+        return imageURI;
+    }
+
+    public void setImageURI(Uri imageURI) {
+        this.imageURI = imageURI;
     }
 
     public String getChatId() {
@@ -61,5 +42,21 @@ public class Message {
     public void setSenderId(String senderId) {
         this.senderId = senderId;
     }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    private String chatId;
+    private String senderId;
+    private long timeStamp;
+    public Message(){
+
+    }
+
 }
 

@@ -56,7 +56,7 @@ public class ChatFragment extends Fragment{
         final ChatAdapter chatAdapter = new ChatAdapter(chatHashMap);
 
         // layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
+       // layoutManager.setStackFromEnd(true);
         layoutManager.setSmoothScrollbarEnabled(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHorizontalScrollBarEnabled(true);
@@ -66,14 +66,17 @@ public class ChatFragment extends Fragment{
         databaseReference.orderByChild(childKey).equalTo(true).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                 // chatHashMap = new HashMap<>();
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            System.out.println(dataSnapshot1.getKey());
+                            chatHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Chat.class));
 
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        System.out.println(dataSnapshot1.getKey());
-                        chatHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Chat.class));
+                        }
+                        recyclerView.setAdapter(chatAdapter);
 
                     }
-                    recyclerView.setAdapter(chatAdapter);
-                }
+
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {

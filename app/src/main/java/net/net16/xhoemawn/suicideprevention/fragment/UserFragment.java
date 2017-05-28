@@ -61,7 +61,7 @@ public class UserFragment extends Fragment
         userName = (EditText) view.findViewById(R.id.chatName);
         userType = (EditText) view.findViewById(R.id.userType);
         aboutUser = (EditText) view.findViewById(R.id.userAbout);
-        //createNewChat();
+        createNewChat();
 
         return view;
 
