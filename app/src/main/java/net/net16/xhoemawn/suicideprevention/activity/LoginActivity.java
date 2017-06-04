@@ -1,10 +1,12 @@
 package net.net16.xhoemawn.suicideprevention.activity;
 
+import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.Query;
+import com.google.firebase.storage.FirebaseStorage;
 
 import net.net16.xhoemawn.suicideprevention.R;
 
@@ -52,13 +55,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
          firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
                 firebaseUser =  firebaseAuth.getCurrentUser();
-                if(firebaseUser!=null && !isLoggedIn){
+                if(firebaseUser!=null){
                     Log.d("SAD","ASDASD");
                     intent = new Intent(LoginActivity.this, HomeActivity.class);
                     progressDialog.dismiss();
                     intent.putExtra("USERNAME",firebaseUser.getEmail());
                     startActivity(intent);
+                    firebaseAuth.removeAuthStateListener(this);
                     finish();
                 }
             }
@@ -83,7 +88,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 //  intent.putExtra("USERNAME",USERNAME);
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                inputMethodManager.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(),0);
+                if(getWindow().getCurrentFocus().getApplicationWindowToken()!=null)
+                inputMethodManager.hideSoftInputFromWindow( getWindow().getCurrentFocus().getApplicationWindowToken(), 0);
                 if(!Patterns.EMAIL_ADDRESS.matcher(USERNAME).matches()){
                     editText.requestFocus();
                     editText.setError("Not a Email!");
@@ -145,13 +151,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public void listUsers(){
 
-    }
-
-    public void viewPosts(){
-
-    }
 
 
 

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,8 +38,8 @@ import java.util.SortedMap;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageHolder> {
 
-    LinkedHashMap<String,Message> messageHashMap;
-    List<Message> messages;
+    private LinkedHashMap<String,Message> messageHashMap;
+    private List<Message> messages;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private String senderName;
@@ -81,8 +82,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
                 holder.linearlayout.setGravity(Gravity.END);
             }
             if (messages.get(position).getImageURI() != null) {
-                holder.imageView.setVisibility(View.GONE);
-                holder.imageView.setImageURI(messages.get(position).getImageURI());
+                holder.imageView.setVisibility(View.VISIBLE);
+                Glide.with(holder.imageView).load("https://firebasestorage.googleapis.com/v0/b/suicideprevention-765f6.appspot.com/o/images%2F1496487960137.jpg?alt=media&token=b14afcf3-6f78-45af-a208-365e9201ef4b").into(holder.imageView);
             }
         }
 

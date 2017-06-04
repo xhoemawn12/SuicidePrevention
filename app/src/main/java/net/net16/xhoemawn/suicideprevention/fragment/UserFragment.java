@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,7 +63,7 @@ public class UserFragment extends Fragment
         userType = (EditText) view.findViewById(R.id.userType);
         aboutUser = (EditText) view.findViewById(R.id.userAbout);
         createNewChat();
-
+        
         return view;
 
     }
