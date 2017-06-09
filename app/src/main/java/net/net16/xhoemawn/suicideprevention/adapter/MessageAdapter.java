@@ -1,6 +1,7 @@
 package net.net16.xhoemawn.suicideprevention.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -83,7 +84,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
             }
             if (messages.get(position).getImageURI() != null) {
                 holder.imageView.setVisibility(View.VISIBLE);
-                Glide.with(holder.imageView).load("https://firebasestorage.googleapis.com/v0/b/suicideprevention-765f6.appspot.com/o/images%2F1496487960137.jpg?alt=media&token=b14afcf3-6f78-45af-a208-365e9201ef4b").into(holder.imageView);
+                Uri uri = Uri.parse(messages.get(position).getImageURI());
+
+                Glide.with(holder.imageView).load(messages.get(position).getImageURI()).into(holder.imageView);
             }
         }
 

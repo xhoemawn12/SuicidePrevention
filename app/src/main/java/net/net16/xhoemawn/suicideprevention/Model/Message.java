@@ -1,7 +1,5 @@
 package net.net16.xhoemawn.suicideprevention.Model;
 
-import android.net.Uri;
-
 /**
  * Created by xhoemawn12 on 5/1/17.
  */
@@ -9,7 +7,7 @@ import android.net.Uri;
 public class Message {
 
     private String messageBody;
-    private Uri imageURI;
+    private String imageURI;
 
     public String getMessageBody() {
         return messageBody;
@@ -19,11 +17,11 @@ public class Message {
         this.messageBody = messageBody;
     }
 
-    public Uri getImageURI() {
+    public String getImageURI() {
         return imageURI;
     }
 
-    public void setImageURI(Uri imageURI) {
+    public void setImageURI(String imageURI) {
         this.imageURI = imageURI;
     }
 

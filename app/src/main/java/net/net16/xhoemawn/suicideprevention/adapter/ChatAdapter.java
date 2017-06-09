@@ -20,10 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 import net.net16.xhoemawn.suicideprevention.Model.Chat;
 import net.net16.xhoemawn.suicideprevention.Model.User;
 import net.net16.xhoemawn.suicideprevention.R;
-import net.net16.xhoemawn.suicideprevention.fragment.MessageActivity;
+import net.net16.xhoemawn.suicideprevention.activity.MessageActivity;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;

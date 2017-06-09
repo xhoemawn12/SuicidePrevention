@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(firebaseUser!=null){
                     Log.d("SAD","ASDASD");
                     intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    progressDialog.dismiss();
+
                     intent.putExtra("USERNAME",firebaseUser.getEmail());
                     startActivity(intent);
                     firebaseAuth.removeAuthStateListener(this);
@@ -128,6 +128,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (task.isSuccessful()) {
                         Snackbar.make(findViewById(R.id.button), "Logging in", Snackbar.LENGTH_LONG).show();
                         isLoggedIn = true;
+                        progressDialog.dismiss();
                     } else {
                         Log.d("SAD",task.toString());
                         progressDialog.dismiss();
