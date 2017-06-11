@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,7 +36,7 @@ public class UserFragment extends Fragment
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private DatabaseReference chatDataReference;
-    private EditText userName;
+    private TextView userName;
     private EditText userType;
     private boolean chatCreationStatus = false;
     private EditText aboutUser;
@@ -59,11 +60,11 @@ public class UserFragment extends Fragment
         databaseReference = firebaseDatabase.getReference("User/");
         chatDataReference = firebaseDatabase.getReference("Chat/");
         databaseReference.child(FOREIGNUSERID).addValueEventListener(this);
-        userName = (EditText) view.findViewById(R.id.chatName);
+        userName = (TextView) view.findViewById(R.id.chatName);
         userType = (EditText) view.findViewById(R.id.userType);
         aboutUser = (EditText) view.findViewById(R.id.userAbout);
         createNewChat();
-        
+
         return view;
 
     }
