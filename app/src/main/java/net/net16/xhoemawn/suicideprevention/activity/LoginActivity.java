@@ -30,11 +30,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import net.net16.xhoemawn.suicideprevention.R;
 
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private boolean isLoggedIn = false;
-    private  FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseUser firebaseUser =  null ;
-    ProgressDialog progressDialog ;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseUser firebaseUser = null;
+    ProgressDialog progressDialog;
     private Intent intent;
     private EditText editText;
     private Button signIn;
@@ -47,21 +47,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         editText1 = (EditText) findViewById(R.id.editText2);
         progressDialog = new ProgressDialog(LoginActivity.this);
-         signIn = (Button)findViewById(R.id.button);
-         signUp = (Button) findViewById(R.id.button2);
-         signIn.setOnClickListener(this);
+        signIn = (Button) findViewById(R.id.button);
+        signUp = (Button) findViewById(R.id.button2);
+        signIn.setOnClickListener(this);
         editText1.setTransformationMethod(new PasswordTransformationMethod());
 
-         firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+        firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 
-                firebaseUser =  firebaseAuth.getCurrentUser();
-                if(firebaseUser!=null){
-                    Log.d("SAD","ASDASD");
+                firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    Log.d("SAD", "ASDASD");
                     intent = new Intent(LoginActivity.this, HomeActivity.class);
 
-                    intent.putExtra("USERNAME",firebaseUser.getEmail());
+                    intent.putExtra("USERNAME", firebaseUser.getEmail());
                     startActivity(intent);
                     firebaseAuth.removeAuthStateListener(this);
                     finish();
@@ -73,77 +73,76 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
     }
 
     @Override
-    public void onClick(View v){
-        switch(v.getId()){
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.button:
-                editText = (EditText)findViewById(R.id.editText);
+                editText = (EditText) findViewById(R.id.editText);
 
                 final String USERNAME = editText.getText().toString();
                 final String PASSWORD = editText1.getText().toString();
                 //  intent.putExtra("USERNAME",USERNAME);
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                if(getWindow().getCurrentFocus().getApplicationWindowToken()!=null)
-                inputMethodManager.hideSoftInputFromWindow( getWindow().getCurrentFocus().getApplicationWindowToken(), 0);
-                if(!Patterns.EMAIL_ADDRESS.matcher(USERNAME).matches()){
+                    try {
+                        inputMethodManager.hideSoftInputFromWindow(getWindow().getCurrentFocus().getApplicationWindowToken(), 0);
+                    }
+                    catch(NullPointerException nullPointer){
+                        Log.d("","No Active window");
+                    }
+                        if (!Patterns.EMAIL_ADDRESS.matcher(USERNAME).matches()) {
                     editText.requestFocus();
                     editText.setError("Not a Email!");
-                }
-
-                else if(USERNAME.equals("")){
+                } else if (USERNAME.equals("")) {
                     editText.requestFocus();
                     editText.setError("Empty Field");
-                }
-                else if(PASSWORD.equals("")){
+                } else if (PASSWORD.equals("")) {
                     editText.requestFocus();
                     editText1.setError("Empty Field");
-                }
-                else{
-                    checkLogin(USERNAME,PASSWORD);
+                } else {
+                    checkLogin(USERNAME, PASSWORD);
                 }
                 break;
             case R.id.button2:
-                startActivity(new Intent(LoginActivity.this,SignupActivity.class));
+                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
                 finish();
                 break;
         }
     }
 
 
-    public void checkLogin(String email,String password){
+    public void checkLogin(String email, String password) {
         progressDialog.show();
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Logging in..");
-        if(firebaseUser==null) {
-            Log.d("SAD",email+"    "+" "+password);
+        if (firebaseUser == null) {
+            Log.d("SAD", email + "    " + " " + password);
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    System.out.println(task.isSuccessful()+"");
+                    System.out.println(task.isSuccessful() + "");
                     if (task.isSuccessful()) {
                         Snackbar.make(findViewById(R.id.button), "Logging in", Snackbar.LENGTH_LONG).show();
                         isLoggedIn = true;
                         progressDialog.dismiss();
                     } else {
-                        Log.d("SAD",task.toString());
+                        Log.d("SAD", task.toString());
                         progressDialog.dismiss();
                         final AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
                         alertDialog.setTitle("ERROR");
                         alertDialog.setMessage("Sorry, Wrong Email/Password");
                         alertDialog.show();
-                       alertDialog.setCancelable(true);
+                        alertDialog.setCancelable(true);
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 alertDialog.dismiss();
-                               editText.requestFocus();
+                                editText.requestFocus();
                             }
-                        },3000);
+                        }, 3000);
 
                     }
                 }
@@ -151,11 +150,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
     }
-
-
-
-
-
 
 
 }
