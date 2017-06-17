@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="firebase-auth-10.2.1">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/b05b6b786b13dc2c2ddfd66bb5b0492562cabd02/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/b05b6b786b13dc2c2ddfd66bb5b0492562cabd02/output/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/42905fc8a314205dd2f52d5797b6cbf5942fe898/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/42905fc8a314205dd2f52d5797b6cbf5942fe898/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

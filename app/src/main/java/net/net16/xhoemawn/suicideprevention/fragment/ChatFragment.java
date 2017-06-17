@@ -7,8 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,60 +20,62 @@ import net.net16.xhoemawn.suicideprevention.Model.Chat;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.adapter.ChatAdapter;
 
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 
 /**
  * Created by xhoemawn on 4/12/2017.
  */
 
-public class ChatFragment extends Fragment{
+public class ChatFragment extends Fragment {
 
-   private HashMap<String,Chat> chatHashMap;
-    private HashMap<String,Boolean> userHashMap;
+    private LinkedHashMap<String, Chat> chatHashMap;
+    private LinkedHashMap<String, Boolean> userHashMap;
     private static FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     private static String USERID = "USERID";
 
-    public static ChatFragment  newInstance(String userId){
+    public static ChatFragment newInstance(String userId) {
         ChatFragment chatFragment = new ChatFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(USERID,userId);
+        bundle.putString(USERID, userId);
         chatFragment.setArguments(bundle);
         return chatFragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View  rootView = inflater.inflate(R.layout.chatfragment, container, false);
+        View rootView = inflater.inflate(R.layout.chatfragment, container, false);
         final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view1);
-        userHashMap = new HashMap<>();
-        chatHashMap = new HashMap<>();
+        userHashMap = new LinkedHashMap<>();
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        final ChatAdapter chatAdapter = new ChatAdapter(chatHashMap);
+
 
         // layoutManager.setReverseLayout(true);
-       // layoutManager.setStackFromEnd(true);
+        // layoutManager.setStackFromEnd(true);
         layoutManager.setSmoothScrollbarEnabled(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHorizontalScrollBarEnabled(true);
         final DatabaseReference databaseReference = firebaseDatabase.getReference("Chat/");
-        String childKey = "users/"+firebaseUser.getUid();
+        String childKey = "users/" + firebaseUser.getUid();
         System.out.println(childKey);
+
         databaseReference.orderByChild(childKey).equalTo(true).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                 // chatHashMap = new HashMap<>();
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                            System.out.println(dataSnapshot1.getKey());
-                            chatHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Chat.class));
+                chatHashMap = new LinkedHashMap<String, Chat>();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    System.out.println(dataSnapshot1.getKey());
+                    chatHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Chat.class));
 
-                        }
-                        recyclerView.setAdapter(chatAdapter);
+                }
 
-                    }
+                final ChatAdapter chatAdapter = new ChatAdapter(chatHashMap);
+                recyclerView.setAdapter(chatAdapter);
 
+            }
 
 
             @Override

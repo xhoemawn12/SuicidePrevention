@@ -45,6 +45,7 @@ public class UserListFragment extends android.support.v4.app.Fragment {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setSmoothScrollbarEnabled(true);
         recyclerView.setLayoutManager(layoutManager);
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("User/");
         databaseReference.addValueEventListener(new ValueEventListener() {

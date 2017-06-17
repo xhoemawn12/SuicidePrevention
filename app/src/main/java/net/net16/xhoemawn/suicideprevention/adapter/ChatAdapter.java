@@ -23,7 +23,9 @@ import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.activity.MessageActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -34,15 +36,16 @@ import java.util.Set;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
-    private HashMap<String,Chat> chatHashMap;
-    private String[] chatIds;
+    private LinkedHashMap<String,Chat> chatHashMap;
     private List<Chat> chats;
+    private List<String> chatIds;
+
     private Drawable drawable ;
     private User foreignUser;
     public ChatAdapter(){
 
     }
-    public ChatAdapter(HashMap<String,Chat> chat){
+    public ChatAdapter(LinkedHashMap<String, Chat> chat){
         this.chatHashMap = chat;
     }
     @Override
@@ -50,7 +53,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         View v =  LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.chat_layout, parent, false);
         chats = new ArrayList<>(chatHashMap.values());
-        chatIds = chatHashMap.keySet().toArray(new String[chatHashMap.keySet().size()]);
+        Collections.reverse(chats);
+        //chatIds = chatHashMap.keySet().toArray(new String[chatHashMap.keySet().size()]);
+        chatIds = new ArrayList<String>(chatHashMap.keySet());
+        Collections.reverse(chatIds);
         //drawable = v.getResources().getDrawable(R.drawable.com_facebook_button_login_silver_background,null);
         return new ViewHolder(v);
 
@@ -78,8 +84,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     foreignUser = (User) dataSnapshot.getValue(User.class);
                     if (foreignUser != null)
-                        holder.userName.setText(foreignUser.getName());
-
+                        holder.chatName.setText(foreignUser.getName());
                 }
 
                 @Override
@@ -115,10 +120,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         public void onClick(View v) {
             Context context = v.getContext();
             Intent intent = new Intent(context,MessageActivity.class);
-            intent.putExtra("CHAT_ID",chatIds[getAdapterPosition()]);
+            intent.putExtra("CHAT_ID",chatIds.get(getAdapterPosition()));
             context.startActivity(intent);
-
-
         }
     }
 

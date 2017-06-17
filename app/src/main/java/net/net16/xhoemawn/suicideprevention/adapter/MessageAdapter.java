@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,10 +28,12 @@ import net.net16.xhoemawn.suicideprevention.R;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.SortedMap;
 
 /**
@@ -61,7 +64,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
     @Override
     public void onBindViewHolder(final MessageHolder holder, int position) {
         System.out.println(messages.get(position).getMessageBody());
-    holder.message.setText(messages.get(position).getMessageBody());
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(messages.get(position).getTimeStamp());
+    holder.message.setText(messages.get(position).getMessageBody()+ cal.getTime());
 
             databaseReference.child(messages.get(position).getSenderId()).addValueEventListener(
                     new ValueEventListener() {
@@ -84,6 +89,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
             }
             if (messages.get(position).getImageURI() != null) {
                 holder.imageView.setVisibility(View.VISIBLE);
+                holder.message.setVisibility(View.INVISIBLE);
                 Uri uri = Uri.parse(messages.get(position).getImageURI());
 
                 Glide.with(holder.imageView).load(messages.get(position).getImageURI()).into(holder.imageView);

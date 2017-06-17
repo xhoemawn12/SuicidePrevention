@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -65,6 +66,8 @@ public class MessageActivity extends AppCompatActivity implements ValueEventList
     private MessageAdapter messageAdapter;
     private Context cntext;
     private StorageReference storageReference;
+    private ImageButton chatButton;
+    Uri selectedImage;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -90,6 +93,7 @@ public class MessageActivity extends AppCompatActivity implements ValueEventList
         messageList = new HashMap<>();
         imageURI = null;
         imageButton = (ImageButton) findViewById(R.id.imageButton);
+        chatButton = (ImageButton) findViewById(R.id.sendButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,32 +106,25 @@ public class MessageActivity extends AppCompatActivity implements ValueEventList
 
         });
         editText = (EditText) findViewById(R.id.sendText);
-
         CHAT_ID = getIntent().getExtras().getString(chat_id);
-
         recyclerView = (RecyclerView) findViewById(R.id.messageRecycler);
-
         calendar = Calendar.getInstance();
         timestamp = calendar.getTimeInMillis();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Message/" + CHAT_ID);
-        databaseReference.orderByChild("timeStamp").addValueEventListener(this);
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener()
-
-        {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    sendMessage();
-                    editText.setText("");
-                }
-                return false;
-            }
-        });
+        databaseReference.addValueEventListener(this);
+        chatButton.setOnClickListener(new View.OnClickListener() {
+                                          @Override
+                                          public void onClick(View v) {
+                                              if (!editText.getText().toString().equals("")|| selectedImage != null) {
+                                                  sendMessage();
+                                                  editText.setText("");
+                                              }
+                                          }
+                                      }
+        );
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        System.out.println("CAHSADP:::" + CHAT_ID);
-
         // layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         layoutManager.setSmoothScrollbarEnabled(true);
@@ -156,8 +153,7 @@ public class MessageActivity extends AppCompatActivity implements ValueEventList
 
         messageAdapter = new MessageAdapter(tempMessageHash);
         recyclerView.setAdapter(messageAdapter);
-        messageAdapter.notifyDataSetChanged();
-        ;
+
     }
 
 
@@ -171,7 +167,7 @@ public class MessageActivity extends AppCompatActivity implements ValueEventList
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
         if (resultCode == RESULT_OK) {
-            Uri selectedImage = imageReturnedIntent.getData();
+            selectedImage = imageReturnedIntent.getData();
             try {
 
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
@@ -188,10 +184,9 @@ public class MessageActivity extends AppCompatActivity implements ValueEventList
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         progressDialog.hide();
                         @SuppressWarnings("VisibleForTests") Uri downloadURI = taskSnapshot.getDownloadUrl();
-                        Log.d("URI", downloadURI.toString());
+
                         imageURI = downloadURI;
                         sendMessage();
-                        Log.d("URI", downloadURI.toString());
                         Snackbar.make(findViewById(R.id.messageLayout), "Success..", Snackbar.LENGTH_SHORT).show();
 
 
@@ -203,7 +198,7 @@ public class MessageActivity extends AppCompatActivity implements ValueEventList
                 Snackbar.make(findViewById(R.id.imageButton), "Unable to Load Image..", Snackbar.LENGTH_SHORT).show();
             }
 
-
+            selectedImage = null;
             // imageview.setImageURI(selectedImage);
 
 
