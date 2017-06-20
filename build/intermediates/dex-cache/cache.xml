@@ -2,103 +2,112 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="C:\Users\khadk\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\constraint-layout-solver-1.0.2_d3584d007bde3a05f03ccc5ac22af7296f1bec7b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\khadk\.android\build-cache\a446ec0c1bed8ef381c3ccdc24b6c53ed4c2dc2f\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_fbb46f51ee36f7213005f01e240617aa1bf04bc8\classes.dex" />
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_fbb46f51ee36f7213005f01e240617aa1bf04bc8.jar" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
+        jar="C:\Users\khadk\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\constraint-layout-solver-1.0.2_d3584d007bde3a05f03ccc5ac22af7296f1bec7b.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="C:\Users\khadk\.android\build-cache\fdb034a51f554ee57f7be1c0410d50bc74fecd01\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f4b68a78a409f9518986411177a2f21ba110f7aa\classes.dex" />
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_f4b68a78a409f9518986411177a2f21ba110f7aa.jar" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\khadk\.android\build-cache\c2a5349b4ea4c0125bbf87f244bdaebd2cd0af3b\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="2a7ffe939ffd830b5d4052f3c1c4c235923790ce">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_551caca334fd7ad03eaa89765b96294f5a9da500\classes.dex" />
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_551caca334fd7ad03eaa89765b96294f5a9da500.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\6c543e795ccaf98a638440fac166dc3168414bfe\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_b958e3ade359691a93281be1764eddf9e49b4f28\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\khadk\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\4.0.0-RC0\eb86cd1d96acc30dcebf338abaf2c62ca28bf355\glide-4.0.0-RC0.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="eb86cd1d96acc30dcebf338abaf2c62ca28bf355">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\glide-4.0.0-RC0_39f90f4b7d15887de9b4aaa1cbd39eb1bb6cb716\classes.dex" />
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\glide-4.0.0-RC0_39f90f4b7d15887de9b4aaa1cbd39eb1bb6cb716.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\21654799756f9d12fdfeb18a38c5fd7d01762d18\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\7e2da1dffa4c904d89909a892291f542cba4bcf7\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="5803db663655ef5cb38c6bcb17ba326fdb9edfbd">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_5b2c267fabf60beccc89108a2cfc5a00c7e18dd3\classes.dex" />
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_39d70db7e7debe938b27b6b48a9661b70f513949.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\annotations\4.0.0-RC0\d5dd0afc50069b7fa0fc12ac85f91efa8df4db67\annotations-4.0.0-RC0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="d5dd0afc50069b7fa0fc12ac85f91efa8df4db67">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\annotations-4.0.0-RC0_ace1329cb2bb426bfc1ac0bcfc0ef4940116247f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\khadk\.android\build-cache\801bde83b889a0643fd4b25137afc5fc864d96d5\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_038ac8f77b63b36c831b460cc0b5e0068d691450\classes.dex" />
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_038ac8f77b63b36c831b460cc0b5e0068d691450.jar" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
+        jar="C:\Users\khadk\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_d587210b8e00a14ff32adf1fbd0c83dc272d97c5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\annotations\4.0.0-RC0\d5dd0afc50069b7fa0fc12ac85f91efa8df4db67\annotations-4.0.0-RC0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d5dd0afc50069b7fa0fc12ac85f91efa8df4db67">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\annotations-4.0.0-RC0_ace1329cb2bb426bfc1ac0bcfc0ef4940116247f.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="C:\Users\khadk\.android\build-cache\f6fc3eb8a04f9b65d179ee72c9da8996ba16c14c\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="6c877b2c372dd26a46a0fe1c0fe07f186fb2ac26">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_5baf4b759de84bab0c6472117faf5cb16bb441b4\classes.dex" />
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_5baf4b759de84bab0c6472117faf5cb16bb441b4.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\c59e1682b7fb2cb22cdc234ac598af47ebd4626b\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\21654799756f9d12fdfeb18a38c5fd7d01762d18\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d454c09a6b884def843d9eefe8f764d7f2c2fca4\classes.dex" />
+        sha1="5803db663655ef5cb38c6bcb17ba326fdb9edfbd">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_5b2c267fabf60beccc89108a2cfc5a00c7e18dd3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\8e92c25e9f9343c62748e009a3a88c2cb3047de9\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="9ed08fab37c3a572da1d9ed2bf2e36c8d3e2bc48">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_61b436280d18af920176ea8248cb67e26501f699.jar" />
     </item>
     <item
         is-multidex="true"
@@ -111,21 +120,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\khadk\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jar="C:\Users\khadk\.android\build-cache\55a9761c505ddeed2d4a20d89260830fb5b0aaff\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.3.1_d587210b8e00a14ff32adf1fbd0c83dc272d97c5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\7e2da1dffa4c904d89909a892291f542cba4bcf7\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_39d70db7e7debe938b27b6b48a9661b70f513949\classes.dex" />
+        sha1="5734c03faa42bb254d3f05d656f7a7036cb096b6">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7a65ad451c4d97c739113f4f63fc41d6e9875fcb\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -137,184 +137,211 @@
         <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_75deaf66b4d815ba22cf4ad14d02b23837a127cd\classes.dex" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\8e92c25e9f9343c62748e009a3a88c2cb3047de9\output\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\c59e1682b7fb2cb22cdc234ac598af47ebd4626b\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="9ed08fab37c3a572da1d9ed2bf2e36c8d3e2bc48">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_61b436280d18af920176ea8248cb67e26501f699\classes.dex" />
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_d454c09a6b884def843d9eefe8f764d7f2c2fca4.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\430b700d3992b1f8b64a171e1e016c86a4332e1f\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_da222defdf5ae6dbd7fef701f98bbc94bd53d1be\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\disklrucache\4.0.0-RC0\46d23cdc19155c5f0d47ece99ca1c421346c1509\disklrucache-4.0.0-RC0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="46d23cdc19155c5f0d47ece99ca1c421346c1509">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\disklrucache-4.0.0-RC0_4ec29cf01a6704b894eb953e7d387ad89975ca36\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\217fff1a41da92554b1ff8c2e3450b3423925c13\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_96d084ce511a760c869ccb835a8cc6e10c76bd50\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\d0986caa763683c52d52fc3d64b9332134aab4d4\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="19696dc358ac668e341f28c41e3387d61ccdb81d">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_8fdc8dedcd2c08a3a92ae5c5babed8bb733d031f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\0a9447d855b912514aa82a449d55c91ab24f7fd5\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="d0a843615f3b5fa3a080497709f5436696149a09">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f15610673385a1f5e3b4c43ad0fbbbfeb54beb60\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\503111805eaab2bce61f06b6e00635d364a0f5ac\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_efb047b5dc0225215093012206d680a496498ea3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.gradle\caches\modules-2\files-2.1\joda-time\joda-time\2.9.9\1d2a6ee94f2fcaa2e2b588cbd5a4da1cb1f1b9ff\joda-time-2.9.9-no-tzdb.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="1d2a6ee94f2fcaa2e2b588cbd5a4da1cb1f1b9ff">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\joda-time-2.9.9-no-tzdb_57b810cad2bb465cce4b22374610434bd41ec7a2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\0a839cd8fa831caee4f30c35c029b41baae76046\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7f1dcbaf7cdf3654177a3e97ab380de0c210b035\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\fd13789788046a7ce3291efb4c795a13d3017b6b\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="95519720620b553f63afc789beba9ad582807f7c">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_bbb92a9892f742de257f59790f0b1615d7f56b99\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\gifdecoder\4.0.0-RC0\c64f5d4805b528de434a5a8bb9a8091b6f9cd1a7\gifdecoder-4.0.0-RC0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="c64f5d4805b528de434a5a8bb9a8091b6f9cd1a7">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\gifdecoder-4.0.0-RC0_ce02e21f7356a8780315d22cd0cb4177a5cff57f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\05cdd37216084cd1b79fb0c5ad30758623a6584a\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="0a5d5553c308643a9022f15513ebdd59e9c78d82">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_9e759ca326faad197be0fd63074b7b39edeb6d82\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\42905fc8a314205dd2f52d5797b6cbf5942fe898\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="4b42a61cd5924f28e95894e859e6abe57847e2f3">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_28266ccd9c81cef4f4e3a9b01a80af29d5afcb48\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\3a716eb664671b1d6e54b245c7f90103ad1e898a\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="399f75732ff1ac159f9e73611536f1508bf18d3b">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_55817ed8b51969958b9f68cb1bcddec84ca3f7f2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\97df588f048953936c5db7816b0a376923f7f735\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="29e4e634375ab2ed25f8db5387b564c78980422a">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_bb546dbe74fc9aa3ef63164c82520ef68a321fd0\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\d53a43ec1aa1fb103dda4d380797b6dcce288f78\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="888983f51cf34f57a93ff16832552f2f15937212">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_df72407f1a62e1efd5496046c707219a5dbd8034\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\11ee94c235bae383b6bfa8279d70b3f3306996ea\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3b9bdba66c26778147b3329fa02c87a1dda22281\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\525a1238b90331b25aca28149d41cf459f2725ca\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="8748e15968514ff1708deb3bb7f0c17623e50bbb">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_042d482eb7e66eb0ebe8ad41a7b3ca5a6416fa98\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\khadk\.android\build-cache\1d31429b8b758743f2273882da0f5116e9b575ba\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_32db9e8a7ec130bdc4e89174d0b5ac9cc56e7605\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\khadk\.android\build-cache\991a41930061a0b1529af239bccbd4e63f5ff27d\output\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
         sha1="6b8ad09b76c4ffaedf443ca54bc2418760870689">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_2dc63f8c936afb088be15fc73b0854976813800c\classes.dex" />
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_2dc63f8c936afb088be15fc73b0854976813800c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\disklrucache\4.0.0-RC0\46d23cdc19155c5f0d47ece99ca1c421346c1509\disklrucache-4.0.0-RC0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="46d23cdc19155c5f0d47ece99ca1c421346c1509">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\disklrucache-4.0.0-RC0_4ec29cf01a6704b894eb953e7d387ad89975ca36.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.gradle\caches\modules-2\files-2.1\joda-time\joda-time\2.9.9\1d2a6ee94f2fcaa2e2b588cbd5a4da1cb1f1b9ff\joda-time-2.9.9-no-tzdb.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="1d2a6ee94f2fcaa2e2b588cbd5a4da1cb1f1b9ff">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\joda-time-2.9.9-no-tzdb_57b810cad2bb465cce4b22374610434bd41ec7a2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\503111805eaab2bce61f06b6e00635d364a0f5ac\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_efb047b5dc0225215093012206d680a496498ea3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\0a839cd8fa831caee4f30c35c029b41baae76046\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_7f1dcbaf7cdf3654177a3e97ab380de0c210b035.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\42905fc8a314205dd2f52d5797b6cbf5942fe898\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4b42a61cd5924f28e95894e859e6abe57847e2f3">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_28266ccd9c81cef4f4e3a9b01a80af29d5afcb48.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\gifdecoder\4.0.0-RC0\c64f5d4805b528de434a5a8bb9a8091b6f9cd1a7\gifdecoder-4.0.0-RC0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="c64f5d4805b528de434a5a8bb9a8091b6f9cd1a7">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\gifdecoder-4.0.0-RC0_ce02e21f7356a8780315d22cd0cb4177a5cff57f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\3a716eb664671b1d6e54b245c7f90103ad1e898a\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="399f75732ff1ac159f9e73611536f1508bf18d3b">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_55817ed8b51969958b9f68cb1bcddec84ca3f7f2.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\khadk\.android\build-cache\7f1f9eebb25e9aeca462a3bdc438c820511ddb30\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="1acfba708364fb5bdb0ad5910d1ca8bb1125f645">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_50c3025ad0e62015ce61d83d59cad68d8c9febd2\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\217fff1a41da92554b1ff8c2e3450b3423925c13\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_96d084ce511a760c869ccb835a8cc6e10c76bd50.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\fd13789788046a7ce3291efb4c795a13d3017b6b\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_bbb92a9892f742de257f59790f0b1615d7f56b99.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\05cdd37216084cd1b79fb0c5ad30758623a6584a\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="0a5d5553c308643a9022f15513ebdd59e9c78d82">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_9e759ca326faad197be0fd63074b7b39edeb6d82.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\d53a43ec1aa1fb103dda4d380797b6dcce288f78\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="888983f51cf34f57a93ff16832552f2f15937212">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_df72407f1a62e1efd5496046c707219a5dbd8034.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\525a1238b90331b25aca28149d41cf459f2725ca\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="8748e15968514ff1708deb3bb7f0c17623e50bbb">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_042d482eb7e66eb0ebe8ad41a7b3ca5a6416fa98.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\6c543e795ccaf98a638440fac166dc3168414bfe\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_b958e3ade359691a93281be1764eddf9e49b4f28.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\0a9447d855b912514aa82a449d55c91ab24f7fd5\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d0a843615f3b5fa3a080497709f5436696149a09">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_f15610673385a1f5e3b4c43ad0fbbbfeb54beb60.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\1d31429b8b758743f2273882da0f5116e9b575ba\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_32db9e8a7ec130bdc4e89174d0b5ac9cc56e7605.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\khadk\.android\build-cache\0834ab89a738442586325b04dc1c351f2125f117\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a73b24a82e860ae409181afee75925a04a03aed3">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3512925b41267a8f1797cb9ba1f21156ec4bc76c\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\d0986caa763683c52d52fc3d64b9332134aab4d4\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="19696dc358ac668e341f28c41e3387d61ccdb81d">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_8fdc8dedcd2c08a3a92ae5c5babed8bb733d031f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\430b700d3992b1f8b64a171e1e016c86a4332e1f\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_da222defdf5ae6dbd7fef701f98bbc94bd53d1be.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\97df588f048953936c5db7816b0a376923f7f735\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="29e4e634375ab2ed25f8db5387b564c78980422a">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_bb546dbe74fc9aa3ef63164c82520ef68a321fd0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\khadk\.android\build-cache\11ee94c235bae383b6bfa8279d70b3f3306996ea\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_3b9bdba66c26778147b3329fa02c87a1dda22281.jar" />
     </item>
 
 </items>

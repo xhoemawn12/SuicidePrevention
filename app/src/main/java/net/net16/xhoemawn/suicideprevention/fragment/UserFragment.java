@@ -26,6 +26,7 @@ import net.net16.xhoemawn.suicideprevention.Model.User;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.activity.LoginActivity;
 import net.net16.xhoemawn.suicideprevention.activity.MessageActivity;
+import net.net16.xhoemawn.suicideprevention.callbacks.ReadyToCreateChat;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class UserFragment extends Fragment
         if(v.getId()==R.id.commend){
             FirebaseAuth.getInstance().signOut();;
             startActivity(new Intent(getActivity(), LoginActivity.class));
+            FirebaseDatabase.getInstance().purgeOutstandingWrites();
             getActivity().finish();
         }
         else if(v.getId()==R.id.chat){
@@ -187,7 +189,5 @@ public class UserFragment extends Fragment
         return chatId;
     }
 
-    public interface ReadyToCreateChat{
-        public void onReady(boolean stat);
-    }
+
 }

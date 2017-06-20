@@ -123,6 +123,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
                                 progressDialog.dismiss();
+                               // startActivity(new Intent(SignupActivity.this,LoginActivity.class));
+                                finish();
                             }
                         }
                     });

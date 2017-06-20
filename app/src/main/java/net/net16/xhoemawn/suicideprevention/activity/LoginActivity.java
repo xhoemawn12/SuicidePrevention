@@ -1,16 +1,13 @@
 package net.net16.xhoemawn.suicideprevention.activity;
 
-import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
@@ -24,10 +21,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.Query;
-import com.google.firebase.storage.FirebaseStorage;
 
 import net.net16.xhoemawn.suicideprevention.R;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -45,6 +42,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Toasty.Config.getInstance().apply();
         editText1 = (EditText) findViewById(R.id.editText2);
         progressDialog = new ProgressDialog(LoginActivity.this);
         signIn = (Button) findViewById(R.id.button);
@@ -55,9 +53,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
                 firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
+                    System.out.println((firebaseUser.getUid()) + "THIS IS THE USER");
                     Log.d("SAD", "ASDASD");
                     intent = new Intent(LoginActivity.this, HomeActivity.class);
 
@@ -87,21 +85,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 final String PASSWORD = editText1.getText().toString();
                 //  intent.putExtra("USERNAME",USERNAME);
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    try {
-                        inputMethodManager.hideSoftInputFromWindow(getWindow().getCurrentFocus().getApplicationWindowToken(), 0);
-                    }
-                    catch(NullPointerException nullPointer){
-                        Log.d("","No Active window");
-                    }
-                        if (!Patterns.EMAIL_ADDRESS.matcher(USERNAME).matches()) {
+                try {
+                    inputMethodManager.hideSoftInputFromWindow(getWindow().getCurrentFocus().getApplicationWindowToken(), 0);
+                } catch (NullPointerException nullPointer) {
+                    Log.d("", "No Active window");
+                }
+                if (!Patterns.EMAIL_ADDRESS.matcher(USERNAME).matches()) {
                     editText.requestFocus();
-                    editText.setError("Not a Email!");
+                    editText.setError("");
+                    Toasty.error(LoginActivity.this, "Not an email.").show();
                 } else if (USERNAME.equals("")) {
                     editText.requestFocus();
                     editText.setError("Empty Field");
+                    Toasty.error(LoginActivity.this, "Username cannot be empty.").show();
                 } else if (PASSWORD.equals("")) {
-                    editText.requestFocus();
-                    editText1.setError("Empty Field");
+                    editText1.requestFocus();
+                    editText1.setError("");
+                    Toasty.error(LoginActivity.this, "Password empty.").show();
                 } else {
                     checkLogin(USERNAME, PASSWORD);
                 }
@@ -117,6 +117,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void checkLogin(String email, String password) {
         progressDialog.show();
         progressDialog.setCancelable(false);
+        progressDialog.setTitle("Suicide Prevention");
+        progressDialog.setIcon(R.mipmap.ic_launcher);
         progressDialog.setMessage("Logging in..");
         if (firebaseUser == null) {
             Log.d("SAD", email + "    " + " " + password);
@@ -125,14 +127,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     System.out.println(task.isSuccessful() + "");
                     if (task.isSuccessful()) {
-                        Snackbar.make(findViewById(R.id.button), "Logging in", Snackbar.LENGTH_LONG).show();
+                        Toasty.info(LoginActivity.this,"Logging in",300 ).show();
                         isLoggedIn = true;
                         progressDialog.dismiss();
                     } else {
                         Log.d("SAD", task.toString());
                         progressDialog.dismiss();
                         final AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
-                        alertDialog.setTitle("ERROR");
+                        alertDialog.setTitle("Suicide Prevention");
+                        alertDialog.setIcon(R.mipmap.ic_launcher);
                         alertDialog.setMessage("Sorry, Wrong Email/Password");
                         alertDialog.show();
                         alertDialog.setCancelable(true);

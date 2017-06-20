@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,9 +24,14 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_welcome);
-        findViewById(R.id.textView3).setAnimation(animate(0));
-        findViewById(R.id.textView).setAnimation(animate(0));
+       // findViewById(R.id.textView3).setAnimation(animate(0));
+       // findViewById(R.id.textView).setAnimation(animate(0));
+        YoYoAnimation(findViewById(R.id.textView),Techniques.BounceInLeft);
+        YoYoAnimation(findViewById(R.id.textView3),Techniques.BounceInRight);
+        YoYoAnimation(findViewById(R.id.textView4),Techniques.BounceInDown);
+        YoYoAnimation(findViewById(R.id.textView5),Techniques.BounceInUp);
         try {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         }
@@ -57,5 +65,11 @@ public class WelcomeActivity extends AppCompatActivity {
 
         return anim;
 
+    }
+    public static void YoYoAnimation(View v, Techniques techniques){
+        YoYo.with(techniques)
+                .duration(3000)
+
+                .playOn(v);
     }
 }

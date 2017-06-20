@@ -52,11 +52,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     public ChatAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v =  LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.chat_layout, parent, false);
-        chats = new ArrayList<>(chatHashMap.values());
-        Collections.reverse(chats);
+
         //chatIds = chatHashMap.keySet().toArray(new String[chatHashMap.keySet().size()]);
-        chatIds = new ArrayList<String>(chatHashMap.keySet());
-        Collections.reverse(chatIds);
+
         //drawable = v.getResources().getDrawable(R.drawable.com_facebook_button_login_silver_background,null);
         return new ViewHolder(v);
 
@@ -64,8 +62,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-
-
+        chats = new ArrayList<>(chatHashMap.values());
+        Collections.reverse(chats);
+        chatIds = new ArrayList<String>(chatHashMap.keySet());
+        Collections.reverse(chatIds);
         holder.chatName.setText(chats.get(position).getNameOfChat());
         HashMap<String, Boolean> usersInvolved = chats.get(position).getUsers();
         Set<String> usersId = usersInvolved.keySet();

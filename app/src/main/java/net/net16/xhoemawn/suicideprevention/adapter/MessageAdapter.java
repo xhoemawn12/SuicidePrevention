@@ -1,6 +1,7 @@
 package net.net16.xhoemawn.suicideprevention.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -42,86 +43,88 @@ import java.util.SortedMap;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageHolder> {
 
-    private LinkedHashMap<String,Message> messageHashMap;
+    private LinkedHashMap<String, Message> messageHashMap;
     private List<Message> messages;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private String senderName;
-    public MessageAdapter(){
+
+    public MessageAdapter() {
 
     }
 
     @Override
     public MessageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.messagelayout,parent,false);
-        messages = new ArrayList<>(messageHashMap.values());
-        for(Message message: messages){
-            System.out.println("TEST!:"+message.getMessageBody());
-        }
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.messagelayout, parent, false);
+
         return new MessageHolder(v);
     }
 
     @Override
     public void onBindViewHolder(final MessageHolder holder, int position) {
-        System.out.println(messages.get(position).getMessageBody());
+
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(messages.get(position).getTimeStamp());
-    holder.message.setText(messages.get(position).getMessageBody()+ cal.getTime());
-
-            databaseReference.child(messages.get(position).getSenderId()).addValueEventListener(
-                    new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+        holder.message.setText(messages.get(position).getMessageBody());
+        databaseReference.child(messages.get(position).getSenderId()).addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot != null) {
                             senderName = dataSnapshot.getValue(User.class).getName();
                             holder.sender.setText(senderName);
                         }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
                     }
-            );
-            holder.linearlayout.setPadding(0,40,0,0);
-            holder.imageView.setVisibility(View.GONE);
-            if (messages.get(position).getSenderId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                holder.linearlayout.setGravity(Gravity.END);
-            }
-            if (messages.get(position).getImageURI() != null) {
-                holder.imageView.setVisibility(View.VISIBLE);
-                holder.message.setVisibility(View.INVISIBLE);
-                Uri uri = Uri.parse(messages.get(position).getImageURI());
 
-                Glide.with(holder.imageView).load(messages.get(position).getImageURI()).into(holder.imageView);
-            }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }
+        );
+        holder.linearlayout.setPadding(0, 40, 0, 0);
+        holder.imageView.setVisibility(View.GONE);
+        if (messages.get(position).getSenderId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+            holder.linearlayout.setGravity(Gravity.END);
+
         }
+        else{
+            holder.linearlayout.setGravity(Gravity.START);
+        }
+        if (!messages.get(position).getImageURI().equals("")) {
+            holder.imageView.setVisibility(View.VISIBLE);
+            holder.message.setVisibility(View.INVISIBLE);
+            Uri uri = Uri.parse(messages.get(position).getImageURI());
 
+            Glide.with(holder.imageView).load(messages.get(position).getImageURI()).into(holder.imageView);
+        }
+    }
 
 
     @Override
     public int getItemCount() {
+        messages = new ArrayList<>(messageHashMap.values());
         return messageHashMap.size();
     }
 
-    public MessageAdapter(LinkedHashMap<String,Message> messageHashMap){
+    public MessageAdapter(LinkedHashMap<String, Message> messageHashMap) {
 
         this.messageHashMap = messageHashMap;
-
-
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("User/");
 
     }
 
-    public static class MessageHolder extends RecyclerView.ViewHolder{
+    public static class MessageHolder extends RecyclerView.ViewHolder {
         TextView message;
         TextView sender;
         ImageView imageView;
         LinearLayout linearlayout;
-        public MessageHolder(View v){
+
+        public MessageHolder(View v) {
             super(v);
             linearlayout = (LinearLayout) v.findViewById(R.id.linearLayoutChat);
-            message = (TextView)v.findViewById(R.id.message);
+            message = (TextView) v.findViewById(R.id.message);
             sender = (TextView) v.findViewById(R.id.senderId);
             imageView = (ImageView) v.findViewById(R.id.imageView);
         }

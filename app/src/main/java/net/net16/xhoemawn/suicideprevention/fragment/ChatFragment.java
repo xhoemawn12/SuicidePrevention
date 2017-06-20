@@ -47,6 +47,7 @@ public class ChatFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.chatfragment, container, false);
         final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view1);
         userHashMap = new LinkedHashMap<>();
+        chatHashMap = new LinkedHashMap<>();
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
 
@@ -61,19 +62,19 @@ public class ChatFragment extends Fragment {
         final DatabaseReference databaseReference = firebaseDatabase.getReference("Chat/");
         String childKey = "users/" + firebaseUser.getUid();
         System.out.println(childKey);
-
+        final ChatAdapter chatAdapter = new ChatAdapter(chatHashMap);
+        recyclerView.setAdapter(chatAdapter);
         databaseReference.orderByChild(childKey).equalTo(true).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                chatHashMap = new LinkedHashMap<String, Chat>();
+               chatHashMap.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    System.out.println(dataSnapshot1.getKey());
+
                     chatHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Chat.class));
 
                 }
 
-                final ChatAdapter chatAdapter = new ChatAdapter(chatHashMap);
-                recyclerView.setAdapter(chatAdapter);
+                chatAdapter.notifyDataSetChanged();
 
             }
 

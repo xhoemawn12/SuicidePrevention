@@ -20,5 +20,6 @@ public class UserProfileActivity extends AppCompatActivity {
         Fragment fragment = UserFragment.newInstance(getIntent().getExtras().getString("USERID"));
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.constraintUserProfile, fragment);
         fragmentTransaction.commit();
+
     }
 }

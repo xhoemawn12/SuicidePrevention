@@ -20,8 +20,9 @@
         android:background="@drawable/button_style"
         android:ems="10"
         android:hint="Type Message"
-        android:inputType="textShortMessage|textLongMessage"
+        android:inputType="textMultiLine"
         android:paddingLeft="10dp"
+        android:singleLine="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/imageButton"
         app:layout_constraintRight_toLeftOf="@+id/progressBar2" />
