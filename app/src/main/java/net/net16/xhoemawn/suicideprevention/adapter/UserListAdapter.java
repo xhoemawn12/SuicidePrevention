@@ -27,17 +27,16 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     private LinkedHashMap<String, User> userHashMap;
     private ArrayList<User> userArrayList;
     private ArrayList<String> idList;
-    public UserListAdapter(LinkedHashMap<String, User> userHashMap){
+
+    public UserListAdapter(LinkedHashMap<String, User> userHashMap) {
         this.userHashMap = userHashMap;
 
     }
 
     @Override
     public UserListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.userdetail,parent,false);
-        userArrayList = new ArrayList<>(userHashMap.values());
-        idList
-                 = new ArrayList<>(userHashMap.keySet());
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.userdetail, parent, false);
+
         return new UserListHolder(v);
     }
 
@@ -50,39 +49,43 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
     @Override
     public int getItemCount() {
+        userArrayList = new ArrayList<>(userHashMap.values());
+        idList
+                = new ArrayList<>(userHashMap.keySet());
         return userHashMap.size();
     }
 
-      class UserListHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class UserListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView userName;
         private ImageView imageView;
         private TextView userType;
         private TextView userDescription;
         private TextView userStatus;
-         UserListHolder(View itemView) {
+
+        UserListHolder(View itemView) {
             super(itemView);
             userName = (TextView) itemView.findViewById(R.id.userName);
             userType = (TextView) itemView.findViewById(R.id.userType);
             userStatus = (TextView) itemView.findViewById(R.id.status);
             imageView = (ImageView) itemView.findViewById(R.id.userImage);
-            List<Integer> colorList =  new ArrayList<>();
+            List<Integer> colorList = new ArrayList<>();
             colorList.add(Color.RED);
             colorList.add(Color.YELLOW);
             colorList.add(Color.BLACK
             );
-            ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,ConstraintLayout.LayoutParams.WRAP_CONTENT);
-            lp.setMargins(0,10,0,0);
+            ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(0, 10, 0, 0);
             itemView.setLayoutParams(lp);
             itemView.setBackgroundColor(colorList.get(new Random().nextInt(2)));
             userDescription = (TextView) itemView.findViewById(R.id.userDescription);
-             itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
 
         }
 
         @Override
-        public void onClick(View view){
-            Intent intent = new Intent(view.getContext(),UserProfileActivity.class);
-            intent.putExtra("USERID",idList.get(getAdapterPosition()));
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), UserProfileActivity.class);
+            intent.putExtra("USERID", idList.get(getAdapterPosition()));
             view.getContext().startActivity(intent);
         }
     }

@@ -12,6 +12,8 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,6 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import net.net16.xhoemawn.suicideprevention.Model.User;
 import net.net16.xhoemawn.suicideprevention.R;
+import net.net16.xhoemawn.suicideprevention.tools.UserType;
+
+import es.dmoral.toasty.Toasty;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth firebaseAuth;
@@ -39,16 +44,15 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private ProgressDialog progressDialog;
     private int USEREXISTS = 0;
     private AlertDialog alertDialog ;
+    RadioGroup radioGroup ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
-
-
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("User/");
-        //System.out.println(firebaseUser);
+
         alertDialog= new AlertDialog.Builder(SignupActivity.this).create();
         newUser = new User();
 
@@ -80,8 +84,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.signupButton:
                 if(USEREXISTS==1){
                     USEREXISTS = 0;
-                    System.out.println("WTSDASSSDSDSDSD");
-                    email.setError("User is already registered");
+
+                    Toasty.error(SignupActivity.this,"User is already registered").show();
+                    email.requestFocus();
                 }
                 else if(!Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
                     email.setError("Not email");
@@ -96,14 +101,28 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     password.requestFocus();
 
                 }
+                else if(radioGroup.getCheckedRadioButtonId()==-1){
+                    Toasty.error(SignupActivity.this,"Select Your Role.").show();
+                }
                 else{
                     newUser.setEmail(email.getText().toString());
                     newUser.setName(name.getText().toString());
                     newUser.setPassword(password.getText().toString());
+                    newUser.setUserType(UserType.VICTIM);
+                    newUser.setAvailable(true);
+                    RadioButton radioButton = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
+                    Integer userType = UserType.VICTIM;
+                    switch (radioButton.getId()){
+                        case R.id.radioButton3: userType = UserType.HELPER;
+                            break;
+                        case R.id.radioButton : userType = UserType.ADMIN;
+                            break;
+                    }
+                    newUser.setUserType(userType);
                     progressDialog.show();
                     progressDialog.setMessage("Just a sec...");
                     signUpUser(newUser);
-                    System.out.println(USEREXISTS);
+
 
                 }
                 break;

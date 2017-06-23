@@ -62,10 +62,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        chats = new ArrayList<>(chatHashMap.values());
-        Collections.reverse(chats);
-        chatIds = new ArrayList<String>(chatHashMap.keySet());
-        Collections.reverse(chatIds);
         holder.chatName.setText(chats.get(position).getNameOfChat());
         HashMap<String, Boolean> usersInvolved = chats.get(position).getUsers();
         Set<String> usersId = usersInvolved.keySet();
@@ -73,12 +69,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
         for(String userId: usersId){
             if(!Objects.equals(userId, FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                System.out.println(userId);
+
                 foreignUserId = userId;
             }
         }
         if(foreignUserId != null) {
-            System.out.println(foreignUserId);
+
             FirebaseDatabase.getInstance().getReference("User/").child(foreignUserId).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -100,7 +96,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        System.out.println(chatHashMap.size());
+        chats = new ArrayList<>(chatHashMap.values());
+        Collections.reverse(chats);
+        chatIds = new ArrayList<String>(chatHashMap.keySet());
+        Collections.reverse(chatIds);
+
         return chatHashMap.size();
     }
 

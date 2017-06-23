@@ -3,6 +3,7 @@ package net.net16.xhoemawn.suicideprevention.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -62,8 +64,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
 
     @Override
     public void onBindViewHolder(final MessageHolder holder, int position) {
-
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        holder.message.setVisibility(View.VISIBLE);
         cal.setTimeInMillis(messages.get(position).getTimeStamp());
         holder.message.setText(messages.get(position).getMessageBody());
         databaseReference.child(messages.get(position).getSenderId()).addValueEventListener(
@@ -82,7 +84,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
                     }
                 }
         );
-        holder.linearlayout.setPadding(0, 40, 0, 0);
+        holder.linearlayout.setPadding(0, 10, 0, 0);
+
         holder.imageView.setVisibility(View.GONE);
         if (messages.get(position).getSenderId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             holder.linearlayout.setGravity(Gravity.END);
@@ -93,7 +96,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
         }
         if (!messages.get(position).getImageURI().equals("")) {
             holder.imageView.setVisibility(View.VISIBLE);
-            holder.message.setVisibility(View.INVISIBLE);
+            holder.message.setVisibility(View.GONE);
             Uri uri = Uri.parse(messages.get(position).getImageURI());
 
             Glide.with(holder.imageView).load(messages.get(position).getImageURI()).into(holder.imageView);

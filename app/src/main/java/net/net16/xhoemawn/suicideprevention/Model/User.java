@@ -1,16 +1,31 @@
 package net.net16.xhoemawn.suicideprevention.Model;
 
+import com.google.firebase.database.Exclude;
+
+import net.net16.xhoemawn.suicideprevention.tools.UserType;
+
 /**
  * Created by xhoemawn12 on 4/26/17.
  */
 
 public class User {
-    public static final Integer VICTIM = 0;
-    public static final Integer MODERATOR = 1;
-    public static final Integer HELPER = 2;
-
+    private Integer userType;
     private String name;
     private String email;
+
+    public Integer getUserType() {
+        /*switch(userType){
+            case 1: return UserType.ADMIN;
+            case 2: return UserType.HELPER;
+            case 3: return UserType.VICTIM;
+        }*/
+        return userType;
+    }
+
+    public void setUserType(Integer userTypeEnum) {
+        this.userType = userTypeEnum;
+    }
+
     private long lastLogin;
     private String password;
     private boolean available;
@@ -23,17 +38,8 @@ public class User {
         this.available = available;
     }
 
-    private Integer userType;
     public User(){
 
-    }
-
-    public Integer getUserType() {
-        return userType;
-    }
-
-    public void setUserType(Integer userType) {
-        this.userType = userType;
     }
 
     public String getName() {

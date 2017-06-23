@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,12 +22,7 @@ import net.net16.xhoemawn.suicideprevention.Model.User;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.adapter.UserListAdapter;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-
-/**
- * Created by xhoemawn12 on 5/14/17.
- */
 
 public class UserListFragment extends android.support.v4.app.Fragment {
     private RecyclerView recyclerView;
@@ -52,13 +48,30 @@ public class UserListFragment extends android.support.v4.app.Fragment {
         userLinkedHashMap = new LinkedHashMap<String, User>();
         userAdapter = new UserListAdapter(userLinkedHashMap);
         recyclerView.setAdapter(userAdapter);
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.orderByChild("available").equalTo(true).addValueEventListener(new ValueEventListener() {
+            User currentUser = null;
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userLinkedHashMap.clear();
+
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    userLinkedHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(User.class));
+                    User user = dataSnapshot1.getValue(User.class);
+                    System.out.println("EMAIL|"+user.getEmail());
+                    FirebaseDatabase.getInstance().getReference("User/").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            currentUser = dataSnapshot.getValue(User.class);
+                            System.out.print("CURRENT"+currentUser.getUserType());
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                    if (currentUser != null && !currentUser.getUserType().equals(dataSnapshot1.getValue(User.class).getUserType()))
+                        userLinkedHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(User.class));
                 }
                 userAdapter.notifyDataSetChanged();
             }
@@ -69,8 +82,6 @@ public class UserListFragment extends android.support.v4.app.Fragment {
 
             }
         });
-
-
         return v;
     }
 }

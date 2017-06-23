@@ -193,6 +193,8 @@ public class MessageActivity extends AppCompatActivity implements ValueEventList
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHorizontalScrollBarEnabled(true);
 
+        messageAdapter = new MessageAdapter(tempMessageHash);
+        recyclerView.setAdapter(messageAdapter);
 
     }
 
@@ -204,15 +206,16 @@ public class MessageActivity extends AppCompatActivity implements ValueEventList
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-            tempMessageHash = new LinkedHashMap<>();
+            tempMessageHash.clear();
             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()
                 ) {
-            if (!tempMessageHash.containsKey(dataSnapshot1.getKey())) {
+
                 tempMessageHash.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Message.class));
+             }
+             messageAdapter.notifyDataSetChanged();
+            if(tempMessageHash.size()!=0){
+                recyclerView.smoothScrollToPosition(tempMessageHash.size()-1);
             }
-        }
-        messageAdapter = new MessageAdapter(tempMessageHash);
-        recyclerView.setAdapter(messageAdapter);
     }
 
 
