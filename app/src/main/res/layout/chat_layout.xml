@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:background="@drawable/selector_background"
+    android:background="?android:attr/selectableItemBackground"
     android:orientation="vertical"
     tools:layout_editor_absoluteY="25dp"
     tools:layout_editor_absoluteX="0dp">

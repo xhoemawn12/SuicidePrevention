@@ -1,4 +1,4 @@
-package net.net16.xhoemawn.suicideprevention.Model;
+package net.net16.xhoemawn.suicideprevention.model;
 
 /**
  * Created by xhoemawn12 on 5/1/17.

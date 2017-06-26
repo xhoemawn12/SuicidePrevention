@@ -16,11 +16,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import net.net16.xhoemawn.suicideprevention.Model.Chat;
+import net.net16.xhoemawn.suicideprevention.model.Chat;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.adapter.ChatAdapter;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 
 /**

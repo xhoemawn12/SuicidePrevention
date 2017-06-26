@@ -1,8 +1,4 @@
-package net.net16.xhoemawn.suicideprevention.Model;
-
-import com.google.firebase.database.Exclude;
-
-import net.net16.xhoemawn.suicideprevention.tools.UserType;
+package net.net16.xhoemawn.suicideprevention.model;
 
 /**
  * Created by xhoemawn12 on 4/26/17.
@@ -13,6 +9,24 @@ public class User {
     private String name;
     private String email;
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    private String description;
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    private String imageURL;
     public Integer getUserType() {
         /*switch(userType){
             case 1: return UserType.ADMIN;

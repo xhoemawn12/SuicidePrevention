@@ -4,14 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
      android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    >
+    android:layout_width="match_parent">
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="vertical"
-
-    android:background="@drawable/gradient_style"
     tools:context="net.net16.xhoemawn.suicideprevention.activity.SignupActivity">
 
     <TextView
@@ -23,7 +20,6 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-
         android:paddingLeft="20dp"
         android:text="@string/sign_up"
         android:textAppearance="@android:style/TextAppearance.Material.Headline"
@@ -55,7 +51,6 @@
         android:ems="10"
         android:textSize="25sp"
         android:fontFamily="serif-monospace"
-        
         android:hint="@string/name"
         android:inputType="text"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -72,7 +67,6 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:elevation="24dp"
-        
         android:text="@string/cancel"
         android:textAppearance="@android:style/TextAppearance.Material.Button"
         app:layout_constraintHorizontal_bias="0.0"
@@ -104,16 +98,12 @@
             android:layout_marginLeft="19dp"
             android:layout_marginRight="19dp"
             android:layout_marginStart="19dp"
-
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:ems="10"
             android:fontFamily="serif-monospace"
-
             android:hint="@string/confirm_password"
-
             android:inputType="textEmailAddress"
-
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="25sp"
             app:layout_constraintHorizontal_bias="0.0"
@@ -129,7 +119,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:elevation="24dp"
-        
         android:text="@string/sign_up"
         android:textAppearance="@android:style/TextAppearance.Material.Button"
         app:layout_constraintHorizontal_bias="0.0"
@@ -139,7 +128,6 @@
         tools:layout_constraintRight_creator="1"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
-
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
@@ -164,13 +152,10 @@
             android:layout_marginLeft="19dp"
             android:layout_marginRight="19dp"
             android:layout_marginStart="19dp"
-
             android:layout_marginTop="8dp"
             android:ems="10"
-
             android:textSize="25sp"
             android:fontFamily="serif-monospace"
-            
             android:hint="@string/email_address"
             android:inputType="textEmailAddress"
             app:layout_constraintHorizontal_bias="0.0"
@@ -201,16 +186,13 @@
             android:layout_marginLeft="19dp"
             android:layout_marginRight="19dp"
             android:layout_marginStart="19dp"
-
             android:layout_marginTop="8dp"
             android:ems="10"
-
             android:fontFamily="serif-monospace"
             android:inputType="textEmailAddress"
             android:textSize="25sp"
             android:hint="@string/password"
             android:typeface="monospace"
-
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

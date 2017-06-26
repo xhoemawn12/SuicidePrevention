@@ -1,12 +1,10 @@
 package net.net16.xhoemawn.suicideprevention.activity;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
@@ -20,24 +18,16 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BaseTransientBottomBar;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,9 +42,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import net.net16.xhoemawn.suicideprevention.Model.Message;
+import net.net16.xhoemawn.suicideprevention.callbacks.ImageResult;
+import net.net16.xhoemawn.suicideprevention.model.Message;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.adapter.MessageAdapter;
+import net.net16.xhoemawn.suicideprevention.base.SuperActivity;
 
 import es.dmoral.toasty.Toasty;
 
@@ -62,7 +54,7 @@ import es.dmoral.toasty.Toasty;
  * Created by xhoemawn12 on 5/8/17.
  */
 
-public class MessageActivity extends AppCompatActivity implements ValueEventListener {
+public class MessageActivity extends SuperActivity implements ValueEventListener {
 
     private Calendar calendar;
     public static String chat_id = "CHAT_ID";
@@ -139,7 +131,7 @@ public class MessageActivity extends AppCompatActivity implements ValueEventList
                                     .setContentTitle("New Message").setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 
                     Intent resultIntent = new Intent(MessageActivity.this, MessageActivity.class);
-                    resultIntent.putExtra("CHAT_ID",dataSnapshot.getKey());
+                    resultIntent.putExtra("CHAT_ID", dataSnapshot.getKey());
                     TaskStackBuilder stackBuilder = TaskStackBuilder.create(MessageActivity.this);
                     stackBuilder.addParentStack(MessageActivity.class);
 
@@ -195,77 +187,72 @@ public class MessageActivity extends AppCompatActivity implements ValueEventList
 
         messageAdapter = new MessageAdapter(tempMessageHash);
         recyclerView.setAdapter(messageAdapter);
+        setImageResult(new ImageResult() {
+            @Override
+            public void resultStatus(Boolean boo,Intent data,Integer type) {
+                if(boo && type == 0){
+                    selectedImage = data.getData();
+                    try {
+
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+                        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+                        storageReference = firebaseStorage.getReference();
+                        final ProgressDialog progressDialog = new ProgressDialog(MessageActivity.this);
+                        progressDialog.setMessage("Uploading....");
+                        progressDialog.setIcon(R.mipmap.ic_launcher);
+                        progressDialog.setTitle("Suicide Prevention");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        storageReference.child("images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(selectedImage).addOnSuccessListener(MessageActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                progressDialog.dismiss();
+                                @SuppressWarnings("VisibleForTests") Uri downloadURI = taskSnapshot.getDownloadUrl();
+
+                                imageURI = downloadURI;
+                                sendMessage();
+                                imageURI = null;
+                                Toasty.info(MessageActivity.this, "Uploaded").show();
+                            }
+                        });
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toasty.warning(MessageActivity.this, "Invalid Image", 300).show();
+                    }
+                }
+
+            }
+
+
+        });
 
     }
 
     public void startImageIntent() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, 1);
+        startActivityForResult(photoPickerIntent, 0);
     }
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-            tempMessageHash.clear();
-            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()
+        tempMessageHash.clear();
+        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()
                 ) {
 
-                tempMessageHash.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Message.class));
-             }
-             messageAdapter.notifyDataSetChanged();
-            if(tempMessageHash.size()!=0){
-                recyclerView.smoothScrollToPosition(tempMessageHash.size()-1);
-            }
+            tempMessageHash.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Message.class));
+        }
+        messageAdapter.notifyDataSetChanged();
+        if (tempMessageHash.size() != 0) {
+            recyclerView.smoothScrollToPosition(tempMessageHash.size() - 1);
+        }
     }
 
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-
-        if (resultCode == RESULT_OK) {
-            selectedImage = imageReturnedIntent.getData();
-            try {
-
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
-                FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-                storageReference = firebaseStorage.getReference();
-                final ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.setMessage("Uploading....");
-                progressDialog.setIcon(R.mipmap.ic_launcher);
-                progressDialog.setTitle("Suicide Prevention");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-                storageReference.child("images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(selectedImage).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        progressDialog.hide();
-                        @SuppressWarnings("VisibleForTests") Uri downloadURI = taskSnapshot.getDownloadUrl();
-
-                        imageURI = downloadURI;
-                        sendMessage();
-                        imageURI = null;
-                        Toasty.info(MessageActivity.this, "Uploaded").show();
-
-
-                    }
-                });
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toasty.warning(MessageActivity.this, "Invalid Image", 300).show();
-            }
-
-
-            // imageview.setImageURI(selectedImage);
-
-
-        }
     }
 
     public void sendMessage() {

@@ -1,13 +1,12 @@
 package net.net16.xhoemawn.suicideprevention.database;
 
-import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import net.net16.xhoemawn.suicideprevention.Model.Chat;
+import net.net16.xhoemawn.suicideprevention.model.Chat;
 
 import java.util.ArrayList;
 

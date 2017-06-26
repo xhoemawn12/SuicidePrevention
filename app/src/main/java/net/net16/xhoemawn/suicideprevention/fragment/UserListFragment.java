@@ -1,28 +1,35 @@
 package net.net16.xhoemawn.suicideprevention.fragment;
 
 
-import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import net.net16.xhoemawn.suicideprevention.Model.User;
+import net.net16.xhoemawn.suicideprevention.activity.MessageActivity;
+import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.adapter.UserListAdapter;
 
 import java.util.LinkedHashMap;
+
+import es.dmoral.toasty.Toasty;
 
 public class UserListFragment extends android.support.v4.app.Fragment {
     private RecyclerView recyclerView;
@@ -30,6 +37,7 @@ public class UserListFragment extends android.support.v4.app.Fragment {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private LinkedHashMap<String, User> userLinkedHashMap;
+    private User currentUser = null;
 
     public static UserListFragment getInstance() {
         return new UserListFragment();
@@ -48,8 +56,20 @@ public class UserListFragment extends android.support.v4.app.Fragment {
         userLinkedHashMap = new LinkedHashMap<String, User>();
         userAdapter = new UserListAdapter(userLinkedHashMap);
         recyclerView.setAdapter(userAdapter);
+        FirebaseDatabase.getInstance().getReference().child("User/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                currentUser = dataSnapshot.getValue(User.class);
+                System.out.print("CURRENT" + currentUser.getUserType());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         databaseReference.orderByChild("available").equalTo(true).addValueEventListener(new ValueEventListener() {
-            User currentUser = null;
+
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -57,19 +77,8 @@ public class UserListFragment extends android.support.v4.app.Fragment {
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     User user = dataSnapshot1.getValue(User.class);
-                    System.out.println("EMAIL|"+user.getEmail());
-                    FirebaseDatabase.getInstance().getReference("User/").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            currentUser = dataSnapshot.getValue(User.class);
-                            System.out.print("CURRENT"+currentUser.getUserType());
-                        }
+                    System.out.println("EMAIL|" + user.getEmail());
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
                     if (currentUser != null && !currentUser.getUserType().equals(dataSnapshot1.getValue(User.class).getUserType()))
                         userLinkedHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(User.class));
                 }

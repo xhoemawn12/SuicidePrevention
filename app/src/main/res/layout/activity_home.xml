@@ -5,7 +5,7 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_style"
+
     android:fitsSystemWindows="true"
     android:windowSoftInputMode="adjustPan|adjustResize"
     tools:context="net.net16.xhoemawn.suicideprevention.activity.HomeActivity">

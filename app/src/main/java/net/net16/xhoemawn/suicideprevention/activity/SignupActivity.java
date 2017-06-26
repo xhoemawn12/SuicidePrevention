@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
@@ -20,17 +19,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import net.net16.xhoemawn.suicideprevention.Model.User;
+import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.R;
+import net.net16.xhoemawn.suicideprevention.base.SuperActivity;
 import net.net16.xhoemawn.suicideprevention.tools.UserType;
 
 import es.dmoral.toasty.Toasty;
 
-public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
+public class SignupActivity extends SuperActivity implements View.OnClickListener{
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;

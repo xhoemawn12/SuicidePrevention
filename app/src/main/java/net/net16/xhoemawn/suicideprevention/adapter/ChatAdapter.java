@@ -17,8 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import net.net16.xhoemawn.suicideprevention.Model.Chat;
-import net.net16.xhoemawn.suicideprevention.Model.User;
+import net.net16.xhoemawn.suicideprevention.model.Chat;
+import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.activity.MessageActivity;
 

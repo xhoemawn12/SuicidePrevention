@@ -13,13 +13,13 @@ import android.view.animation.ScaleAnimation;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.FirebaseDatabase;
 
 import net.net16.xhoemawn.suicideprevention.R;
+import net.net16.xhoemawn.suicideprevention.base.SuperActivity;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends SuperActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 finish();
             }
         },4000);
+
     }
     public static Animation animate(int CASE)
     {

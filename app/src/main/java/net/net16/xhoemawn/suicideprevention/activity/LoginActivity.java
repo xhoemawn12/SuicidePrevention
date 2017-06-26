@@ -23,11 +23,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import net.net16.xhoemawn.suicideprevention.R;
+import net.net16.xhoemawn.suicideprevention.base.SuperActivity;
 
 import es.dmoral.toasty.Toasty;
 
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends SuperActivity implements View.OnClickListener {
     private boolean isLoggedIn = false;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser firebaseUser = null;

@@ -1,43 +1,32 @@
 package net.net16.xhoemawn.suicideprevention.adapter;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.GlideBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
-import net.net16.xhoemawn.suicideprevention.Model.Message;
-import net.net16.xhoemawn.suicideprevention.Model.User;
+import net.net16.xhoemawn.suicideprevention.model.Message;
+import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.SortedMap;
 
 /**
  * Created by xhoemawn12 on 5/10/17.
@@ -100,6 +89,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
             Uri uri = Uri.parse(messages.get(position).getImageURI());
 
             Glide.with(holder.imageView).load(messages.get(position).getImageURI()).into(holder.imageView);
+
         }
     }
 

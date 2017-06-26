@@ -1,32 +1,34 @@
 package net.net16.xhoemawn.suicideprevention.activity;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 
-import net.net16.xhoemawn.suicideprevention.Model.Chat;
-import net.net16.xhoemawn.suicideprevention.fragment.PlaceHolderFragment;
 import net.net16.xhoemawn.suicideprevention.R;
+import net.net16.xhoemawn.suicideprevention.base.SuperActivity;
 import net.net16.xhoemawn.suicideprevention.fragment.ChatFragment;
 import net.net16.xhoemawn.suicideprevention.fragment.UserFragment;
 import net.net16.xhoemawn.suicideprevention.fragment.UserListFragment;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends SuperActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private FirebaseUser firebaseUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,10 +45,9 @@ public class HomeActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_chat_black_24dp);
-        tabLayout.getTabAt(0).setIcon(R.mipmap.ic_group_black_48dp);
-        tabLayout.getTabAt(2).setIcon(R.mipmap.ic_person_black_48dp);
-
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_chat_black_24dp);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_group_black_24dp);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_person_black_24dp);
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -58,13 +59,13 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
 
-             switch (position){
-                case 0 :
+            switch (position) {
+                case 0:
                     return UserListFragment.getInstance();
                 case 1:
-                    return  ChatFragment.newInstance(firebaseUser.getUid());
+                    return ChatFragment.newInstance(firebaseUser.getUid());
                 case 2:
-                    return   UserFragment.newInstance(firebaseUser.getUid());
+                    return UserFragment.newInstance(firebaseUser.getUid());
             }
             return null;
         }
