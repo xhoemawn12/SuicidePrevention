@@ -131,7 +131,7 @@ public class UserFragment extends Fragment
             if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startImageIntent();
             } else {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), permissions[0])) {
+                if (shouldShowRequestPermissionRationale(permissions[0])) {
 
                     Toasty.warning(getActivity(), "Unable To Access Storage", 300).show();
                 } else {
@@ -195,14 +195,15 @@ public class UserFragment extends Fragment
         chatButton = (ImageButton) view.findViewById(R.id.chat);
         commendButton = (ImageButton) view.findViewById(R.id.commend);
         userType = (TextView) view.findViewById(R.id.userType);
-        // aboutUser = (TextView) view.findViewById(R.id.userDescription);
         chatButton.setOnClickListener(this);
         commendButton.setOnClickListener(this);
         profilePic = (ImageView) view.findViewById(R.id.profilePic);
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCompat.requestPermissions(UserFragment.this.getActivity(), new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                requestPermissions(
+                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                Toasty.normal(getContext(),"HELLO").show();;
             }
 
         });
