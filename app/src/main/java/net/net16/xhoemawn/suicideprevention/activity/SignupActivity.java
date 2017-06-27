@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -44,8 +46,10 @@ public class SignupActivity extends SuperActivity implements View.OnClickListene
     private int USEREXISTS = 0;
     private AlertDialog alertDialog ;
     RadioGroup radioGroup ;
+    private PhoneAuthProvider phoneAuthProvider;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);

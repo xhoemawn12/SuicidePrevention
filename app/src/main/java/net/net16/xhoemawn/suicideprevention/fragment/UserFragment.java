@@ -114,7 +114,7 @@ public class UserFragment extends Fragment
 
     public void updateProfile(User user) {
 
-        FirebaseDatabase.getInstance().getReference("User/" + DOMESTICUSERID).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FirebaseDatabase.getInstance().getReference("User/" + FOREIGNUSERID ).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isComplete()) {
@@ -128,6 +128,7 @@ public class UserFragment extends Fragment
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 0) {
+
             if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startImageIntent();
             } else {
