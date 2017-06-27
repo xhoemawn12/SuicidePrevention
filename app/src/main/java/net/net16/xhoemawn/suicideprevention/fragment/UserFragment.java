@@ -4,10 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -18,9 +20,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -60,8 +67,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class UserFragment extends Fragment
         implements ValueEventListener, View.OnClickListener {
-    private ImageButton chatButton;
-    private ImageButton commendButton;
+    private Button chatButton;
+    private Button commendButton;
     private OnProfilePicChanged onProfilePicChanged;
     private User user;
     private FirebaseDatabase firebaseDatabase;
@@ -76,6 +83,7 @@ public class UserFragment extends Fragment
     private static String FOREIGNUSERID = null;
     private static String DOMESTICUSERID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private String chatId = null;
+    private ProgressBar progressBar;
     private Uri imageURI = null;
 
     @Override
@@ -88,20 +96,16 @@ public class UserFragment extends Fragment
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
                 FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
                 StorageReference storageReference = firebaseStorage.getReference();
-                final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Uploading....");
-                progressDialog.setIcon(R.mipmap.ic_launcher);
-                progressDialog.setTitle("Suicide Prevention");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
+                progressBar.setVisibility(View.VISIBLE);
                 storageReference.child("user/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(selectedImage).addOnSuccessListener(getActivity(), new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        progressDialog.dismiss();
+                        progressBar.setVisibility(View.GONE);
                         @SuppressWarnings("VisibleForTests") Uri downloadURI = taskSnapshot.getDownloadUrl();
 
                         imageURI = downloadURI;
-                        user.setImageURL(imageURI.toString());
+                        if (imageURI != null)
+                            user.setImageURL(imageURI.toString());
                         updateProfile(user);
                         imageURI = null;
                         Toasty.info(getActivity(), "Uploaded").show();
@@ -117,11 +121,11 @@ public class UserFragment extends Fragment
 
     public void updateProfile(User user) {
 
-        FirebaseDatabase.getInstance().getReference("User/" + FOREIGNUSERID ).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+        FirebaseDatabase.getInstance().getReference("User/" + FOREIGNUSERID).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isComplete()) {
-                    Toasty.success(getContext(), "Success").show();
+                    Toasty.success(getActivity(), "Success").show();
                     ;
                 }
             }
@@ -194,39 +198,52 @@ public class UserFragment extends Fragment
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("User/");
         chatDataReference = firebaseDatabase.getReference("Chat/");
-        databaseReference.child(FOREIGNUSERID).addValueEventListener(this);
+
         userName = (TextView) view.findViewById(R.id.userName);
-        chatButton = (ImageButton) view.findViewById(R.id.chat);
-        commendButton = (ImageButton) view.findViewById(R.id.commend);
+        chatButton = (Button) view.findViewById(R.id.chat);
+        commendButton = (Button) view.findViewById(R.id.commend);
         userType = (TextView) view.findViewById(R.id.userType);
+        aboutUser = (TextView) view.findViewById(R.id.userDescription);
         chatButton.setOnClickListener(this);
         commendButton.setOnClickListener(this);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
         profilePic = (ImageView) view.findViewById(R.id.profilePic);
-        if(Objects.equals(FOREIGNUSERID, DOMESTICUSERID)) {
+        onProfilePicChanged = new OnProfilePicChanged() {
+            @Override
+            public void isChanged(Boolean boo) {
+                if (boo) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    if (user != null)
+                        if (user.getImageURL() != null) {
+                            Glide.with(getActivity()).load(user.getImageURL()).into(profilePic);
+                            progressBar.setVisibility(View.GONE);
+                            if (user.getUserType() != 1)
+                                userType.setText(user.getUserType() == 0 ? "Helper" : "Victim");
+                            else
+                                userType.setText("Moderator");
+                            if(user.getDescription()!=null)
+                                aboutUser.setText(user.getDescription());
+                        }
+                }
+
+            }
+        };
+        databaseReference.child(FOREIGNUSERID).addValueEventListener(this);
+        if (Objects.equals(FOREIGNUSERID, DOMESTICUSERID)) {
             profilePic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     requestPermissions(
                             new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-                    Toasty.info(getContext(), "Changing Profile Pic").show();
+                    Toasty.info(getActivity(), "Changing Profile Pic").show();
                     ;
                 }
 
             });
         }
-        onProfilePicChanged = new OnProfilePicChanged() {
-            @Override
-            public void isChanged(Boolean boo) {
-                if(boo){
-                }
-                if (user != null)
-                    if (user.getImageURL() != null)
-                        Glide.with(getContext()).load(user.getImageURL()).into(profilePic);
 
-                }
-            };
         return view;
-
     }
 
     @Override

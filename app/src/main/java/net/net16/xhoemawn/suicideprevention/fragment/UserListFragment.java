@@ -60,7 +60,7 @@ public class UserListFragment extends android.support.v4.app.Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 currentUser = dataSnapshot.getValue(User.class);
-                System.out.print("CURRENT" + currentUser.getUserType());
+
             }
 
             @Override
@@ -77,8 +77,6 @@ public class UserListFragment extends android.support.v4.app.Fragment {
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     User user = dataSnapshot1.getValue(User.class);
-                    System.out.println("EMAIL|" + user.getEmail());
-
                     if (currentUser != null && !currentUser.getUserType().equals(dataSnapshot1.getValue(User.class).getUserType()))
                         userLinkedHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(User.class));
                 }
