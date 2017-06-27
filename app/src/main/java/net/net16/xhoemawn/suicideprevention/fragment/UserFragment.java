@@ -35,6 +35,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import net.net16.xhoemawn.suicideprevention.callbacks.ImageResult;
+import net.net16.xhoemawn.suicideprevention.callbacks.OnProfilePicChanged;
 import net.net16.xhoemawn.suicideprevention.model.Chat;
 import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.R;
@@ -47,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 
@@ -60,6 +62,7 @@ public class UserFragment extends Fragment
         implements ValueEventListener, View.OnClickListener {
     private ImageButton chatButton;
     private ImageButton commendButton;
+    private OnProfilePicChanged onProfilePicChanged;
     private User user;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -199,18 +202,29 @@ public class UserFragment extends Fragment
         chatButton.setOnClickListener(this);
         commendButton.setOnClickListener(this);
         profilePic = (ImageView) view.findViewById(R.id.profilePic);
-        profilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestPermissions(
-                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-                Toasty.normal(getContext(),"HELLO").show();;
-            }
+        if(Objects.equals(FOREIGNUSERID, DOMESTICUSERID)) {
+            profilePic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    requestPermissions(
+                            new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                    Toasty.info(getContext(), "Changing Profile Pic").show();
+                    ;
+                }
 
-        });
-        if (user != null)
-            if (user.getImageURL() != null)
-                Glide.with(getContext()).load(user.getImageURL()).into(profilePic);
+            });
+        }
+        onProfilePicChanged = new OnProfilePicChanged() {
+            @Override
+            public void isChanged(Boolean boo) {
+                if(boo){
+                }
+                if (user != null)
+                    if (user.getImageURL() != null)
+                        Glide.with(getContext()).load(user.getImageURL()).into(profilePic);
+
+                }
+            };
         return view;
 
     }
@@ -228,10 +242,8 @@ public class UserFragment extends Fragment
 
         if (user != null) {
             userName.setText(user.getName());
-            if (user.isAvailable()) {
-                System.out.println("helloworld");
-                // aboutUser.setText(String.format("%s", user.isAvailable()));
-            }
+            onProfilePicChanged.isChanged(true);
+
         }
 
     }
