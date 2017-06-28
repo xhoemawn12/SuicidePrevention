@@ -92,7 +92,6 @@ public class SuperActivity extends
             final Snackbar snack = Snackbar.make(getWindow().getDecorView(),"No Internet Connection",Snackbar.LENGTH_INDEFINITE);
             snack.setActionTextColor(Color.RED);
             snack.show();
-
             FrameLayout.LayoutParams params=(FrameLayout.LayoutParams)snack.getView().getLayoutParams();
 
             snack.getView().setLayoutParams(params);
@@ -102,7 +101,7 @@ public class SuperActivity extends
                     snack.dismiss();
                 }
             });
-        }
+            }
 
 
 
@@ -110,6 +109,12 @@ public class SuperActivity extends
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
     }
 
     @Override

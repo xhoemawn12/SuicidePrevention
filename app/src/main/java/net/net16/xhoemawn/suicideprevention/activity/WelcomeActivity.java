@@ -43,6 +43,7 @@ public class WelcomeActivity extends SuperActivity {
             @Override
             public void run() {
                 Intent intent = new Intent(WelcomeActivity.this,LoginActivity.class);
+
                 startActivity(intent);
                 finish();
             }
