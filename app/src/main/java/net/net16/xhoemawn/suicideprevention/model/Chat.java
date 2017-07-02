@@ -10,9 +10,18 @@ import java.util.HashMap;
 public class Chat implements Serializable{
 
     private String nameOfChat;
+
+    public boolean isRead() {
+        return read;
+    }
+
+    public void setRead(boolean read) {
+        this.read = read;
+    }
+
     private HashMap<String,Boolean> users;
     private long timeStamp;
-
+    private boolean read;
     public long getTimeStamp() {
         return timeStamp;
     }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,7 +20,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 
@@ -329,6 +327,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                 progressBar.setVisibility(View.GONE);
             }
         });
+        firebaseDatabase.getReference("Chat/"+message.getChatId()).child("/read/").setValue(false);
 
     }
     public void createReport(final String reportDesc , final Integer reportType, final String imageURL ){

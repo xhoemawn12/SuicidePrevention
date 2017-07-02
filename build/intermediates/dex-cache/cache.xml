@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jar="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="2d35ee432ba10e41971e6d97a3d5e9b9309872c8">
-        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8ae790a29ba210fd05539379f401a2822a33fe2e/classes.dex" />
+        sha1="a3152530ab6d862ffdc4a2d766a04fdc1f3a68e5">
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_3c01d04815f0ecc9d1f6d549c0a63c3dafaf2414\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_062036aca8c01e73d0ae8e13243f3ca4ea571230/classes.dex" />
+        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_75deaf66b4d815ba22cf4ad14d02b23837a127cd\classes.dex" />
     </item>
 
 </items>
