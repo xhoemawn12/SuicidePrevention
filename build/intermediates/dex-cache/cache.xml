@@ -2,157 +2,22 @@
 <items version="2" >
 
     <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\2a5ab1d64d915cd297ddc48ebea64e6af3dec7ee\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="e00b71dcf2fbecaf59b0d487d11839522dd7863d">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_99476a74247b5751a4fc1346b8e2d8f1a1bd6e98.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\86c79b1f03904caf7b4472c6c0e141035dfdcfbf\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="54511008bf7d1aabd871d8d3a26781b3f2bd9617">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_a919daaa54a525895a0f4c268d6593cce8e422d6.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\988fe0313eb8fccda4470151920633c4aacfafae\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="ec1f195979cc7f1ec94779fa16f1b10aac8aceca">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_8424cbcc188edb7f8cfea83d503dd496aeacced1.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\776ee8f5abcac9027791830d57b517b542da2335\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="d4acacbab67243d9eb026ea759aefd401d070f3e">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_fcbebf3ec66ae79649e0db8da98bc09e4d6c0ce1.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\5dec9b4475a6a07d9bc0ccb547668f37fcf8f980\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="21160c044ba984fb2e33b833c89a496becb85cfd">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_823754aabf15575ef931680c7a61703129b570d6.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\7f1f9eebb25e9aeca462a3bdc438c820511ddb30\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="1acfba708364fb5bdb0ad5910d1ca8bb1125f645">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_50c3025ad0e62015ce61d83d59cad68d8c9febd2.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\2863bf867e596e5ffd3b17a5d805b0211f902560\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="8a572a0bd9ea324b099b1761670237bc1be8ba7b">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_7881a4fcd346cb3d2ff311d334339ab491c9f7fc.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\c842c68ee490a18f76d8655a52ac419184c64888\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="6178e31397c24ab1bfc09766832cdcf519621eb7">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_735df2a1ed9196679d3acbdb2b3f205d01197ca8.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\1b48036d773673e56fce1a21c5264f30802fbdd3\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="32054268e6c9fdff0c9c5deafafd0bd105120fb6">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_76916eddf8f0ffcadf20af38ce26f80ebe244bc3.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\45fdbad0771ea7a3a4a15cd63ae205ad973c63e9\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="d94940ddde71cc57402c78b7d8c335d61958f486">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_2f65447fd1fdfc8b99edc180625780e557d31abb.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\caebe05b5f9febe1d58f8273ff85ac316e0790f5\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="3013ffee567202ddab82286ac45b28fcb1e7926a">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_4fdb292991745822e35d7ba3bdbd12ec80dc32ca.jar" />
-    </item>
-    <item
         is-multidex="true"
-        jar="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jar="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="74e03ae7cda5b67ec47c2e6e1a15d182e1512b66">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_3c01d04815f0ecc9d1f6d549c0a63c3dafaf2414\classes.dex" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\799d819f7668df29999a0d1bac666d6e06b9b9a9\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="d695dc4247690369d66c022c6d18190155c61fcd">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_ba85eed569b21598e4113f8cc3057061281b9db5.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\923ef3fdeec69fd59ae5b830bebab844314a0c4c\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="b4fa53b1dbc43a65e9cbcbfe25f4abc47264e78c">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_2d66fbb28c4f9e844c6556b56f25e400394d2eeb.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\0834ab89a738442586325b04dc1c351f2125f117\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="a73b24a82e860ae409181afee75925a04a03aed3">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_3512925b41267a8f1797cb9ba1f21156ec4bc76c.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\khadk\.android\build-cache\55a9761c505ddeed2d4a20d89260830fb5b0aaff\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.3"
-        sha1="5734c03faa42bb254d3f05d656f7a7036cb096b6">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\pre-dexed\debug\classes_7a65ad451c4d97c739113f4f63fc41d6e9875fcb.jar" />
+        sha1="2d35ee432ba10e41971e6d97a3d5e9b9309872c8">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8ae790a29ba210fd05539379f401a2822a33fe2e/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jar="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="C:\Users\khadk\StudioProjects\SuicidePrevention\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_75deaf66b4d815ba22cf4ad14d02b23837a127cd\classes.dex" />
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_062036aca8c01e73d0ae8e13243f3ca4ea571230/classes.dex" />
     </item>
 
 </items>

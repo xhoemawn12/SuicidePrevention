@@ -5,7 +5,7 @@ package net.net16.xhoemawn.suicideprevention.tools;
  */
 
 public class UserType {
-    public static int HELPER = 0;
-    public static int ADMIN = 1;
-    public static int VICTIM = 2;
+    public static Integer HELPER = 0;
+    public static Integer ADMIN = 1;
+    public static Integer VICTIM = 2;
 }

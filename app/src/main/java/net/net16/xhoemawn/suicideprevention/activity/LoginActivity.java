@@ -21,9 +21,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.base.SuperActivity;
+import net.net16.xhoemawn.suicideprevention.model.User;
 
 import es.dmoral.toasty.Toasty;
 
@@ -38,32 +43,62 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
     private Button signIn;
     private Button signUp;
     EditText editText1;
-
+    private Integer userType ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         Toasty.Config.getInstance().apply();
         editText1 = (EditText) findViewById(R.id.editText2);
         progressDialog = new ProgressDialog(LoginActivity.this);
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Suicide Prevention");
+        progressDialog.setIcon(R.mipmap.ic_launcher);
+        progressDialog.setMessage("Logging in..");
         signIn = (Button) findViewById(R.id.button);
         signUp = (Button) findViewById(R.id.button2);
         signIn.setOnClickListener(this);
         editText1.setTransformationMethod(new PasswordTransformationMethod());
-
         firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
-                    System.out.println((firebaseUser.getUid()) + "THIS IS THE USER");
-                    Log.d("SAD", "ASDASD");
-                    intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    progressDialog.show();
+                    FirebaseDatabase.getInstance().getReference("User/"+firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            User user = dataSnapshot.getValue(User.class);
+                            try {
+                                intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                userType = user.getUserType();
+                                intent.putExtra("USERTYPE",userType);
+                                intent.putExtra("USERNAME", firebaseUser.getEmail());
 
-                    intent.putExtra("USERNAME", firebaseUser.getEmail());
-                    startActivity(intent);
+                                startActivity(intent);
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                      progressDialog.dismiss();
+                                    }
+                                },1000);
+                                finish();
+
+                            }
+                            catch (NullPointerException nul){
+                                userType = null;
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                     firebaseAuth.removeAuthStateListener(this);
-                    finish();
                 }
             }
         });
@@ -108,7 +143,9 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
                 }
                 break;
             case R.id.button2:
-                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+                final Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+
+                startActivity(intent);
                 finish();
                 break;
         }
@@ -116,11 +153,7 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
 
 
     public void checkLogin(String email, String password) {
-        progressDialog.show();
-        progressDialog.setCancelable(false);
-        progressDialog.setTitle("Suicide Prevention");
-        progressDialog.setIcon(R.mipmap.ic_launcher);
-        progressDialog.setMessage("Logging in..");
+
         if (firebaseUser == null) {
             Log.d("SAD", email + "    " + " " + password);
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -130,7 +163,7 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
                     if (task.isSuccessful()) {
                         Toasty.info(LoginActivity.this,"Logging in",300 ).show();
                         isLoggedIn = true;
-                        progressDialog.dismiss();
+                        
                     } else {
                         Log.d("SAD", task.toString());
                         progressDialog.dismiss();

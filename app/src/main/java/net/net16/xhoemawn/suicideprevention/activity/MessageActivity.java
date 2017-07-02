@@ -1,33 +1,29 @@
 package net.net16.xhoemawn.suicideprevention.activity;
 
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.media.RingtoneManager;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,11 +38,20 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import net.net16.xhoemawn.suicideprevention.callbacks.ImageResult;
-import net.net16.xhoemawn.suicideprevention.model.Message;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.adapter.MessageAdapter;
 import net.net16.xhoemawn.suicideprevention.base.SuperActivity;
+import net.net16.xhoemawn.suicideprevention.callbacks.ImageResult;
+import net.net16.xhoemawn.suicideprevention.model.Message;
+import net.net16.xhoemawn.suicideprevention.model.Report;
+import net.net16.xhoemawn.suicideprevention.tools.ReportType;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 
@@ -67,6 +72,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
     private RecyclerView recyclerView;
     private Uri imageURI;
     private ImageButton imageButton;
+    private Button reportButton;
     private MessageAdapter messageAdapter;
     private Context cntext;
     private StorageReference storageReference;
@@ -75,7 +81,9 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
     private ProgressBar progressBar;
     private LinkedHashMap<String, Message> tempMessageHash;
     private LinearLayoutManager layoutManager;
-
+    private String reportAgainst;
+    private String reportedBy;
+    private Integer reportType = ReportType.SPAM;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 0) {
@@ -125,7 +133,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Message message = dataSnapshot.getValue(Message.class);
                 if (!message.getSenderId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                    NotificationCompat.Builder mBuilder =
+          /*          NotificationCompat.Builder mBuilder =
                             new NotificationCompat.Builder(MessageActivity.this)
                                     .setSmallIcon(R.mipmap.ic_launcher)
                                     .setContentTitle("New Message").setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
@@ -144,7 +152,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                     mBuilder.setContentIntent(resultPendingIntent);
                     NotificationManager mNotificationManager =
                             (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    mNotificationManager.notify(0, mBuilder.build());
+                    mNotificationManager.notify(0, mBuilder.build());*/
                 }
             }
 
@@ -198,12 +206,9 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
                         storageReference = firebaseStorage.getReference();
                         final ProgressDialog progressDialog = new ProgressDialog(MessageActivity.this);
-                        progressDialog.setMessage("Uploading....");
-                        progressDialog.setIcon(R.mipmap.ic_launcher);
-                        progressDialog.setTitle("Suicide Prevention");
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
-                        storageReference.child("images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(selectedImage).addOnSuccessListener(MessageActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        Toasty.info(MessageActivity.this,"Uploading Image..").show();
+                            progressBar.setVisibility(View.VISIBLE);
+                        storageReference.child("users/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(selectedImage).addOnSuccessListener(MessageActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 progressDialog.dismiss();
@@ -212,12 +217,14 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                                 imageURI = downloadURI;
                                 sendMessage();
                                 imageURI = null;
+                                progressBar.setVisibility(View.GONE);
                                 Toasty.info(MessageActivity.this, "Uploaded").show();
                             }
                         });
 
                     } catch (IOException e) {
                         e.printStackTrace();
+                        progressBar.setVisibility(View.GONE);
                         Toasty.warning(MessageActivity.this, "Invalid Image", 300).show();
                     }
                 }
@@ -226,7 +233,53 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
 
 
         });
+        reportButton = (Button) findViewById(R.id.reportButton);
+        reportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MessageActivity.this);
+                alertDialogBuilder.setView(R.layout.createreportdialog);
+                final AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                final EditText body = (EditText) alertDialog.findViewById(R.id.body);
+                final RadioGroup radioGroup = (RadioGroup) alertDialog.findViewById(R.id.radioGroup);
+                final CheckBox checkBox = (CheckBox)  alertDialog.findViewById(R.id.checkBox);
+                final Button reportBtn = (Button) alertDialog.findViewById(R.id.submit);
+                alertDialog.show();
+                reportBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                switch (radioGroup.getCheckedRadioButtonId()){
+                    case R.id.pornographic: reportType = ReportType.PORNOGRAPHIC_CONTENT;
+                        break;
+                    case R.id.impolite: reportType = ReportType.IMPOLITE;
+                        break;
+                    case R.id.others: reportType = ReportType.OTHERS;
+                        break;
+                }
+                if(checkBox.isSelected()) {alertDialog.dismiss();
+
+                    Bitmap bitmap = MessageActivity.this.getWindow().getDecorView().getRootView().getDrawingCache();
+                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+
+                    String path = MediaStore.Images.Media.insertImage(MessageActivity.this.getContentResolver(), bitmap, "tempFile", null);
+
+                    FirebaseStorage.getInstance().getReference("reports/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(Uri.parse(path)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            createReport(body.getText().toString(), reportType, taskSnapshot.getDownloadUrl().toString());
+                        }
+                    });
+                }
+
+                    }
+                });
+            }
+        });
     }
 
     public void startImageIntent() {
@@ -240,7 +293,6 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         tempMessageHash.clear();
         for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()
                 ) {
-
             tempMessageHash.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Message.class));
         }
         messageAdapter.notifyDataSetChanged();
@@ -279,4 +331,39 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         });
 
     }
+    public void createReport(final String reportDesc , final Integer reportType, final String imageURL ){
+
+        FirebaseDatabase.getInstance().getReference("Chat/"+CHAT_ID).child("/users/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                    if(!Objects.equals(FirebaseAuth.getInstance().getCurrentUser().getUid(), dataSnapshot1.getKey()))
+                    reportAgainst = dataSnapshot1.getKey();
+                }
+                if(reportAgainst!=null){
+                    Report report = new Report();
+                    report.setReportedBy(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    report.setReportedTo(reportAgainst);
+                    report.setReportDescription(reportDesc);
+                    report.setReportType(reportType);
+                    report.setReviewed(false);
+                    report.setReportImage(imageURL);
+                    FirebaseDatabase.getInstance().getReference("Report/").push().setValue(report).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toasty.success(MessageActivity.this,"Successfully Reported.").show();
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 }

@@ -3,8 +3,8 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimaryLight</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="android:fadeScrollbars">false</item>
         <item name="android:buttonStyle">@style/Button</item>
         <item name="android:textViewStyle">@style/CustomFont</item>
@@ -14,10 +14,13 @@
     </style>
     <style name="CustomFont" parent="Platform.AppCompat.Light">
         <item name="android:fontFamily">serif-monospace</item>
+        <item name="android:typeface">monospace</item>
 
     </style>
-    <style name="Button" parent="Base.Widget.AppCompat.Button">
-        <item name="android:background">@drawable/button_style</item>
+    <style name="Button" parent="Base.Widget.AppCompat.Button"><!--
+        <item name="android:background">@drawable/button_style</item>-->
+        <item name="android:background">@color/colorPrimaryLight</item>
+        <item name="android:typeface">monospace</item>
         <item name="android:fontFamily">serif-monospace</item>
 
     </style>

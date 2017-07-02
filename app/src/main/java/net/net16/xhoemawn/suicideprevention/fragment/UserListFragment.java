@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,8 +27,12 @@ import net.net16.xhoemawn.suicideprevention.activity.MessageActivity;
 import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.adapter.UserListAdapter;
+import net.net16.xhoemawn.suicideprevention.tools.UserType;
+
+import org.w3c.dom.Text;
 
 import java.util.LinkedHashMap;
+import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 
@@ -56,11 +61,16 @@ public class UserListFragment extends android.support.v4.app.Fragment {
         userLinkedHashMap = new LinkedHashMap<String, User>();
         userAdapter = new UserListAdapter(userLinkedHashMap);
         recyclerView.setAdapter(userAdapter);
-        FirebaseDatabase.getInstance().getReference().child("User/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        final TextView textView = (TextView)v.findViewById(R.id.typeUser);
+        FirebaseDatabase.getInstance().getReference().child("User/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 currentUser = dataSnapshot.getValue(User.class);
-
+                if(!Objects.equals(currentUser.getUserType(), UserType.HELPER)){
+                    textView.setText("Available Helpers");
+                }
+                else
+                    textView.setText("Victims Seeking Help");
             }
 
             @Override
@@ -77,7 +87,7 @@ public class UserListFragment extends android.support.v4.app.Fragment {
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     User user = dataSnapshot1.getValue(User.class);
-                    if (currentUser != null && !currentUser.getUserType().equals(dataSnapshot1.getValue(User.class).getUserType()))
+                    if (currentUser != null && !currentUser.getUserType().equals(dataSnapshot1.getValue(User.class).getUserType()) && !currentUser.getUserType().equals(UserType.ADMIN))
                         userLinkedHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(User.class));
                 }
                 userAdapter.notifyDataSetChanged();

@@ -114,7 +114,7 @@ public class SuperActivity extends
     @Override
     protected void onResume() {
         super.onResume();
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
+        overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.fade_out);
     }
 
     @Override

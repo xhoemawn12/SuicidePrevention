@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,7 +40,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private LinkedHashMap<String,Chat> chatHashMap;
     private List<Chat> chats;
     private List<String> chatIds;
-
     private Drawable drawable ;
     private User foreignUser;
     public ChatAdapter(){
@@ -69,7 +69,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
         for(String userId: usersId){
             if(!Objects.equals(userId, FirebaseAuth.getInstance().getCurrentUser().getUid())){
-
                 foreignUserId = userId;
             }
         }
@@ -79,8 +78,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     foreignUser = (User) dataSnapshot.getValue(User.class);
-                    if (foreignUser != null)
+                    if (foreignUser != null) {
                         holder.chatName.setText(foreignUser.getName());
+                        if(foreignUser.getImageURL()!=null)
+                            Glide.with(holder.imageView).load(foreignUser.getImageURL()).into(holder.imageView);
+                    }
                 }
 
                 @Override
@@ -88,7 +90,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
                 }
             });
-            //holder.imageView.setImageURI(foreignUser.getImageURI());
         }
     }
 
@@ -104,7 +105,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         return chatHashMap.size();
     }
 
-    public  class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView chatName;
         TextView userName;
         ImageView imageView;
@@ -112,7 +113,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             super(v);
             imageView = (ImageView) v.findViewById(R.id.imageURL);
             chatName = (TextView) v.findViewById(R.id.chatName);
-            userName = (TextView) v.findViewById(R.id.userName);
+            userName = (TextView) v.findViewById(R.id.postedBy);
             v.setOnClickListener(this);
         }
 

@@ -1,33 +1,23 @@
 package net.net16.xhoemawn.suicideprevention.fragment;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -41,12 +31,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import net.net16.xhoemawn.suicideprevention.callbacks.ImageResult;
 import net.net16.xhoemawn.suicideprevention.callbacks.OnProfilePicChanged;
 import net.net16.xhoemawn.suicideprevention.model.Chat;
 import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.R;
-import net.net16.xhoemawn.suicideprevention.activity.LoginActivity;
 import net.net16.xhoemawn.suicideprevention.activity.MessageActivity;
 import net.net16.xhoemawn.suicideprevention.callbacks.ReadyToCreateChat;
 
@@ -160,11 +148,33 @@ public class UserFragment extends Fragment
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.commend) {
-            FirebaseAuth.getInstance().signOut();
+            /*FirebaseAuth.getInstance().signOut();
             ;
             startActivity(new Intent(getActivity(), LoginActivity.class));
             FirebaseDatabase.getInstance().purgeOutstandingWrites();
-            getActivity().finish();
+            getActivity().finish();*/
+            final DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("User/"+FOREIGNUSERID).child("/commends/");
+            dbr.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Integer commends = dataSnapshot.getValue(Integer.class);
+
+                    if(commends!=null){
+                        commends++;
+                    }
+                    else{
+                        commends = 1;
+                    }
+                    dbr.setValue(commends);
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
         } else if (v.getId() == R.id.chat) {
             createNewChat(new ReadyToCreateChat() {
                 @Override
@@ -199,7 +209,7 @@ public class UserFragment extends Fragment
         databaseReference = firebaseDatabase.getReference("User/");
         chatDataReference = firebaseDatabase.getReference("Chat/");
 
-        userName = (TextView) view.findViewById(R.id.userName);
+        userName = (TextView) view.findViewById(R.id.postedBy);
         chatButton = (Button) view.findViewById(R.id.chat);
         commendButton = (Button) view.findViewById(R.id.commend);
         userType = (TextView) view.findViewById(R.id.userType);
@@ -218,12 +228,7 @@ public class UserFragment extends Fragment
                         if (user.getImageURL() != null) {
                             Glide.with(getActivity()).load(user.getImageURL()).into(profilePic);
                             progressBar.setVisibility(View.GONE);
-                            if (user.getUserType() != 1)
-                                userType.setText(user.getUserType() == 0 ? "Helper" : "Victim");
-                            else
-                                userType.setText("Moderator");
-                            if(user.getDescription()!=null)
-                                aboutUser.setText(user.getDescription());
+
                         }
                 }
 
@@ -260,7 +265,12 @@ public class UserFragment extends Fragment
         if (user != null) {
             userName.setText(user.getName());
             onProfilePicChanged.isChanged(true);
-
+            if (user.getUserType() != 1)
+                userType.setText(user.getUserType() == 0 ? "Helper" : "Victim");
+            else
+                userType.setText("Moderator");
+            if(user.getDescription()!=null)
+                aboutUser.setText(user.getDescription());
         }
 
     }

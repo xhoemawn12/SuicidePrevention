@@ -1,10 +1,12 @@
 package net.net16.xhoemawn.suicideprevention.model;
 
+import java.io.Serializable;
+
 /**
  * Created by xhoemawn12 on 5/1/17.
  */
 
-public class Message {
+public class Message implements Serializable {
 
     private String messageBody;
     private String imageURI;

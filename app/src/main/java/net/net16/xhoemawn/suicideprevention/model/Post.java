@@ -1,22 +1,14 @@
 package net.net16.xhoemawn.suicideprevention.model;
 
+import java.io.Serializable;
+
 /**
  * Created by xhoemawn12 on 5/1/17.
  */
 
-public class Post {
+public class Post implements Serializable{
 
     public Post(){}
-
-
-    public Integer getPostId() {
-        return postId;
-    }
-
-    public void setPostId(Integer postId) {
-        this.postId = postId;
-    }
-
     public String getPostName() {
         return postName;
     }
@@ -57,7 +49,6 @@ public class Post {
         this.postedBy = postedBy;
     }
 
-    private Integer postId;
     private String postName;
     private String timeStamp;
     private String postBody;

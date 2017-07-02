@@ -1,12 +1,13 @@
 package net.net16.xhoemawn.suicideprevention.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by xhoemawn on 4/8/2017.
  */
 
-public class Chat {
+public class Chat implements Serializable{
 
     private String nameOfChat;
     private HashMap<String,Boolean> users;

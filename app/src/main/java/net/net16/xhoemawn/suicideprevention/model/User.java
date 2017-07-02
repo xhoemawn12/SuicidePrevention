@@ -1,14 +1,25 @@
 package net.net16.xhoemawn.suicideprevention.model;
 
+import java.io.Serializable;
+
 /**
  * Created by xhoemawn12 on 4/26/17.
  */
 
-public class User {
+public class User implements Serializable{
     private Integer userType;
+
+    public Integer getCommends() {
+        return commends;
+    }
+
+    public void setCommends(Integer commends) {
+        this.commends = commends;
+    }
+
     private String name;
     private String email;
-
+    private Integer commends;
     public String getDescription() {
         return description;
     }
