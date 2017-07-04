@@ -82,6 +82,11 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
     private String reportAgainst;
     private String reportedBy;
     private Integer reportType = ReportType.SPAM;
+    private EditText body ;
+    private RadioGroup radioGroup;
+    private CheckBox checkBox;
+    private Button reportBtn;
+    private String uid;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 0) {
@@ -96,6 +101,41 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                 }
             }
         }
+        else if(requestCode==1 ){
+        if(grantResults.length!=0) {
+            switch (radioGroup.getCheckedRadioButtonId()) {
+                case R.id.pornographic:
+                    reportType = ReportType.PORNOGRAPHIC_CONTENT;
+                    break;
+                case R.id.impolite:
+                    reportType = ReportType.IMPOLITE;
+                    break;
+                case R.id.others:
+                    reportType = ReportType.OTHERS;
+                    break;
+            }
+            View view = MessageActivity.this.getWindow().getDecorView().getRootView();
+            view.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+
+            String path = MediaStore.Images.Media.insertImage(MessageActivity.this.getContentResolver(), bitmap, "tempFile", null);
+
+            FirebaseStorage.getInstance().getReference("reports/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(Uri.parse(path)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    if (body != null) {
+                        createReport(body.getText().toString(), reportType, taskSnapshot.getDownloadUrl().toString());
+                    }
+                }
+            });
+        }
+        else
+            Toasty.warning(MessageActivity.this, "Unable To Access Storage", 300).show();
+
+        }
 
     }
 
@@ -109,7 +149,13 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         progressBar = (ProgressBar) findViewById(R.id.progressBar2);
         progressBar.setVisibility(View.GONE);
         imageURI = null;
-        imageButton = (ImageButton) findViewById(R.id.imageButton);
+        try {
+            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+        catch (NullPointerException nu){
+            uid = "";
+        }
+            imageButton = (ImageButton) findViewById(R.id.imageButton);
         chatButton = (ImageButton) findViewById(R.id.sendButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,12 +172,12 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Message/" + CHAT_ID);
         databaseReference.addValueEventListener(this);
-        databaseReference.addChildEventListener(new ChildEventListener() {
+       /* databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Message message = dataSnapshot.getValue(Message.class);
-                if (!message.getSenderId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-          /*          NotificationCompat.Builder mBuilder =
+                if (!message.getSenderId().equals(uid)) {
+          *//*          NotificationCompat.Builder mBuilder =
                             new NotificationCompat.Builder(MessageActivity.this)
                                     .setSmallIcon(R.mipmap.ic_launcher)
                                     .setContentTitle("New Message").setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
@@ -150,7 +196,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                     mBuilder.setContentIntent(resultPendingIntent);
                     NotificationManager mNotificationManager =
                             (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    mNotificationManager.notify(0, mBuilder.build());*/
+                    mNotificationManager.notify(0, mBuilder.build());*//*
                 }
             }
 
@@ -173,7 +219,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
         chatButton.setOnClickListener(new View.OnClickListener() {
                                           @Override
                                           public void onClick(View v) {
@@ -194,6 +240,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         messageAdapter = new MessageAdapter(tempMessageHash);
         recyclerView.setAdapter(messageAdapter);
         setImageResult(new ImageResult() {
+            @NonNull
             @Override
             public void resultStatus(Boolean boo,Intent data,Integer type) {
                 if(boo && type == 0){
@@ -231,54 +278,39 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
 
 
         });
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MessageActivity.this);
+        alertDialogBuilder.setView(R.layout.createreportdialog);
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+        body =  (EditText) alertDialog.findViewById(R.id.body);
+        radioGroup = (RadioGroup) alertDialog.findViewById(R.id.typeGroup);
+        checkBox = (CheckBox)  alertDialog.findViewById(R.id.checkBox);
+        reportBtn = (Button) alertDialog.findViewById(R.id.submit);
         reportButton = (Button) findViewById(R.id.reportButton);
+        alertDialog.hide();
         reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MessageActivity.this);
-                alertDialogBuilder.setView(R.layout.createreportdialog);
-                final AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
-                final EditText body = (EditText) alertDialog.findViewById(R.id.body);
-                final RadioGroup radioGroup = (RadioGroup) alertDialog.findViewById(R.id.radioGroup);
-                final CheckBox checkBox = (CheckBox)  alertDialog.findViewById(R.id.checkBox);
-                final Button reportBtn = (Button) alertDialog.findViewById(R.id.submit);
-                alertDialog.show();
-                reportBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                switch (radioGroup.getCheckedRadioButtonId()){
-                    case R.id.pornographic: reportType = ReportType.PORNOGRAPHIC_CONTENT;
-                        break;
-                    case R.id.impolite: reportType = ReportType.IMPOLITE;
-                        break;
-                    case R.id.others: reportType = ReportType.OTHERS;
-                        break;
-                }
-                if(checkBox.isSelected()) {alertDialog.dismiss();
-
-                    Bitmap bitmap = MessageActivity.this.getWindow().getDecorView().getRootView().getDrawingCache();
-                    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-
-                    String path = MediaStore.Images.Media.insertImage(MessageActivity.this.getContentResolver(), bitmap, "tempFile", null);
-
-                    FirebaseStorage.getInstance().getReference("reports/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(Uri.parse(path)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                if(reportBtn!=null)
+                    reportBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                            createReport(body.getText().toString(), reportType, taskSnapshot.getDownloadUrl().toString());
+                        public void onClick(View v) {
+                        if (checkBox.isChecked()) {
+                            alertDialog.dismiss();
+                            ActivityCompat.requestPermissions(MessageActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                         }
-                    });
-                }
+                        else{
+                            Toasty.error(MessageActivity.this,"Please Select Report Type").show();
+                        }
 
                     }
                 });
+
             }
-        });
-    }
+        });        }
+
 
     public void startImageIntent() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
@@ -311,7 +343,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         Message message = new Message();
         message.setChatId(CHAT_ID);
         message.setMessageBody(editText.getText().toString());
-        message.setSenderId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        message.setSenderId(uid);
         message.setTimeStamp(Calendar.getInstance().getTimeInMillis())
         ;
         message.setImageURI("");
@@ -321,6 +353,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
             Log.d("URI_BEFORE_SAVE", imageURI.toString());
         }
         databaseReference = firebaseDatabase.getReference("Message/" + message.getChatId());
+
         databaseReference.push().setValue(message).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -328,6 +361,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
             }
         });
         firebaseDatabase.getReference("Chat/"+message.getChatId()).child("/read/").setValue(false);
+        firebaseDatabase.getReference("Chat/"+message.getChatId()).child("/lastMesssage/").setValue(uid);
 
     }
     public void createReport(final String reportDesc , final Integer reportType, final String imageURL ){
@@ -337,12 +371,12 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    if(!Objects.equals(FirebaseAuth.getInstance().getCurrentUser().getUid(), dataSnapshot1.getKey()))
+                    if(!Objects.equals(uid, dataSnapshot1.getKey()))
                     reportAgainst = dataSnapshot1.getKey();
                 }
                 if(reportAgainst!=null){
                     Report report = new Report();
-                    report.setReportedBy(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    report.setReportedBy(uid);
                     report.setReportedTo(reportAgainst);
                     report.setReportDescription(reportDesc);
                     report.setReportType(reportType);

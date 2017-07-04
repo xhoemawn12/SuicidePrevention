@@ -16,14 +16,10 @@ import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.model.Post;
 import net.net16.xhoemawn.suicideprevention.model.User;
 
-import java.lang.reflect.Array;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 
 /**
  * Created by xhoemawn12 on 5/1/17.
@@ -87,7 +83,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder>{
         public PostHolder(View itemView) {
             super(itemView);
             imageBody = (ImageView)itemView.findViewById(R.id.postImage);
-            postedBy = (TextView)itemView.findViewById(R.id.postedBy);
+            postedBy = (TextView)itemView.findViewById(R.id.newMessage);
             postBody = (TextView)itemView.findViewById(R.id.postBody);
             timeStamp = (TextView)itemView.findViewById(R.id.timestamp);
 

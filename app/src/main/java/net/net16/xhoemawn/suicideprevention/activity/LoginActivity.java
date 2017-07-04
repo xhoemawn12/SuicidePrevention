@@ -38,7 +38,6 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
     private boolean isLoggedIn = false;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser firebaseUser = null;
-
     private Intent intent;
     private EditText editText;
     private Button signIn;
@@ -65,7 +64,7 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
                 firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
                     progressBar.setVisibility(View.VISIBLE);
-                    Toasty.info(LoginActivity.this,"Logging you in..").show();
+                    Toasty.info(LoginActivity.this,"Please Wait..").show();
                     signIn.setClickable(false);
                     signUp.setClickable(false);
                     FirebaseDatabase.getInstance().getReference("User/"+firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -78,12 +77,10 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
                                     userType = user.getUserType();
                                     intent.putExtra("USERTYPE", userType);
                                     intent.putExtra("USERNAME", firebaseUser.getEmail());
-
                                     progressBar.setVisibility(View.GONE);
-                                    Toasty.info(LoginActivity.this,"Success..").show();
+                                    Toasty.success(LoginActivity.this,"Success..").show();
                                     signIn.setClickable(true);
                                     signUp.setClickable(true);
-
                                     startActivity(intent);
                                     finish();
                                 }

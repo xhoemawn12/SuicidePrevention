@@ -1,6 +1,8 @@
 package net.net16.xhoemawn.suicideprevention.fragment;
 
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -61,8 +63,9 @@ public class UserListFragment extends android.support.v4.app.Fragment {
         userLinkedHashMap = new LinkedHashMap<String, User>();
         userAdapter = new UserListAdapter(userLinkedHashMap);
         recyclerView.setAdapter(userAdapter);
+
         final TextView textView = (TextView)v.findViewById(R.id.typeUser);
-        FirebaseDatabase.getInstance().getReference().child("User/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 currentUser = dataSnapshot.getValue(User.class);
@@ -87,8 +90,9 @@ public class UserListFragment extends android.support.v4.app.Fragment {
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     User user = dataSnapshot1.getValue(User.class);
-                    if (currentUser != null && !currentUser.getUserType().equals(dataSnapshot1.getValue(User.class).getUserType()) && !currentUser.getUserType().equals(UserType.ADMIN))
-                        userLinkedHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(User.class));
+                    if (currentUser != null && !currentUser.getUserType().equals(dataSnapshot1.getValue(User.class).getUserType()))
+                        if(!dataSnapshot1.getValue(User.class).getUserType().equals(UserType.ADMIN))
+                            userLinkedHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(User.class));
                 }
                 userAdapter.notifyDataSetChanged();
             }

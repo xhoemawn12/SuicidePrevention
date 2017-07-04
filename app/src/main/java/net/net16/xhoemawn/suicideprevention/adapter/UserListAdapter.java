@@ -41,9 +41,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     @Override
     public void onBindViewHolder(final UserListHolder holder, int position) {
         holder.userName.setText(userArrayList.get(position).getName());
-        Glide.with(holder.imageView).load(userArrayList.get(position).getImageURL()).into(holder.imageView);
-            holder.userDescription.setText(userArrayList.get(position).getDescription());
-            holder.userStatus.setText(userArrayList.get(position).isAvailable() + "");
+        if (userArrayList.get(position).getImageURL() != null)
+            Glide.with(holder.imageView).load(userArrayList.get(position).getImageURL()).into(holder.imageView);
+        holder.userDescription.setText(userArrayList.get(position).getDescription());
+        holder.userStatus.setText(userArrayList.get(position).isAvailable() + "");
 
 // holder.userType.setText(userArrayList.get(position).getUserType());
 
@@ -66,7 +67,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
 
         UserListHolder(View itemView) {
             super(itemView);
-            userName = (TextView) itemView.findViewById(R.id.postedBy);
+            userName = (TextView) itemView.findViewById(R.id.newMessage);
             userType = (TextView) itemView.findViewById(R.id.userTypeProfile);
             userStatus = (TextView) itemView.findViewById(R.id.status);
             imageView = (ImageView) itemView.findViewById(R.id.userImage);

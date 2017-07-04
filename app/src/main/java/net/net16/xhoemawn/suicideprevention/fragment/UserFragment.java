@@ -209,7 +209,7 @@ public class UserFragment extends Fragment
         databaseReference = firebaseDatabase.getReference("User/");
         chatDataReference = firebaseDatabase.getReference("Chat/");
 
-        userName = (TextView) view.findViewById(R.id.postedBy);
+        userName = (TextView) view.findViewById(R.id.newMessage);
         chatButton = (Button) view.findViewById(R.id.chat);
         commendButton = (Button) view.findViewById(R.id.commend);
         userType = (TextView) view.findViewById(R.id.userType);
@@ -284,7 +284,7 @@ public class UserFragment extends Fragment
             usersList.put(DOMESTICUSERID, true);
             final Chat chat = new Chat("0", usersList);
             chat.setTimeStamp(Calendar.getInstance().getTimeInMillis());
-
+            chat.setLastMessage("");
             ValueEventListener valueEventListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -327,9 +327,7 @@ public class UserFragment extends Fragment
 
                 }
             };
-            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-            DatabaseReference databaseReference = firebaseDatabase.getReference("Chat/");
-            databaseReference.orderByChild("users/" + DOMESTICUSERID).equalTo(true).addListenerForSingleValueEvent(valueEventListener);
+            chatDataReference.orderByChild("users/" + DOMESTICUSERID).equalTo(true).addListenerForSingleValueEvent(valueEventListener);
         }
         return chatId;
     }

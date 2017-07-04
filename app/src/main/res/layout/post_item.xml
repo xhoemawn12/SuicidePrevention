@@ -16,7 +16,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/postedBy"
+                android:id="@+id/newMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -60,6 +60,6 @@
                 android:layout_marginTop="0dp"
                 android:text="TextView"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/postedBy" />
+                app:layout_constraintTop_toBottomOf="@+id/newMessage" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

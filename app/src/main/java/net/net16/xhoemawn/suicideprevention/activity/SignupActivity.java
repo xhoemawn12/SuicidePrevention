@@ -11,8 +11,10 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,11 +44,9 @@ public class SignupActivity extends SuperActivity implements View.OnClickListene
     private EditText email;
     private EditText password;
     private EditText confirmPassword;
-    private ProgressDialog progressDialog;
     private int USEREXISTS = 0;
-    private AlertDialog alertDialog ;
     RadioGroup radioGroup ;
-    private PhoneAuthProvider phoneAuthProvider;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -55,13 +55,9 @@ public class SignupActivity extends SuperActivity implements View.OnClickListene
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("User/");
-
-        alertDialog= new AlertDialog.Builder(SignupActivity.this).create();
+        progressBar = (ProgressBar) findViewById(R.id.loadingBar);
+        progressBar.setVisibility(View.GONE);
         newUser = new User();
-
-        progressDialog = new ProgressDialog(SignupActivity.this);
-        progressDialog.setCancelable(false);
-
         cancel = (Button) findViewById(R.id.cancelButton);
         signUp = (Button) findViewById(R.id.signupButton);
         name = (EditText) findViewById(R.id.name);
@@ -87,7 +83,6 @@ public class SignupActivity extends SuperActivity implements View.OnClickListene
             case R.id.signupButton:
                 if(USEREXISTS==1){
                     USEREXISTS = 0;
-
                     Toasty.error(SignupActivity.this,"User is already registered").show();
                     email.requestFocus();
                 }
@@ -122,8 +117,11 @@ public class SignupActivity extends SuperActivity implements View.OnClickListene
                             break;
                     }
                     newUser.setUserType(userType);
-                    progressDialog.show();
-                    progressDialog.setMessage("Just a sec...");
+                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.requestFocus();
+                    Toasty.info(SignupActivity.this,"Registering you! Stay Calm. ", Toast.LENGTH_LONG).show();
+                    signUp.setClickable(false);
+                    cancel.setClickable(false);
                     signUpUser(newUser);
 
 
@@ -144,8 +142,6 @@ public class SignupActivity extends SuperActivity implements View.OnClickListene
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                progressDialog.dismiss();
-                               // startActivity(new Intent(SignupActivity.this,LoginActivity.class));
                                 finish();
                             }
                         }
@@ -156,18 +152,13 @@ public class SignupActivity extends SuperActivity implements View.OnClickListene
                     signUp.performClick();
                 }
                 else{
-                    alertDialog.setMessage("Sorry, Unable to create Account.");
-                    alertDialog.show();
-                    alertDialog.setCancelable(true);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            alertDialog.dismiss();
-                            name.requestFocus();
-                        }
-                    },3000);
+                    progressBar.setVisibility(View.GONE);
+                    progressBar.requestFocus();
+                    Toasty.error(SignupActivity.this,"You cannot be registered. Sorry.", Toast.LENGTH_LONG).show();
+                    signUp.setClickable(false);
+                    cancel.setClickable(false);
+
                 }
-                progressDialog.dismiss();
             }
         });
     }

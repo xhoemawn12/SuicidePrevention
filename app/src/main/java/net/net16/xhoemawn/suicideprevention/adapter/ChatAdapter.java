@@ -3,7 +3,9 @@ package net.net16.xhoemawn.suicideprevention.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -42,11 +45,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private List<String> chatIds;
     private Drawable drawable ;
     private User foreignUser;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
     public ChatAdapter(){
 
     }
     public ChatAdapter(LinkedHashMap<String, Chat> chat){
         this.chatHashMap = chat;
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("Chat");
     }
     @Override
     public ChatAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -61,20 +68,24 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.chatName.setText(chats.get(position).getNameOfChat());
         HashMap<String, Boolean> usersInvolved = chats.get(position).getUsers();
         Set<String> usersId = usersInvolved.keySet();
         String foreignUserId = null;
-
         for(String userId: usersId){
             if(!Objects.equals(userId, FirebaseAuth.getInstance().getCurrentUser().getUid())){
                 foreignUserId = userId;
+                if(userId.equals(chats.get(position).getLastMessage())) {
+                    holder.newMessage.setText("New Message");
+                    holder.constraintLayout.setBackgroundResource(R.color.colorPrimaryLight);
+                }
             }
-        }
-        if(foreignUserId != null) {
 
-            FirebaseDatabase.getInstance().getReference("User/").child(foreignUserId).addValueEventListener(new ValueEventListener() {
+        }
+
+        if(foreignUserId != null) {
+           firebaseDatabase.getReference("User/").child(foreignUserId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     foreignUser = (User) dataSnapshot.getValue(User.class);
@@ -82,15 +93,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                         holder.chatName.setText(foreignUser.getName());
                         if(foreignUser.getImageURL()!=null)
                             Glide.with(holder.imageView).load(foreignUser.getImageURL()).into(holder.imageView);
+
                     }
                 }
-
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
             });
         }
+
     }
 
 
@@ -106,14 +118,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView chatName;
-        TextView userName;
-        ImageView imageView;
+        private TextView chatName;
+        private TextView newMessage;
+        private ImageView imageView;
+        private ConstraintLayout constraintLayout;
         ViewHolder(View v){
             super(v);
             imageView = (ImageView) v.findViewById(R.id.imageURL);
             chatName = (TextView) v.findViewById(R.id.chatName);
-            userName = (TextView) v.findViewById(R.id.postedBy);
+            newMessage = (TextView) v.findViewById(R.id.newMessage);
+            constraintLayout = (ConstraintLayout) v.findViewById(R.id.constraintLayoutChat);
             v.setOnClickListener(this);
         }
 

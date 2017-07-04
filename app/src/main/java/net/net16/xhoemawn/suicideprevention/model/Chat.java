@@ -10,22 +10,21 @@ import java.util.HashMap;
 public class Chat implements Serializable{
 
     private String nameOfChat;
-
-    public boolean isRead() {
-        return read;
-    }
-
-    public void setRead(boolean read) {
-        this.read = read;
-    }
-
     private HashMap<String,Boolean> users;
     private long timeStamp;
-    private boolean read;
     public long getTimeStamp() {
         return timeStamp;
     }
 
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
+    private String lastMessage;
     public void setTimeStamp(long timeStamp) {
         this.timeStamp = timeStamp;
     }

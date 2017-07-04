@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,6 +21,8 @@ import net.net16.xhoemawn.suicideprevention.model.Chat;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.adapter.ChatAdapter;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 
 /**
@@ -67,12 +70,11 @@ public class ChatFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                chatHashMap.clear();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     chatHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Chat.class));
 
                 }
-
                 chatAdapter.notifyDataSetChanged();
 
             }

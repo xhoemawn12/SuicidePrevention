@@ -27,6 +27,7 @@ import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.base.SuperActivity;
 import net.net16.xhoemawn.suicideprevention.fragment.ChatFragment;
 import net.net16.xhoemawn.suicideprevention.fragment.PostFragment;
+import net.net16.xhoemawn.suicideprevention.fragment.ReportFragment;
 import net.net16.xhoemawn.suicideprevention.fragment.UserFragment;
 import net.net16.xhoemawn.suicideprevention.fragment.UserListFragment;
 import net.net16.xhoemawn.suicideprevention.model.User;
@@ -89,9 +90,14 @@ public class HomeActivity extends SuperActivity {
                 case 3:
                     return PostFragment.newInstance(firebaseUser.getUid());
             }
-            else
-                    return UserFragment.newInstance(firebaseUser.getUid());
-            return null;
+            else {
+             switch (position) {
+                 case 0:
+                 return UserFragment.newInstance(firebaseUser.getUid());
+                 case 1:
+                     return ReportFragment.newInstance();
+             }
+            }return null;
         }
 
         @Override
@@ -101,7 +107,7 @@ public class HomeActivity extends SuperActivity {
             if(!Objects.equals(userType, UserType.ADMIN))
                 return 4;
             else
-                return 1;
+                return 2;
         }
 
     }
