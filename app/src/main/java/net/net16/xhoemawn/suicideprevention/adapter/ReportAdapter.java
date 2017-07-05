@@ -1,12 +1,15 @@
 package net.net16.xhoemawn.suicideprevention.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import net.net16.xhoemawn.suicideprevention.R;
+import net.net16.xhoemawn.suicideprevention.activity.ReportActivity;
 import net.net16.xhoemawn.suicideprevention.model.Report;
 
 import java.lang.reflect.Array;
@@ -35,7 +38,9 @@ import java.util.LinkedHashMap;
 
     @Override
     public void onBindViewHolder(ReportHolder holder, int position) {
-
+        Report report = reports.get(position);
+        holder.reportType.setText(report.getReportType());
+        holder.reportDescripttion.setText(report.getReportDescription());
     }
 
     @Override
@@ -48,9 +53,20 @@ import java.util.LinkedHashMap;
     }
 
     class ReportHolder extends RecyclerView.ViewHolder{
-
+        private TextView reportType;
+        private TextView reportDescripttion;
         ReportHolder(View itemView) {
             super(itemView);
+            reportType = (TextView) itemView.findViewById(R.id.reportType);
+            reportDescripttion = (TextView) itemView.findViewById(R.id.reportedDescription);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), ReportActivity.class);
+                    intent.putExtra("REPORT",keys.get(getAdapterPosition()));
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
     }
 

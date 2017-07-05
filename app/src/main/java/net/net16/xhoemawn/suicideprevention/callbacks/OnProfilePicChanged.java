@@ -5,6 +5,6 @@ package net.net16.xhoemawn.suicideprevention.callbacks;
  */
 
 public interface OnProfilePicChanged {
-    public void isChanged(Boolean boo);
+    void isChanged(Boolean boo);
 
 }

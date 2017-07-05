@@ -32,12 +32,7 @@ public class WelcomeActivity extends SuperActivity {
         YoYoAnimation(findViewById(R.id.textView3),Techniques.BounceInRight);
         YoYoAnimation(findViewById(R.id.textView4),Techniques.BounceInDown);
         YoYoAnimation(findViewById(R.id.textView5),Techniques.BounceInUp);
-        try {
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        }
-        catch(DatabaseException database){
-            FirebaseDatabase.getInstance();
-        }
+
 
             new Handler().postDelayed(new Runnable() {
             @Override

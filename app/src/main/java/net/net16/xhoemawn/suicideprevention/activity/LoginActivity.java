@@ -167,7 +167,7 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
                         
                     } else {
                         Log.d("SAD", task.toString());
-                        progressBar.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
                         Toasty.error(LoginActivity.this,"Incorrect Username/Password..").show();
                         signIn.setClickable(true);
                         signUp.setClickable(true);

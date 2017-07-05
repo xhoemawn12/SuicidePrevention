@@ -6,20 +6,17 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.media.RingtoneManager;
 import android.os.Bundle;
-import android.service.notification.StatusBarNotification;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
-
 import android.widget.Toast;
 
-import com.bumptech.glide.Priority;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -29,20 +26,19 @@ import com.google.firebase.storage.StorageReference;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.callbacks.ImageResult;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import es.dmoral.toasty.Toasty;
 
 public class SuperActivity extends
         AppCompatActivity {
+    private static boolean shouldShowNotification = true;
+    private static boolean firstRun = true;
+    private static int count= 0;
+    public ImageResult imageResult;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
     private FirebaseStorage firebaseStorage;
-    private static boolean shouldShowNotification = true;
     private NotificationManager notificationManager;
-    public ImageResult imageResult;
 
     public ImageResult getImageResult() {
         return imageResult;
@@ -83,39 +79,47 @@ public class SuperActivity extends
     public void setDatabaseReference(DatabaseReference databaseReference) {
         this.databaseReference = databaseReference;
     }
-    private static boolean dontShow = true;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        notificationManager =(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        FirebaseDatabase.getInstance().getReference(".info/connected").addValueEventListener(new ValueEventListener() {
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (firstRun)
+            try {
+                firstRun = false;
+                FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            } catch (DatabaseException database) {
+                FirebaseDatabase.getInstance();
+            }
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot!=null)
-                if (!dataSnapshot.getValue(Boolean.class)) {
-                    if(!dontShow) {
-                        Toasty.error(getApplicationContext(), "Cannot Connect to Server", Toast.LENGTH_LONG).show();
+            public void run() {
+                FirebaseDatabase.getInstance().getReference(".info/connected").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot != null)
+                            if (!dataSnapshot.getValue(Boolean.class)) {
+                                if (shouldShowNotification && count>0) {
+                                    Toasty.error(getApplicationContext(), "Cannot Connect to Server", Toast.LENGTH_LONG).show();
+                                    notificationManager = buildNotification("Cannot Connect To Server", "Check your Internet Connection.", new Intent(), 0, notificationManager, true);
+                                    shouldShowNotification = false;
+                                }
+                                count++;
+                            } else {
+                                notificationManager.cancel(0);
+                                shouldShowNotification = true;
+                            }
 
-                        if (shouldShowNotification) {
-                            notificationManager = buildNotification("Cannot Connect To Server", "Check your Internet Connection.", new Intent(), 0, notificationManager, true);
-                            shouldShowNotification = false;
-                        }
                     }
-                    dontShow = false;
-                } else {
-                    notificationManager.cancel(0);
-                    shouldShowNotification = true;
-                }
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        }, 20000);
 
     }
 
@@ -139,7 +143,7 @@ public class SuperActivity extends
             imageResult.resultStatus(true, returnedIntent, 1);
     }
 
-    public NotificationManager buildNotification(String title, String msg, Intent intent, Integer idOfNotification, NotificationManager  notificationMgr,Boolean shouldAutoCancel) {
+    public NotificationManager buildNotification(String title, String msg, Intent intent, Integer idOfNotification, NotificationManager notificationMgr, Boolean shouldAutoCancel) {
         notificationMgr = (NotificationManager)
                 getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -158,8 +162,8 @@ public class SuperActivity extends
                         .setPriority(Notification.PRIORITY_MAX);
 
         mBuilder.setContentIntent(contentIntent);
-        notificationMgr.notify(idOfNotification,mBuilder.build());
-            mBuilder.setAutoCancel(shouldAutoCancel);
+        notificationMgr.notify(idOfNotification, mBuilder.build());
+        mBuilder.setAutoCancel(shouldAutoCancel);
         return notificationMgr;
     }
 

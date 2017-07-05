@@ -22,6 +22,8 @@ import net.net16.xhoemawn.suicideprevention.model.Message;
 import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
@@ -39,7 +41,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private String senderName;
-
+    private DateFormat dateFormat;
     public MessageAdapter() {
 
     }
@@ -73,8 +75,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
                     }
                 }
         );
+        holder.timeStamp.setText(dateFormat.format(cal.getTime()));
         holder.linearlayout.setPadding(0, 10, 0, 0);
-
         holder.imageView.setVisibility(View.GONE);
         if (messages.get(position).getSenderId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             holder.linearlayout.setGravity(Gravity.END);
@@ -105,21 +107,23 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
         this.messageHashMap = messageHashMap;
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("User/");
+        dateFormat = new SimpleDateFormat("HH:mm");
 
     }
 
-    public static class MessageHolder extends RecyclerView.ViewHolder {
+     static class MessageHolder extends RecyclerView.ViewHolder {
         TextView message;
         TextView sender;
         ImageView imageView;
         LinearLayout linearlayout;
-
-        public MessageHolder(View v) {
+        TextView timeStamp;
+         MessageHolder(View v) {
             super(v);
             linearlayout = (LinearLayout) v.findViewById(R.id.linearLayoutChat);
             message = (TextView) v.findViewById(R.id.message);
             sender = (TextView) v.findViewById(R.id.senderId);
             imageView = (ImageView) v.findViewById(R.id.imageView);
+            timeStamp = (TextView) v.findViewById(R.id.timeStamp);
         }
     }
 }

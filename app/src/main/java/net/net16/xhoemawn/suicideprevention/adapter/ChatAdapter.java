@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,7 +27,12 @@ import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.activity.MessageActivity;
 
+import org.w3c.dom.Text;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -47,11 +53,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private User foreignUser;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+    private DateFormat dateFormat;
     public ChatAdapter(){
 
     }
     public ChatAdapter(LinkedHashMap<String, Chat> chat){
         this.chatHashMap = chat;
+        dateFormat = new SimpleDateFormat("HH:mm");
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Chat");
     }
@@ -73,6 +81,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         HashMap<String, Boolean> usersInvolved = chats.get(position).getUsers();
         Set<String> usersId = usersInvolved.keySet();
         String foreignUserId = null;
+        if(chats.get(position).getTimeStamp()!=0){
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(chats.get(position).getTimeStamp());
+            holder.time.setText(dateFormat.format(cal.getTime()));
+        }
         for(String userId: usersId){
             if(!Objects.equals(userId, FirebaseAuth.getInstance().getCurrentUser().getUid())){
                 foreignUserId = userId;
@@ -88,7 +101,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
            firebaseDatabase.getReference("User/").child(foreignUserId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    foreignUser = (User) dataSnapshot.getValue(User.class);
+                    foreignUser = dataSnapshot.getValue(User.class);
                     if (foreignUser != null) {
                         holder.chatName.setText(foreignUser.getName());
                         if(foreignUser.getImageURL()!=null)
@@ -122,11 +135,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         private TextView newMessage;
         private ImageView imageView;
         private ConstraintLayout constraintLayout;
+        private TextView time;
         ViewHolder(View v){
             super(v);
             imageView = (ImageView) v.findViewById(R.id.imageURL);
             chatName = (TextView) v.findViewById(R.id.chatName);
             newMessage = (TextView) v.findViewById(R.id.newMessage);
+            time = (TextView) v.findViewById(R.id.chatTime);
             constraintLayout = (ConstraintLayout) v.findViewById(R.id.constraintLayoutChat);
             v.setOnClickListener(this);
         }

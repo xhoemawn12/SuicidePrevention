@@ -75,7 +75,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
     private Context cntext;
     private StorageReference storageReference;
     private ImageButton chatButton;
-    Uri selectedImage;
+    private Uri selectedImage;
     private ProgressBar progressBar;
     private LinkedHashMap<String, Message> tempMessageHash;
     private LinearLayoutManager layoutManager;
@@ -250,13 +250,13 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
                         storageReference = firebaseStorage.getReference();
-                        final ProgressDialog progressDialog = new ProgressDialog(MessageActivity.this);
+
                         Toasty.info(MessageActivity.this,"Uploading Image..").show();
                             progressBar.setVisibility(View.VISIBLE);
                         storageReference.child("users/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(selectedImage).addOnSuccessListener(MessageActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                progressDialog.dismiss();
+
                                 @SuppressWarnings("VisibleForTests") Uri downloadURI = taskSnapshot.getDownloadUrl();
 
                                 imageURI = downloadURI;
@@ -360,9 +360,8 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                 progressBar.setVisibility(View.GONE);
             }
         });
-        firebaseDatabase.getReference("Chat/"+message.getChatId()).child("/read/").setValue(false);
-        firebaseDatabase.getReference("Chat/"+message.getChatId()).child("/lastMesssage/").setValue(uid);
-
+        firebaseDatabase.getReference("Chat/"+message.getChatId()).child("/lastMessage/").setValue(uid);
+        firebaseDatabase.getReference("Chat/"+message.getChatId()).child("/timeStamp/").setValue(Calendar.getInstance().getTimeInMillis());
     }
     public void createReport(final String reportDesc , final Integer reportType, final String imageURL ){
 

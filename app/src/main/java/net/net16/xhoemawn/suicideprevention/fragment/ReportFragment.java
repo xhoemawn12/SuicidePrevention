@@ -4,6 +4,7 @@ package net.net16.xhoemawn.suicideprevention.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,10 +44,12 @@ public class ReportFragment extends Fragment {
         reportHashMap = new LinkedHashMap<>();
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerViewReport);
         reportAdapter = new ReportAdapter(reportHashMap);
+        recyclerView.setAdapter(reportAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         FirebaseDatabase.getInstance().getReference("Report/").orderByChild("reviewed").equalTo(false).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                reportHashMap = new LinkedHashMap<String, Report>();
+                reportHashMap.clear();
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
                     reportHashMap.put(dataSnapshot1.getKey(),dataSnapshot1.getValue(Report.class));
                 }

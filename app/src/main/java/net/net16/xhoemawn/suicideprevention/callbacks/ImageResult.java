@@ -8,6 +8,6 @@ import android.support.annotation.NonNull;
  */
 
 public interface ImageResult {
-    public void resultStatus(Boolean boo, Intent intent,Integer type);
+    void resultStatus(Boolean boo, Intent intent, Integer type);
 
 }

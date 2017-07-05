@@ -44,7 +44,7 @@ public class PlaceHolderFragment extends android.support.v4.app.Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String help = "";
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    help += (String) data.getKey();
+                    help += data.getKey();
                 }
                 textView.setText(help);
             }

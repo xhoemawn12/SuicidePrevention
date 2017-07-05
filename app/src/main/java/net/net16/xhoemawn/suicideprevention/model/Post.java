@@ -1,6 +1,7 @@
 package net.net16.xhoemawn.suicideprevention.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * Created by xhoemawn12 on 5/1/17.
@@ -49,9 +50,20 @@ public class Post implements Serializable{
         this.postedBy = postedBy;
     }
 
+    public HashMap<String, Boolean> getCommends() {
+        return commends;
+    }
+
+    public void setCommends(HashMap<String, Boolean> commends) {
+        this.commends = commends;
+    }
+
     private String postName;
     private String timeStamp;
     private String postBody;
     private String imageURL;
     private String postedBy;
+    private HashMap<String,Boolean> commends;
+
+
 }

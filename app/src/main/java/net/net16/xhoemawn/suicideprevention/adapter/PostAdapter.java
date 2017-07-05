@@ -1,12 +1,16 @@
 package net.net16.xhoemawn.suicideprevention.adapter;
 
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -16,10 +20,18 @@ import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.model.Post;
 import net.net16.xhoemawn.suicideprevention.model.User;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by xhoemawn12 on 5/1/17.
@@ -40,7 +52,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder>{
     @Override
     public PostHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item,parent,false);
-        dateFormat = DateFormat.getDateInstance(DateFormat.FULL);
+        dateFormat = new SimpleDateFormat("YY:MM HH:mm");
         return new PostHolder(v);
     }
 
@@ -60,32 +72,79 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder>{
 
             }
         });
+        if(!tempPost.getPostedBy().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+            holder.deletebutton.setVisibility(View.GONE);
+            holder.textView.setVisibility(View.GONE);
+        }
         if(tempPost.getImageURL()==null){
             holder.imageBody.setVisibility(View.GONE);
+        }
+        else{
+            Glide.with(holder.imageBody).load(posts.get(position).getImageURL()).into(holder.imageBody);
         }
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(Long.valueOf(tempPost.getTimeStamp()));
         holder.timeStamp.setText(dateFormat.format(calendar.getTime())+"");
+        if(tempPost.getCommends()==null){
+            tempPost.setCommends(new HashMap<String, Boolean>());
+        }
+        if(tempPost.getCommends().containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+            tempPost.getCommends().put(FirebaseAuth.getInstance().getCurrentUser().getUid(),true);
+            //FirebaseDatabase.getInstance().getReference("Post/"+keys.get(position)).child("/commends/").setValue(tempPost.getCommends());
+            holder.commends.setImageResource(R.drawable.ic_favorite_black_24dp);
+        }
+        holder.commendCount.setText(tempPost.getCommends().size()+" Commends");
+
     }
 
     @Override
     public int getItemCount() {
         posts = new ArrayList<>(postHashMap.values());
+        Collections.reverse(posts);
         keys = new ArrayList<>(postHashMap.keySet());
+        Collections.reverse(keys);
         return posts.size();
     }
 
-    class PostHolder extends RecyclerView.ViewHolder{
+    class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView imageBody;
         private TextView postedBy;
         private TextView postBody;
         private TextView timeStamp;
-        public PostHolder(View itemView) {
+        private TextView commendCount;
+        private ImageButton commends;
+        private ImageButton deletebutton;
+        private TextView textView;
+        PostHolder(final View itemView) {
             super(itemView);
             imageBody = (ImageView)itemView.findViewById(R.id.postImage);
             postedBy = (TextView)itemView.findViewById(R.id.newMessage);
             postBody = (TextView)itemView.findViewById(R.id.postBody);
             timeStamp = (TextView)itemView.findViewById(R.id.timestamp);
+            commendCount = (TextView) itemView.findViewById(R.id.commendText);
+            deletebutton = (ImageButton) itemView.findViewById(R.id.delete);
+            commends = (ImageButton) itemView.findViewById(R.id.commendButton);
+            textView = (TextView) itemView.findViewById(R.id.deleteText);
+            commends.setOnClickListener(this);
+            deletebutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseDatabase.getInstance().getReference("Post/"+keys.get(getAdapterPosition())).removeValue();
+                    Toasty.success(itemView.getContext(),"Removed.").show();
+                }
+            });
+        }
+        @Override
+        public void onClick(View view){
+            Post post = posts.get(getAdapterPosition());
+            if(post.getCommends()==null){
+                post.setCommends(new HashMap<String, Boolean>());
+            }
+            if(!post.getCommends().containsKey(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                post.getCommends().put(FirebaseAuth.getInstance().getCurrentUser().getUid(),true);
+                FirebaseDatabase.getInstance().getReference("Post/"+keys.get(getAdapterPosition())).child("/commends/").setValue(post.getCommends());
+                commends.setImageResource(R.drawable.ic_favorite_black_24dp);
+            }
 
         }
     }

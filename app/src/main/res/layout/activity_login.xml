@@ -36,14 +36,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryLight"
         android:elevation="4dp"
+        android:fontFamily="cursive"
         android:gravity="start"
         android:padding="10dp"
         android:text="@string/login"
-        android:textAlignment="viewStart"
+        android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Headline"
-        android:textSize="36sp"
+        android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
