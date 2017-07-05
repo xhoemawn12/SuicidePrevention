@@ -1,6 +1,8 @@
 package net.net16.xhoemawn.suicideprevention.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by xhoemawn12 on 4/26/17.
@@ -8,18 +10,22 @@ import java.io.Serializable;
 
 public class User implements Serializable{
     private Integer userType;
+    private String name;
+    private String email;
+    private HashMap<String,Boolean> commends;
+    private String imageURL;
+    private long lastLogin;
+    private String password;
+    private boolean available;
 
-    public Integer getCommends() {
+    public HashMap<String, Boolean> getCommends() {
         return commends;
     }
 
-    public void setCommends(Integer commends) {
+    public void setCommends(HashMap<String, Boolean> commends) {
         this.commends = commends;
     }
 
-    private String name;
-    private String email;
-    private Integer commends;
     public String getDescription() {
         return description;
     }
@@ -37,7 +43,6 @@ public class User implements Serializable{
         this.imageURL = imageURL;
     }
 
-    private String imageURL;
     public Integer getUserType() {
         /*switch(userType){
             case 1: return UserType.ADMIN;
@@ -50,10 +55,6 @@ public class User implements Serializable{
     public void setUserType(Integer userTypeEnum) {
         this.userType = userTypeEnum;
     }
-
-    private long lastLogin;
-    private String password;
-    private boolean available;
 
     public boolean isAvailable() {
         return available;

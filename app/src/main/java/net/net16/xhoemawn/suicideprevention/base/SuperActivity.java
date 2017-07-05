@@ -83,23 +83,27 @@ public class SuperActivity extends
     public void setDatabaseReference(DatabaseReference databaseReference) {
         this.databaseReference = databaseReference;
     }
-
+    private static boolean dontShow = true;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         firebaseDatabase = FirebaseDatabase.getInstance();
         notificationManager =(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
         FirebaseDatabase.getInstance().getReference(".info/connected").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                if(dataSnapshot!=null)
                 if (!dataSnapshot.getValue(Boolean.class)) {
-                    Toasty.error(getApplicationContext(), "Cannot Connect to Server", Toast.LENGTH_LONG).show();
+                    if(!dontShow) {
+                        Toasty.error(getApplicationContext(), "Cannot Connect to Server", Toast.LENGTH_LONG).show();
 
-                    if (shouldShowNotification) {
-                        notificationManager = buildNotification("Cannot Connect To Server","Check your Internet Connection.",new Intent(),0,notificationManager,true);
-                        shouldShowNotification = false;
+                        if (shouldShowNotification) {
+                            notificationManager = buildNotification("Cannot Connect To Server", "Check your Internet Connection.", new Intent(), 0, notificationManager, true);
+                            shouldShowNotification = false;
+                        }
                     }
+                    dontShow = false;
                 } else {
                     notificationManager.cancel(0);
                     shouldShowNotification = true;

@@ -61,14 +61,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     class UserListHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView userName;
         private ImageView imageView;
-        private TextView userType;
         private TextView userDescription;
         private TextView userStatus;
 
         UserListHolder(View itemView) {
             super(itemView);
             userName = (TextView) itemView.findViewById(R.id.newMessage);
-            userType = (TextView) itemView.findViewById(R.id.userTypeProfile);
             userStatus = (TextView) itemView.findViewById(R.id.status);
             imageView = (ImageView) itemView.findViewById(R.id.userImage);
             /*List<Integer> colorList = new ArrayList<>();

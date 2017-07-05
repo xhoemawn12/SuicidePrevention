@@ -1,13 +1,16 @@
 package net.net16.xhoemawn.suicideprevention.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -37,6 +41,7 @@ import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.activity.MessageActivity;
 import net.net16.xhoemawn.suicideprevention.callbacks.ReadyToCreateChat;
+import net.net16.xhoemawn.suicideprevention.tools.UserType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,10 +60,14 @@ import static android.app.Activity.RESULT_OK;
 
 public class UserFragment extends Fragment
         implements ValueEventListener, View.OnClickListener {
+    private static final String userId = "USERID";
+    private static String FOREIGNUSERID = null;
+    private static String DOMESTICUSERID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private Button chatButton;
     private Button commendButton;
     private OnProfilePicChanged onProfilePicChanged;
     private User user;
+    private AlertDialog.Builder alertDialog;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private DatabaseReference chatDataReference;
@@ -67,12 +76,18 @@ public class UserFragment extends Fragment
     private boolean chatCreationStatus = false;
     private TextView aboutUser;
     private ImageView profilePic;
-    private static final String userId = "USERID";
-    private static String FOREIGNUSERID = null;
-    private static String DOMESTICUSERID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private String chatId = null;
     private ProgressBar progressBar;
     private Uri imageURI = null;
+    private Switch userOnline;
+
+    public static UserFragment newInstance(String id) {
+        UserFragment userFragment = new UserFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(userId, id);
+        userFragment.setArguments(bundle);
+        return userFragment;
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -90,7 +105,6 @@ public class UserFragment extends Fragment
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         progressBar.setVisibility(View.GONE);
                         @SuppressWarnings("VisibleForTests") Uri downloadURI = taskSnapshot.getDownloadUrl();
-
                         imageURI = downloadURI;
                         if (imageURI != null)
                             user.setImageURL(imageURI.toString());
@@ -108,13 +122,11 @@ public class UserFragment extends Fragment
     }
 
     public void updateProfile(User user) {
-
         FirebaseDatabase.getInstance().getReference("User/" + FOREIGNUSERID).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isComplete()) {
                     Toasty.success(getActivity(), "Success").show();
-                    ;
                 }
             }
         });
@@ -123,7 +135,6 @@ public class UserFragment extends Fragment
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 0) {
-
             if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startImageIntent();
             } else {
@@ -135,7 +146,6 @@ public class UserFragment extends Fragment
                 }
             }
         }
-
     }
 
     public void startImageIntent() {
@@ -144,37 +154,25 @@ public class UserFragment extends Fragment
         startActivityForResult(photoPickerIntent, 1);
     }
 
-
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.commend) {
-            /*FirebaseAuth.getInstance().signOut();
-            ;
-            startActivity(new Intent(getActivity(), LoginActivity.class));
-            FirebaseDatabase.getInstance().purgeOutstandingWrites();
-            getActivity().finish();*/
-            final DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("User/"+FOREIGNUSERID).child("/commends/");
-            dbr.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Integer commends = dataSnapshot.getValue(Integer.class);
-
-                    if(commends!=null){
-                        commends++;
-                    }
-                    else{
-                        commends = 1;
-                    }
-                    dbr.setValue(commends);
-
+            if (user.getCommends() == null) {
+                user.setCommends(new HashMap<String, Boolean>());
+            }
+            if (!user.getCommends().containsKey(DOMESTICUSERID)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    commendButton.setText("Commended");
+                    commendButton.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_favorite_black_24dp, getContext().getTheme()), null, null, null);
+                } else {
+                    commendButton.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_favorite_black_24dp), null, null, null);
                 }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
+                HashMap<String, Boolean> commends = user.getCommends();
+                commends.put(DOMESTICUSERID, true);
+                FirebaseDatabase.getInstance().getReference("User/" + FOREIGNUSERID).child("/commends/").setValue(commends);
+            } else {
+                Toasty.info(getActivity(), "You already Commended the User").show();
+            }
         } else if (v.getId() == R.id.chat) {
             createNewChat(new ReadyToCreateChat() {
                 @Override
@@ -193,14 +191,6 @@ public class UserFragment extends Fragment
         }
     }
 
-    public static UserFragment newInstance(String id) {
-        UserFragment userFragment = new UserFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(userId, id);
-        userFragment.setArguments(bundle);
-        return userFragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.userprofilebeta, container, false);
@@ -208,7 +198,17 @@ public class UserFragment extends Fragment
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("User/");
         chatDataReference = firebaseDatabase.getReference("Chat/");
-
+        alertDialog = new AlertDialog.Builder(UserFragment.this.getActivity());
+        alertDialog.setView(R.layout.user_profile);
+        userOnline = (Switch) view.findViewById(R.id.switch2);
+        userOnline.setChecked(true);
+        userOnline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseReference.child(FOREIGNUSERID + "/available/").setValue(userOnline.isChecked());
+            }
+        });
+        user = new User();
         userName = (TextView) view.findViewById(R.id.newMessage);
         chatButton = (Button) view.findViewById(R.id.chat);
         commendButton = (Button) view.findViewById(R.id.commend);
@@ -226,9 +226,8 @@ public class UserFragment extends Fragment
                     progressBar.setVisibility(View.VISIBLE);
                     if (user != null)
                         if (user.getImageURL() != null) {
-                            Glide.with(getActivity()).load(user.getImageURL()).into(profilePic);
+                            Glide.with(profilePic).load(user.getImageURL()).into(profilePic);
                             progressBar.setVisibility(View.GONE);
-
                         }
                 }
 
@@ -236,6 +235,8 @@ public class UserFragment extends Fragment
         };
         databaseReference.child(FOREIGNUSERID).addValueEventListener(this);
         if (Objects.equals(FOREIGNUSERID, DOMESTICUSERID)) {
+            commendButton.setVisibility(View.GONE);
+            chatButton.setVisibility(View.GONE);
             profilePic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -258,6 +259,7 @@ public class UserFragment extends Fragment
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         user = dataSnapshot.getValue(User.class);
@@ -267,10 +269,22 @@ public class UserFragment extends Fragment
             onProfilePicChanged.isChanged(true);
             if (user.getUserType() != 1)
                 userType.setText(user.getUserType() == 0 ? "Helper" : "Victim");
-            else
+            if (Objects.equals(user.getUserType(), UserType.VICTIM)) {
+                userOnline.setText("Seek Help Now.");
+            } else {
                 userType.setText("Moderator");
-            if(user.getDescription()!=null)
+                userOnline.setVisibility(View.GONE);
+            }
+            if (user.getDescription() != null)
                 aboutUser.setText(user.getDescription());
+            if (user.getCommends() != null && user.getCommends().containsKey(DOMESTICUSERID))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    commendButton.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_favorite_black_24dp, getContext().getTheme()), null, null, null);
+                } else {
+                    commendButton.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_favorite_black_24dp), null, null, null);
+                }
+            commendButton.setText(user.getCommends().size()+" Commends");
+
         }
 
     }
@@ -296,11 +310,8 @@ public class UserFragment extends Fragment
 
                     String[] chatIds = chatHashMap.keySet().toArray(new String[chatHashMap.keySet().size()]);
                     chatCreationStatus = true;
-                    System.out.println(chatHashMap.size() + "     " + chatArrayList1.size() + "Length of chatIds List" + chatIds.length);
                     if (chatArrayList1.size() != 0) {
                         for (int i = 0; i < chatArrayList1.size(); i++) {
-                            System.out.println(chatArrayList1.get(i).getUsers().containsKey(DOMESTICUSERID));
-                            System.out.println(chatArrayList1.get(i).getUsers().containsKey(FOREIGNUSERID));
                             if (chatArrayList1.get(i).getUsers().containsKey(DOMESTICUSERID) && chatArrayList1.get(i).getUsers().containsKey(FOREIGNUSERID)) {
                                 chatId = chatIds[i];
                                 chatCreationStatus = false;
@@ -310,13 +321,7 @@ public class UserFragment extends Fragment
                     }
                     if (chatCreationStatus) {
                         chatId = chatDataReference.push().getKey();
-                        chatDataReference.child(chatId).setValue(chat).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                }
-                            }
-                        });
+                        chatDataReference.child(chatId).setValue(chat);
                     }
                     readyToCreateChat.onReady(true);
 
