@@ -19,6 +19,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -93,6 +94,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
     private CheckBox checkBox;
     private Button reportBtn;
     private String uid;
+    private ImageButton callButton;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -177,34 +179,34 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Message/" + CHAT_ID);
         databaseReference.addValueEventListener(this);
-        firebaseDatabase.getReference("Chat/"+CHAT_ID).addValueEventListener(new ValueEventListener() {
-                                                             @Override
-                                                             public void onDataChange(DataSnapshot dataSnapshot) {
+        firebaseDatabase.getReference("Chat/" + CHAT_ID).addValueEventListener(new ValueEventListener() {
+                                                                                   @Override
+                                                                                   public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                                                 Chat chat = dataSnapshot.getValue(Chat.class);
-                                                                 if(chat.getLastMessage()!=null)
-                                                                 if (!chat.getLastMessage().equals(uid)) {
-                                                                     NotificationCompat.Builder mBuilder =
-                                                                             new NotificationCompat.Builder(MessageActivity.this)
-                                                                                     .setSmallIcon(R.mipmap.ic_launcher)
-                                                                                     .setContentTitle("New Message").setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                                                                                       Chat chat = dataSnapshot.getValue(Chat.class);
+                                                                                       if (chat.getLastMessage() != null)
+                                                                                           if (!chat.getLastMessage().equals(uid)) {
+                                                                                               NotificationCompat.Builder mBuilder =
+                                                                                                       new NotificationCompat.Builder(MessageActivity.this)
+                                                                                                               .setSmallIcon(R.mipmap.ic_launcher)
+                                                                                                               .setContentTitle("New Message").setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 
-                                                                     Intent resultIntent = new Intent(MessageActivity.this, WelcomeActivity.class);
-                                                                     resultIntent.putExtra("CHAT_ID", dataSnapshot.getKey());
-                                                                     PendingIntent resultPendingIntent  = PendingIntent.getActivity(getApplicationContext(), 0,
-                                                                             resultIntent, PendingIntent.FLAG_ONE_SHOT);
-                                                                     mBuilder.setContentIntent(resultPendingIntent);
-                                                                     NotificationManager mNotificationManager =
-                                                                             (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                                                                     mNotificationManager.notify(0, mBuilder.build());
-                                                                 }
-                                                             }
+                                                                                               Intent resultIntent = new Intent(MessageActivity.this, WelcomeActivity.class);
+                                                                                               resultIntent.putExtra("CHAT_ID", dataSnapshot.getKey());
+                                                                                               PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
+                                                                                                       resultIntent, PendingIntent.FLAG_ONE_SHOT);
+                                                                                               mBuilder.setContentIntent(resultPendingIntent);
+                                                                                               NotificationManager mNotificationManager =
+                                                                                                       (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                                                                               mNotificationManager.notify(0, mBuilder.build());
+                                                                                           }
+                                                                                   }
 
-                                                             @Override
-                                                             public void onCancelled(DatabaseError databaseError) {
+                                                                                   @Override
+                                                                                   public void onCancelled(DatabaseError databaseError) {
 
-                                                             }
-                                                         }
+                                                                                   }
+                                                                               }
         );
         chatButton.setOnClickListener(new View.OnClickListener() {
                                           @Override
@@ -222,7 +224,34 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         layoutManager.setSmoothScrollbarEnabled(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHorizontalScrollBarEnabled(true);
+        callButton = (ImageButton) findViewById(R.id.callButton);
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase.getInstance().getReference("Chat/" + CHAT_ID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Chat chat = dataSnapshot.getValue(Chat.class);
+                        String receiver = "";
+                        for (String id : chat.getUsers().keySet()) {
+                            if (id != uid) {
+                                receiver = id;
+                            }
+                        }
+                        Intent intent = new Intent(MessageActivity.this, CallActivity.class);
+                        intent.putExtra("caller", uid);
+                        intent.putExtra("receiver", receiver);
+                        startActivity(intent);
 
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
         messageAdapter = new MessageAdapter(tempMessageHash);
         recyclerView.setAdapter(messageAdapter);
         setImageResult(new ImageResult() {

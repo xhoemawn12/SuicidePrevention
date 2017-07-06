@@ -41,13 +41,12 @@ dependencies {
     compile 'com.daimajia.easing:library:2.0@aar'
     compile 'com.daimajia.androidanimations:library:2.2@aar'
     compile 'com.github.GrenderG:Toasty:1.2.5'
-
     compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
 
         exclude group: 'com.google.android', module: 'support-v4'
     }
     testCompile 'junit:junit:4.12'
-
+    compile project(':sinch-android-rtc-3.11.1')
 }
 
 apply plugin: 'com.google.gms.google-services'

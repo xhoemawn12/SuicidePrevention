@@ -15,6 +15,8 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.FirebaseDatabase;
+import com.sinch.android.rtc.Sinch;
+import com.sinch.android.rtc.SinchClient;
 
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.base.SuperActivity;
@@ -24,7 +26,7 @@ public class WelcomeActivity extends SuperActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         setContentView(R.layout.activity_welcome);
        // findViewById(R.id.textView3).setAnimation(animate(0));
        // findViewById(R.id.textView).setAnimation(animate(0));

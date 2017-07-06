@@ -49,6 +49,7 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".activity.UserProfileActivity"/>
         <activity android:name=".activity.ReportActivity"/>
-    </application>
+        <activity android:name=".activity.CallActivity"
+/>    </application>
 
 </manifest>

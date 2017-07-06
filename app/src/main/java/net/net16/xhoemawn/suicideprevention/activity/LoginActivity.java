@@ -27,6 +27,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sinch.android.rtc.ClientRegistration;
+import com.sinch.android.rtc.Sinch;
+import com.sinch.android.rtc.SinchClient;
+import com.sinch.android.rtc.SinchClientListener;
+import com.sinch.android.rtc.SinchError;
 
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.base.SuperActivity;
@@ -79,6 +84,7 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
                                         Toasty.info(getBaseContext(),"You have been blocked for certain time by our moderator for violating certain rules", Toast.LENGTH_LONG).show();
                                     }
                                     else {
+
                                         userType = user.getUserType();
                                         intent.putExtra("USERTYPE", userType);
                                         intent.putExtra("USERNAME", firebaseUser.getEmail());
@@ -111,6 +117,7 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
 
         signUp.setOnClickListener(this);
     }
+
 
     @Override
     public void onStart() {
