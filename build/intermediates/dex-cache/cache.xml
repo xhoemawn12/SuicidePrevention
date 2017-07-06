@@ -70,7 +70,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="7ac376c263ee64482a0aced1e7b3877b482c5364">
+        sha1="ce4d828dc73073e8257c52dc8c534ed125d8cf93">
         <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8ae790a29ba210fd05539379f401a2822a33fe2e/classes.dex" />
     </item>
     <item
@@ -99,6 +99,15 @@
         revision="25.0.3"
         sha1="a890ee8445927649d9ed50f625a315d8758688be">
         <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/classes_016e08efdb5536306e21db372d33b93d6ac1f921.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/xhoemawn12/.android/build-cache/e6e51d6d5028ec42d1cba06385f9e2d1df2fe952/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="2d335cc337e32f5483347c848644d4bc4dab1b30">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_57e0dd6e4a1bf9120107dc7c52daf152f3b3feca/classes.dex" />
     </item>
     <item
         is-multidex="false"
