@@ -1,6 +1,5 @@
 package net.net16.xhoemawn.suicideprevention.fragment;
 
-import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -9,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -20,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -40,8 +39,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import net.net16.xhoemawn.suicideprevention.activity.HomeActivity;
-import net.net16.xhoemawn.suicideprevention.activity.LoginActivity;
 import net.net16.xhoemawn.suicideprevention.activity.WelcomeActivity;
 import net.net16.xhoemawn.suicideprevention.callbacks.OnProfilePicChanged;
 import net.net16.xhoemawn.suicideprevention.model.Chat;
@@ -74,6 +71,7 @@ public class UserFragment extends Fragment
     private ImageButton chatButton;
     private ImageButton commendButton;
     private TextView commendText;
+    private TextView messageText;
     private OnProfilePicChanged onProfilePicChanged;
     private User user;
     private AlertDialog.Builder alertDialog;
@@ -90,6 +88,11 @@ public class UserFragment extends Fragment
     private Uri imageURI = null;
     private Switch userOnline;
     private Button logout;
+    private ImageButton editDetails;
+    private EditText editUserName;
+    private EditText editUserDescription;
+    private Button editConfirm;
+    private AlertDialog editDialog;
     public static UserFragment newInstance(String id) {
         UserFragment userFragment = new UserFragment();
         Bundle bundle = new Bundle();
@@ -109,7 +112,8 @@ public class UserFragment extends Fragment
                 FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
                 StorageReference storageReference = firebaseStorage.getReference();
                 progressBar.setVisibility(View.VISIBLE);
-                storageReference.child("user/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(selectedImage).addOnSuccessListener(getActivity(), new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                storageReference.child("user/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg")
+                        .putFile(selectedImage).addOnSuccessListener(getActivity(), new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         progressBar.setVisibility(View.GONE);
@@ -171,14 +175,14 @@ public class UserFragment extends Fragment
             }
             if (!user.getCommends().containsKey(DOMESTICUSERID)) {
                 commendButton.setImageResource(R.drawable.ic_favorite_black_50dp);
-                commendText.setText(user.getCommends().size()+" Commends");
+                commendText.setText(user.getCommends().size() + " Commends");
                 HashMap<String, Boolean> commends = user.getCommends();
                 commends.put(DOMESTICUSERID, true);
                 FirebaseDatabase.getInstance().getReference("User/" + FOREIGNUSERID).child("/commends/").setValue(commends);
             } else {
                 Toasty.info(getActivity(), "You already Commended the User").show();
             }
-        } else if (v.getId() == R.id.chat) {
+        } else if (v.getId() == R.id.sendMessage) {
             createNewChat(new ReadyToCreateChat() {
                 @Override
                 public void onReady(boolean stat) {
@@ -194,6 +198,10 @@ public class UserFragment extends Fragment
             });
 
         }
+        else if(v.getId()==R.id.editButton){
+
+            editDialog.show();
+        }
     }
 
     @Override
@@ -205,25 +213,31 @@ public class UserFragment extends Fragment
         chatDataReference = firebaseDatabase.getReference("Chat/");
         alertDialog = new AlertDialog.Builder(UserFragment.this.getActivity());
         alertDialog.setView(R.layout.user_profile);
+        editDialog = alertDialog.create();
+        editDialog.show();
+        editUserDescription = (EditText) editDialog.findViewById(R.id.editUserDescription);
+        editUserName = (EditText) editDialog.findViewById(R.id.editUserName);
         userOnline = (Switch) view.findViewById(R.id.switch2);
         logout = (Button) view.findViewById(R.id.logout);
+        editDetails = (ImageButton) view.findViewById(R.id.editButton);
+        editDetails.setOnClickListener(this);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                 alertDialog.setTitle("Alert");
-                alertDialog.setMessage("Application will restart.");
+                alertDialog.setMessage("User will be logged out of system. Application will restart in few seconds.");
                 alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                FirebaseAuth.getInstance().signOut();
-                Intent mStartActivity = new Intent(getActivity(), WelcomeActivity.class);
-                int mPendingIntentId = 123456;
-                PendingIntent mPendingIntent = PendingIntent.getActivity(getActivity(), mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-                AlarmManager mgr = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 10, mPendingIntent);
-                System.exit(0);
+                        FirebaseAuth.getInstance().signOut();
+                        Intent mStartActivity = new Intent(getActivity(), WelcomeActivity.class);
+                        int mPendingIntentId = 910;
+                        PendingIntent mPendingIntent = PendingIntent.getActivity(getActivity(), mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+                        AlarmManager mgr = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 10, mPendingIntent);
+                        System.exit(0);
 
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -235,6 +249,45 @@ public class UserFragment extends Fragment
                 alertDialog.show();
             }
         });
+        FirebaseDatabase.getInstance().getReference("User/"+DOMESTICUSERID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                editUserName.setText(user.getName());
+                if (user.getDescription() != null)
+                    editUserDescription.setText(user.getDescription());
+                else
+                    editUserDescription.setText("");
+                if(hide) {
+                    hide = false;
+                    if(editDialog.isShowing())
+                        editDialog.hide();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        editConfirm = (Button) editDialog.findViewById(R.id.editConfirm);
+        editConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!editUserName.getText().toString().equals("")) {
+
+
+                    FirebaseDatabase.getInstance().getReference("User/" + DOMESTICUSERID).child("description").setValue(editUserDescription.getText().toString());
+                    FirebaseDatabase.getInstance().getReference("User/" + DOMESTICUSERID).child("name").setValue(editUserName.getText().toString());
+                    editDialog.hide();
+                    Toasty.success(getActivity(), "Success").show();
+                }
+                else{
+                    Toasty.error(getActivity(),"Name cannot be empty").show();
+                }
+            }
+        });
+        editDialog.hide();
         userOnline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,7 +296,7 @@ public class UserFragment extends Fragment
         });
         user = new User();
         userName = (TextView) view.findViewById(R.id.newMessage);
-        chatButton = (ImageButton) view.findViewById(R.id.chat);
+        chatButton = (ImageButton) view.findViewById(R.id.sendMessage);
         commendText = (TextView) view.findViewById(R.id.commendText);
         commendButton = (ImageButton) view.findViewById(R.id.commendImageButton);
         userType = (TextView) view.findViewById(R.id.userType);
@@ -255,29 +308,32 @@ public class UserFragment extends Fragment
         profilePic = (ImageView) view.findViewById(R.id.profilePic);
         onProfilePicChanged =
                 new OnProfilePicChanged() {
-            @Override
-            public void isChanged(Boolean boo) {
-                if (boo) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    if (user != null)
-                        if (user.getImageURL() != null) {
-                            try {
-                                Glide.with(getActivity()).load(user.getImageURL()).into(profilePic);
-                            }
-                            catch (NullPointerException nul){
+                    @Override
+                    public void isChanged(Boolean boo) {
+                        if (boo) {
+                            progressBar.setVisibility(View.VISIBLE);
+                            if (user != null)
+                                if (user.getImageURL() != null) {
+                                    try {
+                                        Glide.with(getActivity()).load(user.getImageURL()).into(profilePic);
+                                    } catch (NullPointerException nul) {
 
-                            }
+                                    }
 
-                        } progressBar.setVisibility(View.GONE);
+                                }
+                            progressBar.setVisibility(View.GONE);
 
-                }
+                        }
 
-            }
-        };
+                    }
+                };
+        messageText = (TextView) view.findViewById(R.id.messageText);
         databaseReference.child(FOREIGNUSERID).addValueEventListener(this);
         if (Objects.equals(FOREIGNUSERID, DOMESTICUSERID)) {
             commendButton.setVisibility(View.GONE);
             chatButton.setVisibility(View.GONE);
+            commendText.setVisibility(View.GONE);
+            messageText.setVisibility(View.GONE);
             profilePic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -287,8 +343,8 @@ public class UserFragment extends Fragment
                 }
 
             });
-        }
-        else{
+        } else {
+            editDetails.setVisibility(View.GONE);
             userOnline.setVisibility(View.GONE);
             logout.setVisibility(View.GONE);
         }
@@ -301,12 +357,13 @@ public class UserFragment extends Fragment
         Log.d("Database Error. ", "Error Code of:" + databaseError.getCode() + "");
 
     }
-
+    boolean hide = true;
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         user = dataSnapshot.getValue(User.class);
 
         if (user != null) {
+
             userName.setText(user.getName());
             onProfilePicChanged.isChanged(true);
             userOnline.setChecked(user.isAvailable());
@@ -319,12 +376,12 @@ public class UserFragment extends Fragment
             }
             if (user.getDescription() != null)
                 aboutUser.setText(user.getDescription());
-            if(user.getCommends() == null){
+            if (user.getCommends() == null) {
                 user.setCommends(new HashMap<String, Boolean>());
             }
             if (user.getCommends().containsKey(DOMESTICUSERID))
                 commendButton.setImageResource(R.drawable.ic_favorite_black_50dp);
-            commendText.setText(user.getCommends().size()+" Commends");
+            commendText.setText(user.getCommends().size() + " Commends");
 
         }
 

@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -74,15 +75,21 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
                             try {
                                 intent = new Intent(LoginActivity.this, HomeActivity.class);
                                 if(user!=null && user.getUserType()!=null) {
-                                    userType = user.getUserType();
-                                    intent.putExtra("USERTYPE", userType);
-                                    intent.putExtra("USERNAME", firebaseUser.getEmail());
-                                    progressBar.setVisibility(View.GONE);
-                                    Toasty.success(LoginActivity.this,"Success..").show();
-                                    signIn.setClickable(true);
-                                    signUp.setClickable(true);
-                                    startActivity(intent);
-                                    finish();
+                                    if(user.getDisabled()>System.currentTimeMillis()){
+                                        Toasty.info(getBaseContext(),"You have been blocked for certain time by our moderator for violating certain rules", Toast.LENGTH_LONG).show();
+                                    }
+                                    else {
+                                        userType = user.getUserType();
+                                        intent.putExtra("USERTYPE", userType);
+                                        intent.putExtra("USERNAME", firebaseUser.getEmail());
+                                        progressBar.setVisibility(View.GONE);
+                                        Toasty.success(LoginActivity.this, "Success..").show();
+                                        signIn.setClickable(true);
+                                        signUp.setClickable(true);
+                                        startActivity(intent);
+                                        finish();
+
+                                    }
                                 }
                             }
                             catch (NullPointerException nul){

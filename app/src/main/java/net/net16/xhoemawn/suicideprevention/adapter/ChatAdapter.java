@@ -50,12 +50,21 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private List<Chat> chats;
     private List<String> chatIds;
     private Drawable drawable ;
+
+    public LinkedHashMap<String, Chat> getChatHashMap() {
+        return chatHashMap;
+    }
+
+    public void setChatHashMap(LinkedHashMap<String, Chat> chatHashMap) {
+        this.chatHashMap = chatHashMap;
+    }
+
     private User foreignUser;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private DateFormat dateFormat;
     public ChatAdapter(){
-
+        
     }
     public ChatAdapter(LinkedHashMap<String, Chat> chat){
         this.chatHashMap = chat;
@@ -67,10 +76,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     public ChatAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v =  LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.chat_layout, parent, false);
-
-        //chatIds = chatHashMap.keySet().toArray(new String[chatHashMap.keySet().size()]);
-
-        //drawable = v.getResources().getDrawable(R.drawable.com_facebook_button_login_silver_background,null);
         return new ViewHolder(v);
 
     }
@@ -95,6 +100,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                 }
             }
 
+
         }
 
         if(foreignUserId != null) {
@@ -118,15 +124,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     }
 
-
-
     @Override
     public int getItemCount() {
         chats = new ArrayList<>(chatHashMap.values());
-        Collections.reverse(chats);
-        chatIds = new ArrayList<String>(chatHashMap.keySet());
-        Collections.reverse(chatIds);
-
+        chatIds = new ArrayList<>(chatHashMap.keySet());
         return chatHashMap.size();
     }
 

@@ -39,7 +39,7 @@ import java.util.LinkedHashMap;
     @Override
     public void onBindViewHolder(ReportHolder holder, int position) {
         Report report = reports.get(position);
-        holder.reportType.setText(report.getReportType());
+        holder.reportType.setText("Type: "+report.getReportType().toString());
         holder.reportDescripttion.setText(report.getReportDescription());
     }
 
@@ -63,7 +63,8 @@ import java.util.LinkedHashMap;
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), ReportActivity.class);
-                    intent.putExtra("REPORT",keys.get(getAdapterPosition()));
+                    intent.putExtra("REPORTID",keys.get(getAdapterPosition()));
+                    intent.putExtra("REPORT",reports.get(getAdapterPosition()));
                     v.getContext().startActivity(intent);
                 }
             });

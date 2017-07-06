@@ -21,6 +21,7 @@ import net.net16.xhoemawn.suicideprevention.model.Chat;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.adapter.ChatAdapter;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -43,6 +44,27 @@ public class ChatFragment extends Fragment {
         chatFragment.setArguments(bundle);
         return chatFragment;
     }
+    private LinkedHashMap<String,Chat> sortByTimeStamp(LinkedHashMap<String,Chat> chatHash){
+        LinkedHashMap<String,Chat> tempChat = new LinkedHashMap<>();
+        ArrayList<Long> timestamps = new ArrayList<>();
+        for(Chat chat: chatHash.values()){
+            timestamps.add(chat.getTimeStamp());
+        }
+        Collections.sort(timestamps);
+        Collections.reverse(timestamps);
+        ArrayList<Chat> chats = new ArrayList<>(chatHashMap.values());
+        ArrayList<String> chatIds = new ArrayList<String>(chatHashMap.keySet());
+        for(Long timestamp: timestamps){
+            for(int i = 0; i<chatHash.size();i++){
+                if(timestamp.equals(chats.get(i).getTimeStamp())){
+                    if(!tempChat.containsKey(chatIds.get(i))){
+                        tempChat.put(chatIds.get(i),chats.get(i));
+                    }
+                }
+            }
+        }
+        return tempChat;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,13 +73,7 @@ public class ChatFragment extends Fragment {
         userHashMap = new LinkedHashMap<>();
         chatHashMap = new LinkedHashMap<>();
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-
-
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-
-
-        // layoutManager.setReverseLayout(true);
-        // layoutManager.setStackFromEnd(true);
         layoutManager.setSmoothScrollbarEnabled(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHorizontalScrollBarEnabled(true);
@@ -73,10 +89,12 @@ public class ChatFragment extends Fragment {
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     chatHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Chat.class));
-
                 }
+                chatHashMap = sortByTimeStamp(chatHashMap);
+                chatAdapter.setChatHashMap(new LinkedHashMap<String, Chat>());
                 chatAdapter.notifyDataSetChanged();
-
+                chatAdapter.setChatHashMap(chatHashMap);
+                chatAdapter.notifyDataSetChanged();
             }
 
 

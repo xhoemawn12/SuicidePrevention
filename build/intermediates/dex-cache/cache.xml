@@ -2,13 +2,13 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/054c0a8325652f5c85d470b45d1f8b2d9e5949e8/output/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="e54b130048327d25b0ee064e6615ddb05dd95d1c">
-        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8ae790a29ba210fd05539379f401a2822a33fe2e/classes.dex" />
+        sha1="905f3e63973d47fedf2d945fa31d8c0f0c98816e">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/classes_26143c99e3936af8a513d5e415ba4d7fd04fc4d4.jar" />
     </item>
     <item
         is-multidex="true"
@@ -18,6 +18,123 @@
         revision="25.0.3"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
         <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_062036aca8c01e73d0ae8e13243f3ca4ea571230/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/2.0.1/516c03b21d50a644d538de0f0369c620989cd8f0/jsr305-2.0.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="516c03b21d50a644d538de0f0369c620989cd8f0">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/jsr305-2.0.1_70017e25bf49e9f4b66b42a404f289294c5ba3af.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="42a25dc3219429f0e5d060061f71acb49bf010a0">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/hamcrest-core-1.3_05a3152440d9d093c398bcab4965d885eeb283dc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-library/1.3/4785a3c21320980282f9f33d0d1264a69040538f/hamcrest-library-1.3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="4785a3c21320980282f9f33d0d1264a69040538f">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/hamcrest-library-1.3_d4fb6ba8f2a4ad90659c1930f2df27d99ad1afc9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.gradle/caches/modules-2/files-2.1/com.squareup/javawriter/2.1.1/67ff45d9ae02e583d0f9b3432a5ebbe05c30c966/javawriter-2.1.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="67ff45d9ae02e583d0f9b3432a5ebbe05c30c966">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/javawriter-2.1.1_9e8a3f4fc3d6744f6516d7813d6aa02613ac7500.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.gradle/caches/modules-2/files-2.1/javax.annotation/javax.annotation-api/1.2/479c1e06db31c432330183f5cae684163f186146/javax.annotation-api-1.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="479c1e06db31c432330183f5cae684163f186146">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/javax.annotation-api-1.2_5af7d61f77a5e2c93e76f489bf12f9e97ee451c7.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="7ac376c263ee64482a0aced1e7b3877b482c5364">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8ae790a29ba210fd05539379f401a2822a33fe2e/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/aaec8ba3691dafedbbc0bebe73dd004629392a79/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d115b0e9e1501135fe91254ba884fcbd83d374c0">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/classes_e5fb5d32e4c9bea4cc86a7b6795be92d0ba3f14e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/javax.inject-1_4ddc586e32020f5a11cf824314434916f33ce41e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/fa9caa0a973590fa6c24b7a8c75d1efebce9e509/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a890ee8445927649d9ed50f625a315d8758688be">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/classes_016e08efdb5536306e21db372d33b93d6ac1f921.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/32403852e0094d2da9b530cbbf747859482ceaf2/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="796f9229948e907471c5595fbe94655ccf03ff73">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/classes_8ae90abd05dbb0bf2365cfb64c83dbd4a5961abd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec/junit-4.12.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="2973d150c0dc1fefe998f834810d68f278ea58ec">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/junit-4.12_93448f5c1c555eead00d5c472c1b37acfc9f1a1c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-integration/1.3/5de0c73fef18917cd85d0ab70bb23818685e4dfd/hamcrest-integration-1.3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="5de0c73fef18917cd85d0ab70bb23818685e4dfd">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/hamcrest-integration-1.3_68d8b17cd7a1d2db23d6a50db81461edec1ea1d1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/xhoemawn12/.android/build-cache/d12de0d7e19d6ede9ddf8be9394ed1d235a4dbfb/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="7e11799d8a26bfa5d48acafe012ee5545b9bf468">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/classes_6337352b0f6ab3935ca24ac309779599f19f29ca.jar" />
     </item>
 
 </items>

@@ -143,7 +143,10 @@ public class SuperActivity extends
             imageResult.resultStatus(true, returnedIntent, 1);
     }
 
-    public NotificationManager buildNotification(String title, String msg, Intent intent, Integer idOfNotification, NotificationManager notificationMgr, Boolean shouldAutoCancel) {
+    public NotificationManager buildNotification(String title, String msg,
+                                                 Intent intent, Integer idOfNotification,
+                                                 NotificationManager notificationMgr,
+                                                 Boolean shouldAutoCancel) {
         notificationMgr = (NotificationManager)
                 getSystemService(Context.NOTIFICATION_SERVICE);
 

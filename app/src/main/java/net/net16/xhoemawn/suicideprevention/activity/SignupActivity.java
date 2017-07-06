@@ -108,6 +108,7 @@ public class SignupActivity extends SuperActivity implements View.OnClickListene
                     newUser.setPassword(password.getText().toString());
                     newUser.setUserType(UserType.VICTIM);
                     newUser.setAvailable(true);
+                    newUser.setDisabled(-1);
                     RadioButton radioButton = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
                     Integer userType = UserType.VICTIM;
                     switch (radioButton.getId()){

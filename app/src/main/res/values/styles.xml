@@ -15,10 +15,10 @@
     <style name="CustomFont" parent="Platform.AppCompat.Light">
         <item name="android:fontFamily">serif-monospace</item>
         <item name="android:typeface">monospace</item>
+        <item name="android:textSize">17sp</item>
 
     </style>
-    <style name="Button" parent="Base.Widget.AppCompat.Button"><!--
-        <item name="android:background">@drawable/button_style</item>-->
+    <style name="Button" parent="Base.Widget.AppCompat.Button">
         <item name="android:background">@color/colorPrimaryLight</item>
         <item name="android:typeface">monospace</item>
         <item name="android:fontFamily">serif-monospace</item>

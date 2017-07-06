@@ -1,16 +1,21 @@
 package net.net16.xhoemawn.suicideprevention.activity;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,6 +45,7 @@ import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.adapter.MessageAdapter;
 import net.net16.xhoemawn.suicideprevention.base.SuperActivity;
 import net.net16.xhoemawn.suicideprevention.callbacks.ImageResult;
+import net.net16.xhoemawn.suicideprevention.model.Chat;
 import net.net16.xhoemawn.suicideprevention.model.Message;
 import net.net16.xhoemawn.suicideprevention.model.Report;
 import net.net16.xhoemawn.suicideprevention.tools.ReportType;
@@ -59,9 +65,9 @@ import es.dmoral.toasty.Toasty;
 
 public class MessageActivity extends SuperActivity implements ValueEventListener {
 
-    private Calendar calendar;
     public static String chat_id = "CHAT_ID";
     public static String CHAT_ID = null;
+    private Calendar calendar;
     private long timestamp = 0;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -82,11 +88,12 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
     private String reportAgainst;
     private String reportedBy;
     private Integer reportType = ReportType.SPAM;
-    private EditText body ;
+    private EditText body;
     private RadioGroup radioGroup;
     private CheckBox checkBox;
     private Button reportBtn;
     private String uid;
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 0) {
@@ -100,40 +107,38 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                     startImageIntent();
                 }
             }
-        }
-        else if(requestCode==1 ){
-        if(grantResults.length!=0) {
-            switch (radioGroup.getCheckedRadioButtonId()) {
-                case R.id.pornographic:
-                    reportType = ReportType.PORNOGRAPHIC_CONTENT;
-                    break;
-                case R.id.impolite:
-                    reportType = ReportType.IMPOLITE;
-                    break;
-                case R.id.others:
-                    reportType = ReportType.OTHERS;
-                    break;
-            }
-            View view = MessageActivity.this.getWindow().getDecorView().getRootView();
-            view.setDrawingCacheEnabled(true);
-            Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-
-            String path = MediaStore.Images.Media.insertImage(MessageActivity.this.getContentResolver(), bitmap, "tempFile", null);
-
-            FirebaseStorage.getInstance().getReference("reports/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(Uri.parse(path)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                    if (body != null) {
-                        createReport(body.getText().toString(), reportType, taskSnapshot.getDownloadUrl().toString());
-                    }
+        } else if (requestCode == 1) {
+            if (grantResults.length != 0) {
+                switch (radioGroup.getCheckedRadioButtonId()) {
+                    case R.id.pornographic:
+                        reportType = ReportType.PORNOGRAPHIC_CONTENT;
+                        break;
+                    case R.id.impolite:
+                        reportType = ReportType.IMPOLITE;
+                        break;
+                    case R.id.others:
+                        reportType = ReportType.OTHERS;
+                        break;
                 }
-            });
-        }
-        else
-            Toasty.warning(MessageActivity.this, "Unable To Access Storage", 300).show();
+                View view = MessageActivity.this.getWindow().getDecorView().getRootView();
+                view.setDrawingCacheEnabled(true);
+                Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+
+                String path = MediaStore.Images.Media.insertImage(MessageActivity.this.getContentResolver(), bitmap, "tempFile", null);
+
+                FirebaseStorage.getInstance().getReference("reports/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(Uri.parse(path)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        if (body != null) {
+                            createReport(body.getText().toString(), reportType, taskSnapshot.getDownloadUrl().toString());
+                        }
+                    }
+                });
+            } else
+                Toasty.warning(MessageActivity.this, "Unable To Access Storage", 300).show();
 
         }
 
@@ -151,16 +156,16 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         imageURI = null;
         try {
             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        }
-        catch (NullPointerException nu){
+        } catch (NullPointerException nu) {
             uid = "";
         }
-            imageButton = (ImageButton) findViewById(R.id.imageButton);
+        imageButton = (ImageButton) findViewById(R.id.imageButton);
         chatButton = (ImageButton) findViewById(R.id.sendButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCompat.requestPermissions(MessageActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                ActivityCompat.requestPermissions(MessageActivity.this, new String[]{
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             }
 
         });
@@ -172,54 +177,35 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Message/" + CHAT_ID);
         databaseReference.addValueEventListener(this);
-       /* databaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Message message = dataSnapshot.getValue(Message.class);
-                if (!message.getSenderId().equals(uid)) {
-          *//*          NotificationCompat.Builder mBuilder =
-                            new NotificationCompat.Builder(MessageActivity.this)
-                                    .setSmallIcon(R.mipmap.ic_launcher)
-                                    .setContentTitle("New Message").setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+        firebaseDatabase.getReference("Chat/"+CHAT_ID).addValueEventListener(new ValueEventListener() {
+                                                             @Override
+                                                             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    Intent resultIntent = new Intent(MessageActivity.this, MessageActivity.class);
-                    resultIntent.putExtra("CHAT_ID", dataSnapshot.getKey());
-                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(MessageActivity.this);
-                    stackBuilder.addParentStack(MessageActivity.class);
+                                                                 Chat chat = dataSnapshot.getValue(Chat.class);
+                                                                 if(chat.getLastMessage()!=null)
+                                                                 if (!chat.getLastMessage().equals(uid)) {
+                                                                     NotificationCompat.Builder mBuilder =
+                                                                             new NotificationCompat.Builder(MessageActivity.this)
+                                                                                     .setSmallIcon(R.mipmap.ic_launcher)
+                                                                                     .setContentTitle("New Message").setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 
-                    stackBuilder.addNextIntent(resultIntent);
-                    PendingIntent resultPendingIntent =
-                            stackBuilder.getPendingIntent(
-                                    0,
-                                    PendingIntent.FLAG_UPDATE_CURRENT
-                            );
-                    mBuilder.setContentIntent(resultPendingIntent);
-                    NotificationManager mNotificationManager =
-                            (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    mNotificationManager.notify(0, mBuilder.build());*//*
-                }
-            }
+                                                                     Intent resultIntent = new Intent(MessageActivity.this, WelcomeActivity.class);
+                                                                     resultIntent.putExtra("CHAT_ID", dataSnapshot.getKey());
+                                                                     PendingIntent resultPendingIntent  = PendingIntent.getActivity(getApplicationContext(), 0,
+                                                                             resultIntent, PendingIntent.FLAG_ONE_SHOT);
+                                                                     mBuilder.setContentIntent(resultPendingIntent);
+                                                                     NotificationManager mNotificationManager =
+                                                                             (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                                                     mNotificationManager.notify(0, mBuilder.build());
+                                                                 }
+                                                             }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                                                             @Override
+                                                             public void onCancelled(DatabaseError databaseError) {
 
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
+                                                             }
+                                                         }
+        );
         chatButton.setOnClickListener(new View.OnClickListener() {
                                           @Override
                                           public void onClick(View v) {
@@ -242,8 +228,8 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         setImageResult(new ImageResult() {
             @NonNull
             @Override
-            public void resultStatus(Boolean boo,Intent data,Integer type) {
-                if(boo && type == 0){
+            public void resultStatus(Boolean boo, Intent data, Integer type) {
+                if (boo && type == 0) {
                     selectedImage = data.getData();
                     try {
 
@@ -251,8 +237,8 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
                         storageReference = firebaseStorage.getReference();
 
-                        Toasty.info(MessageActivity.this,"Uploading Image..").show();
-                            progressBar.setVisibility(View.VISIBLE);
+                        Toasty.info(MessageActivity.this, "Uploading Image..").show();
+                        progressBar.setVisibility(View.VISIBLE);
                         storageReference.child("users/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(selectedImage).addOnSuccessListener(MessageActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -283,33 +269,33 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
 
-        body =  (EditText) alertDialog.findViewById(R.id.body);
+        body = (EditText) alertDialog.findViewById(R.id.body);
         radioGroup = (RadioGroup) alertDialog.findViewById(R.id.typeGroup);
-        checkBox = (CheckBox)  alertDialog.findViewById(R.id.checkBox);
+        checkBox = (CheckBox) alertDialog.findViewById(R.id.checkBox);
         reportBtn = (Button) alertDialog.findViewById(R.id.submit);
         reportButton = (Button) findViewById(R.id.reportButton);
-        alertDialog.hide();
+        alertDialog.dismiss();
         reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog.show();
-                if(reportBtn!=null)
+                if (reportBtn != null)
                     reportBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                        if (checkBox.isChecked()) {
-                            alertDialog.dismiss();
-                            ActivityCompat.requestPermissions(MessageActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                        }
-                        else{
-                            Toasty.error(MessageActivity.this,"Please Select Report Type").show();
-                        }
+                            if (checkBox.isChecked()) {
+                                alertDialog.dismiss();
+                                ActivityCompat.requestPermissions(MessageActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                            } else {
+                                Toasty.error(MessageActivity.this, "Please Select Report Type").show();
+                            }
 
-                    }
-                });
+                        }
+                    });
 
             }
-        });        }
+        });
+    }
 
 
     public void startImageIntent() {
@@ -360,20 +346,21 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                 progressBar.setVisibility(View.GONE);
             }
         });
-        firebaseDatabase.getReference("Chat/"+message.getChatId()).child("/lastMessage/").setValue(uid);
-        firebaseDatabase.getReference("Chat/"+message.getChatId()).child("/timeStamp/").setValue(Calendar.getInstance().getTimeInMillis());
+        firebaseDatabase.getReference("Chat/" + message.getChatId()).child("/lastMessage/").setValue(uid);
+        firebaseDatabase.getReference("Chat/" + message.getChatId()).child("/timeStamp/").setValue(Calendar.getInstance().getTimeInMillis());
     }
-    public void createReport(final String reportDesc , final Integer reportType, final String imageURL ){
 
-        FirebaseDatabase.getInstance().getReference("Chat/"+CHAT_ID).child("/users/").addListenerForSingleValueEvent(new ValueEventListener() {
+    public void createReport(final String reportDesc, final Integer reportType, final String imageURL) {
+
+        FirebaseDatabase.getInstance().getReference("Chat/" + CHAT_ID).child("/users/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    if(!Objects.equals(uid, dataSnapshot1.getKey()))
-                    reportAgainst = dataSnapshot1.getKey();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    if (!Objects.equals(uid, dataSnapshot1.getKey()))
+                        reportAgainst = dataSnapshot1.getKey();
                 }
-                if(reportAgainst!=null){
+                if (reportAgainst != null) {
                     Report report = new Report();
                     report.setReportedBy(uid);
                     report.setReportedTo(reportAgainst);
@@ -384,7 +371,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                     FirebaseDatabase.getInstance().getReference("Report/").push().setValue(report).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toasty.success(MessageActivity.this,"Successfully Reported.").show();
+                            Toasty.success(MessageActivity.this, "Successfully Reported.").show();
                         }
                     });
                 }

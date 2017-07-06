@@ -17,6 +17,15 @@ public class User implements Serializable{
     private long lastLogin;
     private String password;
     private boolean available;
+    private long disabled;
+
+    public long getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(long disabled) {
+        this.disabled = disabled;
+    }
 
     public HashMap<String, Boolean> getCommends() {
         return commends;
