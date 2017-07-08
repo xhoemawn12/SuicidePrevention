@@ -21,7 +21,6 @@ import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.adapter.ReportAdapter;
 import net.net16.xhoemawn.suicideprevention.model.Report;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
@@ -30,11 +29,11 @@ import java.util.LinkedHashMap;
 
 public class ReportFragment extends Fragment {
 
-    private RecyclerView recyclerView ;
+    private RecyclerView recyclerView;
     private ReportAdapter reportAdapter;
     private LinkedHashMap<String, Report> reportHashMap;
 
-    public static ReportFragment newInstance(){
+    public static ReportFragment newInstance() {
         ReportFragment reportFragment = new ReportFragment();
         return reportFragment;
     }
@@ -42,7 +41,7 @@ public class ReportFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.report_fragment,container,false);
+        View v = inflater.inflate(R.layout.report_fragment, container, false);
         reportHashMap = new LinkedHashMap<>();
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerViewReport);
         reportAdapter = new ReportAdapter(reportHashMap);
@@ -57,14 +56,13 @@ public class ReportFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 reportHashMap.clear();
-                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                    reportHashMap.put(dataSnapshot1.getKey(),dataSnapshot1.getValue(Report.class));
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    reportHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Report.class));
                 }
-                if(reportHashMap.size()==0){
+                if (reportHashMap.size() == 0) {
                     textView1.setVisibility(View.VISIBLE);
 
-                }
-                else{
+                } else {
                     textView1.setVisibility(View.GONE);
                 }
                 progressBar.setVisibility(View.GONE);

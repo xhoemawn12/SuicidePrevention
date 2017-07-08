@@ -7,9 +7,11 @@ import java.util.HashMap;
  * Created by xhoemawn12 on 5/1/17.
  */
 
-public class Post implements Serializable{
+public class Post implements Serializable {
 
-    public Post(){}
+    public Post() {
+    }
+
     public String getPostName() {
         return postName;
     }
@@ -63,7 +65,7 @@ public class Post implements Serializable{
     private String postBody;
     private String imageURL;
     private String postedBy;
-    private HashMap<String,Boolean> commends;
+    private HashMap<String, Boolean> commends;
 
 
 }

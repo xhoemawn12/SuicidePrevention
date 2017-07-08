@@ -2,17 +2,16 @@ package net.net16.xhoemawn.suicideprevention.model;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by xhoemawn12 on 4/26/17.
  */
 
-public class User implements Serializable{
+public class User implements Serializable {
     private Integer userType;
     private String name;
     private String email;
-    private HashMap<String,Boolean> commends;
+    private HashMap<String, Boolean> commends;
     private String imageURL;
     private long lastLogin;
     private String password;
@@ -44,6 +43,7 @@ public class User implements Serializable{
     }
 
     private String description;
+
     public String getImageURL() {
         return imageURL;
     }
@@ -73,7 +73,7 @@ public class User implements Serializable{
         this.available = available;
     }
 
-    public User(){
+    public User() {
 
     }
 

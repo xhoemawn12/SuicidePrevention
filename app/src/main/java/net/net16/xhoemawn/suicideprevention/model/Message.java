@@ -54,7 +54,8 @@ public class Message implements Serializable {
     private String chatId;
     private String senderId;
     private long timeStamp;
-    public Message(){
+
+    public Message() {
 
     }
 

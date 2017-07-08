@@ -1,21 +1,13 @@
 package net.net16.xhoemawn.suicideprevention.fragment;
 
 
-import android.app.NotificationManager;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,18 +18,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import net.net16.xhoemawn.suicideprevention.activity.MessageActivity;
-import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.adapter.UserListAdapter;
+import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.tools.UserType;
-
-import org.w3c.dom.Text;
 
 import java.util.LinkedHashMap;
 import java.util.Objects;
-
-import es.dmoral.toasty.Toasty;
 
 public class UserListFragment extends android.support.v4.app.Fragment {
     private RecyclerView recyclerView;
@@ -65,15 +52,14 @@ public class UserListFragment extends android.support.v4.app.Fragment {
         userAdapter = new UserListAdapter(userLinkedHashMap);
         recyclerView.setAdapter(userAdapter);
 
-        final TextView textView = (TextView)v.findViewById(R.id.typeUser);
+        final TextView textView = (TextView) v.findViewById(R.id.typeUser);
         databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 currentUser = dataSnapshot.getValue(User.class);
-                if(!Objects.equals(currentUser.getUserType(), UserType.HELPER)){
+                if (!Objects.equals(currentUser.getUserType(), UserType.HELPER)) {
                     textView.setText("Available Helpers");
-                }
-                else
+                } else
                     textView.setText("Victims Seeking Help");
             }
 
@@ -96,13 +82,12 @@ public class UserListFragment extends android.support.v4.app.Fragment {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     User user = dataSnapshot1.getValue(User.class);
                     if (currentUser != null && !currentUser.getUserType().equals(dataSnapshot1.getValue(User.class).getUserType()))
-                        if(!user.getUserType().equals(UserType.ADMIN))
+                        if (!user.getUserType().equals(UserType.ADMIN))
                             userLinkedHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(User.class));
-                    if(userLinkedHashMap.size()==0){
+                    if (userLinkedHashMap.size() == 0) {
                         textView1.setVisibility(View.VISIBLE);
 
-                    }
-                    else{
+                    } else {
                         textView1.setVisibility(View.GONE);
                     }
                     progressBar.setVisibility(View.GONE);

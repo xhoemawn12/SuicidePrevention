@@ -1,12 +1,9 @@
 package net.net16.xhoemawn.suicideprevention.fragment;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.GradientDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,7 +20,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,18 +34,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import net.net16.xhoemawn.suicideprevention.R;
-import net.net16.xhoemawn.suicideprevention.activity.MessageActivity;
 import net.net16.xhoemawn.suicideprevention.adapter.PostAdapter;
 import net.net16.xhoemawn.suicideprevention.callbacks.ImageResult;
 import net.net16.xhoemawn.suicideprevention.model.Post;
 
 import java.io.IOException;
-import java.security.Permission;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
@@ -57,12 +48,12 @@ import es.dmoral.toasty.Toasty;
  * Created by xhoemawn12 on 5/1/17.
  */
 
-public class PostFragment extends android.support.v4.app.Fragment implements  View.OnClickListener, ValueEventListener {
+public class PostFragment extends android.support.v4.app.Fragment implements View.OnClickListener, ValueEventListener {
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private FirebaseUser firebaseUser;
-    private LinkedHashMap<String,Post> postsList;
+    private LinkedHashMap<String, Post> postsList;
     private Post savePost;
     private EditText postBody;
     private ImageView imageView;
@@ -95,8 +86,8 @@ public class PostFragment extends android.support.v4.app.Fragment implements  Vi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==0 && resultCode== Activity.RESULT_OK){
-            imageResult.resultStatus(true,data,0);
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
+            imageResult.resultStatus(true, data, 0);
         }
     }
 
@@ -120,7 +111,7 @@ public class PostFragment extends android.support.v4.app.Fragment implements  Vi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.post_fragment,container,false);
+        View v = inflater.inflate(R.layout.post_fragment, container, false);
         uid = getArguments().getString("UID");
         firebaseDatabase = FirebaseDatabase.getInstance();
         postsList = new LinkedHashMap<>();
@@ -129,10 +120,10 @@ public class PostFragment extends android.support.v4.app.Fragment implements  Vi
         savePostButton = (Button) v.findViewById(R.id.postNewButton);
         imageButton = (ImageButton) v.findViewById(R.id.imageButton2);
         savePostButton.setOnClickListener(this);
-        recyclerView = (RecyclerView)v.findViewById(R.id.postRecycler);
+        recyclerView = (RecyclerView) v.findViewById(R.id.postRecycler);
         progressBar = (ProgressBar) v.findViewById(R.id.progressBar3);
         progressBar.setVisibility(View.GONE);
-        postAdapter= new PostAdapter(postsList);
+        postAdapter = new PostAdapter(postsList);
         recyclerView.setAdapter(postAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setSmoothScrollbarEnabled(true);
@@ -144,15 +135,15 @@ public class PostFragment extends android.support.v4.app.Fragment implements  Vi
         setImageResult(new ImageResult() {
             @NonNull
             @Override
-            public void resultStatus(Boolean boo,Intent data,Integer type) {
-                if(boo && type == 0){
-                   imageURI = data.getData();
+            public void resultStatus(Boolean boo, Intent data, Integer type) {
+                if (boo && type == 0) {
+                    imageURI = data.getData();
                     try {
 
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageURI);
                         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
                         StorageReference storageReference = firebaseStorage.getReference();
-                        Toasty.info(getActivity(),"Uploading Image..").show();
+                        Toasty.info(getActivity(), "Uploading Image..").show();
                         progressBar.setVisibility(View.VISIBLE);
                         storageReference.child("posts/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(imageURI).addOnSuccessListener(getActivity(), new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
@@ -186,11 +177,11 @@ public class PostFragment extends android.support.v4.app.Fragment implements  Vi
         startActivityForResult(photoPickerIntent, 0);
     }
 
-    public void saveNewPost(Post post){
+    public void saveNewPost(Post post) {
         progressBar.setVisibility(View.VISIBLE);
-        if(firebaseUser!=null){
+        if (firebaseUser != null) {
             post.setPostedBy(firebaseUser.getUid());
-            post.setTimeStamp(Calendar.getInstance().getTimeInMillis()+"");
+            post.setTimeStamp(Calendar.getInstance().getTimeInMillis() + "");
 
         }
 
@@ -198,28 +189,29 @@ public class PostFragment extends android.support.v4.app.Fragment implements  Vi
             @Override
             public void onSuccess(Void aVoid) {
                 progressBar.setVisibility(View.GONE);
-                Toasty.success(getActivity(),"Success.").show();
+                Toasty.success(getActivity(), "Success.").show();
             }
         });
     }
-    public void commendToPost(){
+
+    public void commendToPost() {
 
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.postNewButton:
                 savePost = new Post();
                 savePost.setPostBody(postBody.getText().toString());
                 postBody.setText("");
                 postBody.setHint("Write Something Inspiring here.");
-                if(imageURI!=null)
+                if (imageURI != null)
                     savePost.setImageURL(imageURI.toString());
                 saveNewPost(savePost);
                 break;
             case R.id.imageButton2:
-                requestPermissions( new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,
                         android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
 
         }
@@ -228,8 +220,8 @@ public class PostFragment extends android.support.v4.app.Fragment implements  Vi
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         postsList.clear();
-        for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-            postsList.put(dataSnapshot1.getKey(),dataSnapshot1.getValue(Post.class));
+        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+            postsList.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Post.class));
         }
         postAdapter.notifyDataSetChanged();
     }

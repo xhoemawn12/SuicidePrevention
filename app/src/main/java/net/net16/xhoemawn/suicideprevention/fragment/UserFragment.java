@@ -39,13 +39,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import net.net16.xhoemawn.suicideprevention.activity.WelcomeActivity;
-import net.net16.xhoemawn.suicideprevention.callbacks.OnProfilePicChanged;
-import net.net16.xhoemawn.suicideprevention.model.Chat;
-import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.activity.MessageActivity;
+import net.net16.xhoemawn.suicideprevention.activity.WelcomeActivity;
+import net.net16.xhoemawn.suicideprevention.callbacks.OnProfilePicChanged;
 import net.net16.xhoemawn.suicideprevention.callbacks.ReadyToCreateChat;
+import net.net16.xhoemawn.suicideprevention.model.Chat;
+import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.tools.UserType;
 
 import java.io.IOException;
@@ -93,6 +93,7 @@ public class UserFragment extends Fragment
     private EditText editUserDescription;
     private Button editConfirm;
     private AlertDialog editDialog;
+
     public static UserFragment newInstance(String id) {
         UserFragment userFragment = new UserFragment();
         Bundle bundle = new Bundle();
@@ -197,8 +198,7 @@ public class UserFragment extends Fragment
                 }
             });
 
-        }
-        else if(v.getId()==R.id.editButton){
+        } else if (v.getId() == R.id.editButton) {
 
             editDialog.show();
         }
@@ -249,7 +249,7 @@ public class UserFragment extends Fragment
                 alertDialog.show();
             }
         });
-        FirebaseDatabase.getInstance().getReference("User/"+DOMESTICUSERID).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("User/" + DOMESTICUSERID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
@@ -258,9 +258,9 @@ public class UserFragment extends Fragment
                     editUserDescription.setText(user.getDescription());
                 else
                     editUserDescription.setText("");
-                if(hide) {
+                if (hide) {
                     hide = false;
-                    if(editDialog.isShowing())
+                    if (editDialog.isShowing())
                         editDialog.hide();
                 }
             }
@@ -274,16 +274,15 @@ public class UserFragment extends Fragment
         editConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!editUserName.getText().toString().equals("")) {
+                if (!editUserName.getText().toString().equals("")) {
 
 
                     FirebaseDatabase.getInstance().getReference("User/" + DOMESTICUSERID).child("description").setValue(editUserDescription.getText().toString());
                     FirebaseDatabase.getInstance().getReference("User/" + DOMESTICUSERID).child("name").setValue(editUserName.getText().toString());
                     editDialog.hide();
                     Toasty.success(getActivity(), "Success").show();
-                }
-                else{
-                    Toasty.error(getActivity(),"Name cannot be empty").show();
+                } else {
+                    Toasty.error(getActivity(), "Name cannot be empty").show();
                 }
             }
         });
@@ -357,7 +356,9 @@ public class UserFragment extends Fragment
         Log.d("Database Error. ", "Error Code of:" + databaseError.getCode() + "");
 
     }
+
     boolean hide = true;
+
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         user = dataSnapshot.getValue(User.class);
@@ -371,7 +372,7 @@ public class UserFragment extends Fragment
                 userType.setText(user.getUserType() == 0 ? "Helper" : "Victim");
             if (Objects.equals(user.getUserType(), UserType.VICTIM)) {
                 userOnline.setText("Seek Help Now.");
-            } else if(Objects.equals(user.getUserType(),UserType.ADMIN)){
+            } else if (Objects.equals(user.getUserType(), UserType.ADMIN)) {
                 userOnline.setText("Review Reports");
                 userType.setText("Moderator");
             }

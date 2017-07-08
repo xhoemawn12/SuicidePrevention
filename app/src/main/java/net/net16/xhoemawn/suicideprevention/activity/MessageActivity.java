@@ -1,25 +1,18 @@
 package net.net16.xhoemawn.suicideprevention.activity;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +25,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,8 +44,6 @@ import net.net16.xhoemawn.suicideprevention.model.Message;
 import net.net16.xhoemawn.suicideprevention.model.Report;
 import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.tools.ReportType;
-
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -101,6 +91,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
     private ImageButton callButton;
     private TextView nameOfUser;
     private String receiver;
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 0) {
@@ -209,7 +200,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Chat chat = dataSnapshot.getValue(Chat.class);
-                 receiver = "";
+                receiver = "";
                 for (String id : chat.getUsers().keySet()) {
                     if (id != uid) {
                         receiver = id;
@@ -224,7 +215,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                         startActivity(intent);
                     }
                 });
-                FirebaseDatabase.getInstance().getReference("User/"+receiver).addListenerForSingleValueEvent(new ValueEventListener() {
+                FirebaseDatabase.getInstance().getReference("User/" + receiver).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         nameOfUser.setText(dataSnapshot.getValue(User.class).getName());
@@ -238,7 +229,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                 nameOfUser.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(uid!=null){
+                        if (uid != null) {
                             Intent intent1 = new Intent(MessageActivity.this, UserProfileActivity.class);
                             intent1.putExtra("USERID", receiver);
                             startActivity(intent1);

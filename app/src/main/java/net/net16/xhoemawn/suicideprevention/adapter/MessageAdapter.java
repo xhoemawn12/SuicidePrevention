@@ -18,9 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.model.Message;
 import net.net16.xhoemawn.suicideprevention.model.User;
-import net.net16.xhoemawn.suicideprevention.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -42,6 +42,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
     private DatabaseReference databaseReference;
     private String senderName;
     private DateFormat dateFormat;
+
     public MessageAdapter() {
 
     }
@@ -81,8 +82,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
         if (messages.get(position).getSenderId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             holder.linearlayout.setGravity(Gravity.END);
 
-        }
-        else{
+        } else {
             holder.linearlayout.setGravity(Gravity.START);
         }
         if (!messages.get(position).getImageURI().equals("")) {
@@ -111,13 +111,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageH
 
     }
 
-     static class MessageHolder extends RecyclerView.ViewHolder {
+    static class MessageHolder extends RecyclerView.ViewHolder {
         TextView message;
         TextView sender;
         ImageView imageView;
         LinearLayout linearlayout;
         TextView timeStamp;
-         MessageHolder(View v) {
+
+        MessageHolder(View v) {
             super(v);
             linearlayout = (LinearLayout) v.findViewById(R.id.linearLayoutChat);
             message = (TextView) v.findViewById(R.id.message);

@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.activity.UserProfileActivity;
+import net.net16.xhoemawn.suicideprevention.model.User;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -44,7 +44,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         if (userArrayList.get(position).getImageURL() != null)
             Glide.with(holder.imageView).load(userArrayList.get(position).getImageURL()).into(holder.imageView);
         holder.userDescription.setText(userArrayList.get(position).getDescription());
-        holder.userStatus.setText(userArrayList.get(position).isAvailable()?"online":"offline"+ "");
+        holder.userStatus.setText(userArrayList.get(position).isAvailable() ? "online" : "offline" + "");
 
 // holder.userType.setText(userArrayList.get(position).getUserType());
 

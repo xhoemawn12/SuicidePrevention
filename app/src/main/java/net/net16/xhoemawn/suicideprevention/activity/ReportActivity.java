@@ -1,9 +1,7 @@
 package net.net16.xhoemawn.suicideprevention.activity;
 
 import android.content.Intent;
-import android.icu.util.TimeUnit;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -23,8 +21,6 @@ import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.base.SuperActivity;
 import net.net16.xhoemawn.suicideprevention.model.Report;
 import net.net16.xhoemawn.suicideprevention.model.User;
-
-import org.w3c.dom.Text;
 
 import es.dmoral.toasty.Toasty;
 
@@ -120,9 +116,9 @@ public class ReportActivity extends SuperActivity implements View.OnClickListene
                                               public void onClick(View v) {
                                                   FirebaseDatabase.getInstance().getReference("User/" + report.getReportedTo()).
                                                           child("/disabled/").
-                                                          setValue(System.currentTimeMillis()+java.util.concurrent.TimeUnit.DAYS.toMillis(Long.valueOf(editText.getText().toString())));
+                                                          setValue(System.currentTimeMillis() + java.util.concurrent.TimeUnit.DAYS.toMillis(Long.valueOf(editText.getText().toString())));
                                                   alertDialog.dismiss();
-                                                  Toasty.success(ReportActivity.this,"Success.").show();
+                                                  Toasty.success(ReportActivity.this, "Success.").show();
                                               }
 
                                           }
@@ -130,7 +126,7 @@ public class ReportActivity extends SuperActivity implements View.OnClickListene
                 break;
             case R.id.reportSpamButton:
                 FirebaseDatabase.getInstance().getReference("Report/" + reportId).child("/reviewed/").setValue(true);
-                Toasty.success(ReportActivity.this,"Success.").show();
+                Toasty.success(ReportActivity.this, "Success.").show();
         }
     }
 }

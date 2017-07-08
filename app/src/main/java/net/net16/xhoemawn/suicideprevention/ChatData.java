@@ -6,13 +6,11 @@ import android.os.AsyncTask;
 
 import com.google.firebase.database.DatabaseReference;
 
-import java.net.URL;
-
 /**
  * Created by glenn on 4/14/17.
  */
 
-public class ChatData extends AsyncTask<DatabaseReference,Long,Long> {
+public class ChatData extends AsyncTask<DatabaseReference, Long, Long> {
     public ProgressDialog progressDialog;
 
     public ChatData(Context ctx) {

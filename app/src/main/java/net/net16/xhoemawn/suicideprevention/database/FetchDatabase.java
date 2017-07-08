@@ -15,12 +15,12 @@ import java.util.ArrayList;
  */
 public class FetchDatabase {
 
-    private static  FirebaseDatabase firebaseDatabase;
+    private static FirebaseDatabase firebaseDatabase;
     private static DatabaseReference databaseReference;
 
-    public static  FetchDatabase getInstance(){
+    public static FetchDatabase getInstance() {
         FetchDatabase fetchDatabase = new FetchDatabase();
-        firebaseDatabase  = FirebaseDatabase.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
@@ -32,16 +32,16 @@ public class FetchDatabase {
         return new FetchDatabase();
     }
 
-    public ArrayList<Chat> getChatData(){
+    public ArrayList<Chat> getChatData() {
         return new ArrayList<>();
     }
 
 
-    public ArrayList getPostDetails(){
+    public ArrayList getPostDetails() {
         return new ArrayList();
     }
 
-    public DatabaseReference getChatNode(){
+    public DatabaseReference getChatNode() {
         return databaseReference.child("Child");
     }
 

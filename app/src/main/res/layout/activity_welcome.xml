@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="net.net16.xhoemawn.suicideprevention.activity.WelcomeActivity"
-    >
+    tools:context="net.net16.xhoemawn.suicideprevention.activity.WelcomeActivity">
 
     <TextView
         android:id="@+id/textView5"

@@ -30,15 +30,12 @@ import com.google.firebase.storage.StorageReference;
 import com.sinch.android.rtc.PushPair;
 import com.sinch.android.rtc.Sinch;
 import com.sinch.android.rtc.SinchClient;
-import com.sinch.android.rtc.SinchClientListener;
 import com.sinch.android.rtc.calling.Call;
 import com.sinch.android.rtc.calling.CallClient;
 import com.sinch.android.rtc.calling.CallClientListener;
 import com.sinch.android.rtc.calling.CallListener;
 
 import net.net16.xhoemawn.suicideprevention.R;
-import net.net16.xhoemawn.suicideprevention.activity.CallActivity;
-import net.net16.xhoemawn.suicideprevention.activity.MessageActivity;
 import net.net16.xhoemawn.suicideprevention.activity.WelcomeActivity;
 import net.net16.xhoemawn.suicideprevention.callbacks.ImageResult;
 import net.net16.xhoemawn.suicideprevention.model.Chat;
@@ -61,7 +58,7 @@ public class SuperActivity extends
         SuperActivity.messageActive = messageActive;
     }
 
-    private static int count= 0;
+    private static int count = 0;
     public ImageResult imageResult;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -69,6 +66,7 @@ public class SuperActivity extends
     private FirebaseStorage firebaseStorage;
     private NotificationManager notificationManager;
     public static SinchClient sinchClient;
+
     public ImageResult getImageResult() {
         return imageResult;
     }
@@ -130,7 +128,7 @@ public class SuperActivity extends
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot != null)
                             if (!dataSnapshot.getValue(Boolean.class)) {
-                                if (shouldShowNotification && count>0) {
+                                if (shouldShowNotification && count > 0) {
                                     Toasty.error(getApplicationContext(), "Cannot Connect to Server", Toast.LENGTH_LONG).show();
                                     notificationManager = buildNotification("Cannot Connect To Server", "Check your Internet Connection.", new Intent(), 0, notificationManager, true);
                                     shouldShowNotification = false;
@@ -150,43 +148,43 @@ public class SuperActivity extends
                 });
             }
         }, 20000);
-        if(firstRun && FirebaseAuth.getInstance().getCurrentUser()!=null) {
+        if (firstRun && FirebaseAuth.getInstance().getCurrentUser() != null) {
             firebaseDatabase.getReference("User/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).child("/available/").setValue(true);
-            if(!isMessageActive())
-            firebaseDatabase.getReference("Chat/").
-                    orderByChild("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .equalTo(true).addValueEventListener(new ValueEventListener() {
-                                                             @Override
-                                                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                 firstRun = false;
-                                                                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+            if (!isMessageActive())
+                firebaseDatabase.getReference("Chat/").
+                        orderByChild("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .equalTo(true).addValueEventListener(new ValueEventListener() {
+                                                                 @Override
+                                                                 public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                     firstRun = false;
+                                                                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
-                                                                     Chat chat = dataSnapshot1.getValue(Chat.class);
-                                                                     if (chat.getLastMessage() != null)
-                                                                         if (!chat.getLastMessage().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                                                                             NotificationCompat.Builder mBuilder =
-                                                                                     new NotificationCompat.Builder(SuperActivity.this)
-                                                                                             .setSmallIcon(R.mipmap.ic_launcher)
-                                                                                             .setContentTitle("Suicide Prevention").setContentText("Unresponded Messages.").setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                                                                         Chat chat = dataSnapshot1.getValue(Chat.class);
+                                                                         if (chat.getLastMessage() != null)
+                                                                             if (!chat.getLastMessage().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                                                                                 NotificationCompat.Builder mBuilder =
+                                                                                         new NotificationCompat.Builder(SuperActivity.this)
+                                                                                                 .setSmallIcon(R.mipmap.ic_launcher)
+                                                                                                 .setContentTitle("Suicide Prevention").setContentText("Unresponded Messages.").setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 
-                                                                             Intent resultIntent = new Intent(SuperActivity.this, WelcomeActivity.class);
-                                                                             resultIntent.putExtra("CHAT_ID", dataSnapshot.getKey());
-                                                                             PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
-                                                                                     resultIntent, PendingIntent.FLAG_ONE_SHOT);
-                                                                             mBuilder.setContentIntent(resultPendingIntent);
-                                                                             NotificationManager mNotificationManager =
-                                                                                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                                                                             mNotificationManager.notify(0, mBuilder.build());
-                                                                         }
+                                                                                 Intent resultIntent = new Intent(SuperActivity.this, WelcomeActivity.class);
+                                                                                 resultIntent.putExtra("CHAT_ID", dataSnapshot.getKey());
+                                                                                 PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
+                                                                                         resultIntent, PendingIntent.FLAG_ONE_SHOT);
+                                                                                 mBuilder.setContentIntent(resultPendingIntent);
+                                                                                 NotificationManager mNotificationManager =
+                                                                                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                                                                 mNotificationManager.notify(0, mBuilder.build());
+                                                                             }
+                                                                     }
+                                                                 }
+
+                                                                 @Override
+                                                                 public void onCancelled(DatabaseError databaseError) {
+
                                                                  }
                                                              }
-
-                                                             @Override
-                                                             public void onCancelled(DatabaseError databaseError) {
-
-                                                             }
-                                                         }
-            );
+                );
             firebaseDatabase.getReference("User/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).child("/available/").onDisconnect().setValue(false);
 
             sinchClient = Sinch.getSinchClientBuilder()
@@ -227,14 +225,16 @@ public class SuperActivity extends
             AlertDialog alertDialog = alBuilder.create();
             /*call.addCallListener(new SuperActivity.SinchCallListener());
             button.setText("Hang Up");
-        */}
+        */
+        }
     }
 
     AlertDialog alertDialog;
+
     public class SinchCallListener implements CallListener {
         @Override
         public void onCallEnded(Call endedCall) {
-            if(alertDialog!=null){
+            if (alertDialog != null) {
                 alertDialog.dismiss();
             }
             setVolumeControlStream(AudioManager.USE_DEFAULT_STREAM_TYPE);
@@ -252,7 +252,8 @@ public class SuperActivity extends
         }
 
         @Override
-        public void onShouldSendPushNotification(Call call, List<PushPair> pushPairs) {}
+        public void onShouldSendPushNotification(Call call, List<PushPair> pushPairs) {
+        }
     }
 
 

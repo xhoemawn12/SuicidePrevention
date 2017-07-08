@@ -9,15 +9,17 @@
         <item name="android:buttonStyle">@style/Button</item>
         <item name="android:textViewStyle">@style/CustomFont</item>
         <item name="android:textAppearance">@style/CustomFont</item>
-        <item name = "android:editTextPreferenceStyle">@style/CustomFont</item>
+        <item name="android:editTextPreferenceStyle">@style/CustomFont</item>
 
     </style>
+
     <style name="CustomFont" parent="Platform.AppCompat.Light">
         <item name="android:fontFamily">serif-monospace</item>
         <item name="android:typeface">monospace</item>
         <item name="android:textSize">17sp</item>
 
     </style>
+
     <style name="Button" parent="Base.Widget.AppCompat.Button">
         <item name="android:background">@color/colorPrimaryLight</item>
         <item name="android:typeface">monospace</item>

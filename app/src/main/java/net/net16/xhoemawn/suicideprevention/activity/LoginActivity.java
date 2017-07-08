@@ -1,13 +1,9 @@
 package net.net16.xhoemawn.suicideprevention.activity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
@@ -27,11 +23,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.sinch.android.rtc.ClientRegistration;
-import com.sinch.android.rtc.Sinch;
-import com.sinch.android.rtc.SinchClient;
-import com.sinch.android.rtc.SinchClientListener;
-import com.sinch.android.rtc.SinchError;
 
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.base.SuperActivity;
@@ -41,6 +32,7 @@ import es.dmoral.toasty.Toasty;
 
 
 public class LoginActivity extends SuperActivity implements View.OnClickListener {
+    EditText editText1;
     private boolean isLoggedIn = false;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseUser firebaseUser = null;
@@ -48,9 +40,9 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
     private EditText editText;
     private Button signIn;
     private Button signUp;
-    EditText editText1;
     private ProgressBar progressBar;
-    private Integer userType ;
+    private Integer userType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,44 +62,38 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
                 firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
                     progressBar.setVisibility(View.VISIBLE);
-                    Toasty.info(LoginActivity.this,"Please Wait..").show();
+                    Toasty.info(LoginActivity.this, "Please Wait..").show();
                     signIn.setClickable(false);
                     signUp.setClickable(false);
-                    FirebaseDatabase.getInstance().getReference("User/"+firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    FirebaseDatabase.getInstance().getReference("User/" + firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             User user = dataSnapshot.getValue(User.class);
                             try {
                                 intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                if(user!=null && user.getUserType()!=null) {
-                                    if(user.getDisabled()>System.currentTimeMillis()){
-                                        Toasty.info(getBaseContext(),"You have been blocked for certain time by our moderator for violating certain rules", Toast.LENGTH_LONG).show();
-                                    }
-                                    else {
-
+                                if (user != null && user.getUserType() != null) {
+                                    if (user.getDisabled() > System.currentTimeMillis()) {
+                                        Toasty.info(getBaseContext(), "You have been blocked for certain time by our moderator for violating certain rules",
+                                                Toast.LENGTH_LONG).show();
+                                    } else {
                                         userType = user.getUserType();
                                         intent.putExtra("USERTYPE", userType);
                                         intent.putExtra("USERNAME", firebaseUser.getEmail());
-                                        progressBar.setVisibility(View.GONE);
                                         Toasty.success(LoginActivity.this, "Success..").show();
                                         signIn.setClickable(true);
                                         signUp.setClickable(true);
                                         startActivity(intent);
                                         finish();
-
                                     }
+                                    progressBar.setVisibility(View.GONE);
                                 }
-                            }
-                            catch (NullPointerException nul){
+                            } catch (NullPointerException nul) {
                                 userType = null;
                             }
-
-
                         }
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
-
                         }
                     });
                     firebaseAuth.removeAuthStateListener(this);
@@ -167,7 +153,7 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
 
     public void checkLogin(String email, String password) {
         progressBar.setVisibility(View.VISIBLE);
-        Toasty.info(LoginActivity.this,"Logging you in..").show();
+        Toasty.info(LoginActivity.this, "Logging you in..").show();
         signIn.setClickable(false);
         signUp.setClickable(false);
         if (firebaseUser == null) {
@@ -178,11 +164,11 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
                     System.out.println(task.isSuccessful() + "");
                     if (task.isSuccessful()) {
                         isLoggedIn = true;
-                        
+
                     } else {
                         Log.d("SAD", task.toString());
                         progressBar.setVisibility(View.GONE);
-                        Toasty.error(LoginActivity.this,"Incorrect Username/Password..").show();
+                        Toasty.error(LoginActivity.this, "Incorrect Username/Password..").show();
                         signIn.setClickable(true);
                         signUp.setClickable(true);
                         editText.requestFocus();
