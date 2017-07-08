@@ -11,6 +11,7 @@ import android.widget.TextView;
 import net.net16.xhoemawn.suicideprevention.R;
 import net.net16.xhoemawn.suicideprevention.activity.ReportActivity;
 import net.net16.xhoemawn.suicideprevention.model.Report;
+import net.net16.xhoemawn.suicideprevention.tools.ReportType;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -39,8 +40,24 @@ import java.util.LinkedHashMap;
     @Override
     public void onBindViewHolder(ReportHolder holder, int position) {
         Report report = reports.get(position);
-        holder.reportType.setText("Type: "+report.getReportType().toString());
+
+        holder.reportType.setText(printReportType(report.getReportType()));
         holder.reportDescripttion.setText(report.getReportDescription());
+    }
+
+    private String printReportType(int reportType){
+        String str = new String();
+        str = "Others";
+        if(reportType == ReportType.IMPOLITE){
+            str = "Impolite";
+        }
+        else if(reportType == ReportType.PORNOGRAPHIC_CONTENT){
+            str = "Pornographic Content";
+        }
+        else if(reportType ==ReportType.SPAM){
+            str = "Spam";
+        }
+        return str;
     }
 
     @Override

@@ -91,11 +91,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             cal.setTimeInMillis(chats.get(position).getTimeStamp());
             holder.time.setText(dateFormat.format(cal.getTime()));
         }
+        holder.newMessage.setText("No New Messages");
         for(String userId: usersId){
             if(!Objects.equals(userId, FirebaseAuth.getInstance().getCurrentUser().getUid())){
                 foreignUserId = userId;
                 if(userId.equals(chats.get(position).getLastMessage())) {
-                    holder.newMessage.setText("New Message");
+                    holder.newMessage.setText("Messages Not Replied");
                     holder.constraintLayout.setBackgroundResource(R.color.colorPrimaryLight);
                 }
             }

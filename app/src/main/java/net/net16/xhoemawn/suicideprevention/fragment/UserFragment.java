@@ -371,7 +371,8 @@ public class UserFragment extends Fragment
                 userType.setText(user.getUserType() == 0 ? "Helper" : "Victim");
             if (Objects.equals(user.getUserType(), UserType.VICTIM)) {
                 userOnline.setText("Seek Help Now.");
-            } else {
+            } else if(Objects.equals(user.getUserType(),UserType.ADMIN)){
+                userOnline.setText("Review Reports");
                 userType.setText("Moderator");
             }
             if (user.getDescription() != null)

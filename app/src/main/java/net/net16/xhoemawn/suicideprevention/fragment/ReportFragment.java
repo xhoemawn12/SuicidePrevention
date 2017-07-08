@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,6 +48,11 @@ public class ReportFragment extends Fragment {
         reportAdapter = new ReportAdapter(reportHashMap);
         recyclerView.setAdapter(reportAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        final ProgressBar progressBar = (ProgressBar) v.findViewById(R.id.progress);
+        progressBar.setVisibility(View.GONE);
+        final TextView textView1 = (TextView) v.findViewById(R.id.messageAlert);
+        textView1.setVisibility(View.GONE);
         FirebaseDatabase.getInstance().getReference("Report/").orderByChild("reviewed").equalTo(false).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -53,6 +60,14 @@ public class ReportFragment extends Fragment {
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
                     reportHashMap.put(dataSnapshot1.getKey(),dataSnapshot1.getValue(Report.class));
                 }
+                if(reportHashMap.size()==0){
+                    textView1.setVisibility(View.VISIBLE);
+
+                }
+                else{
+                    textView1.setVisibility(View.GONE);
+                }
+                progressBar.setVisibility(View.GONE);
                 reportAdapter.notifyDataSetChanged();
             }
 

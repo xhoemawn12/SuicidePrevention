@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,7 +50,10 @@ import net.net16.xhoemawn.suicideprevention.callbacks.ImageResult;
 import net.net16.xhoemawn.suicideprevention.model.Chat;
 import net.net16.xhoemawn.suicideprevention.model.Message;
 import net.net16.xhoemawn.suicideprevention.model.Report;
+import net.net16.xhoemawn.suicideprevention.model.User;
 import net.net16.xhoemawn.suicideprevention.tools.ReportType;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -95,7 +99,8 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
     private Button reportBtn;
     private String uid;
     private ImageButton callButton;
-
+    private TextView nameOfUser;
+    private String receiver;
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 0) {
@@ -149,10 +154,12 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.messagefragment);
         cntext = getApplicationContext();
         tempMessageHash = new LinkedHashMap<>();
         messageList = new HashMap<>();
+        nameOfUser = (TextView) findViewById(R.id.nameOfUser);
         progressBar = (ProgressBar) findViewById(R.id.progressBar2);
         progressBar.setVisibility(View.GONE);
         imageURI = null;
@@ -161,6 +168,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         } catch (NullPointerException nu) {
             uid = "";
         }
+
         imageButton = (ImageButton) findViewById(R.id.imageButton);
         chatButton = (ImageButton) findViewById(R.id.sendButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -179,35 +187,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Message/" + CHAT_ID);
         databaseReference.addValueEventListener(this);
-        firebaseDatabase.getReference("Chat/" + CHAT_ID).addValueEventListener(new ValueEventListener() {
-                                                                                   @Override
-                                                                                   public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                                                                       Chat chat = dataSnapshot.getValue(Chat.class);
-                                                                                       if (chat.getLastMessage() != null)
-                                                                                           if (!chat.getLastMessage().equals(uid)) {
-                                                                                               NotificationCompat.Builder mBuilder =
-                                                                                                       new NotificationCompat.Builder(MessageActivity.this)
-                                                                                                               .setSmallIcon(R.mipmap.ic_launcher)
-                                                                                                               .setContentTitle("New Message").setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-
-                                                                                               Intent resultIntent = new Intent(MessageActivity.this, WelcomeActivity.class);
-                                                                                               resultIntent.putExtra("CHAT_ID", dataSnapshot.getKey());
-                                                                                               PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
-                                                                                                       resultIntent, PendingIntent.FLAG_ONE_SHOT);
-                                                                                               mBuilder.setContentIntent(resultPendingIntent);
-                                                                                               NotificationManager mNotificationManager =
-                                                                                                       (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                                                                                               mNotificationManager.notify(0, mBuilder.build());
-                                                                                           }
-                                                                                   }
-
-                                                                                   @Override
-                                                                                   public void onCancelled(DatabaseError databaseError) {
-
-                                                                                   }
-                                                                               }
-        );
         chatButton.setOnClickListener(new View.OnClickListener() {
                                           @Override
                                           public void onClick(View v) {
@@ -225,24 +205,29 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHorizontalScrollBarEnabled(true);
         callButton = (ImageButton) findViewById(R.id.callButton);
-        callButton.setOnClickListener(new View.OnClickListener() {
+        FirebaseDatabase.getInstance().getReference("Chat/" + CHAT_ID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                FirebaseDatabase.getInstance().getReference("Chat/" + CHAT_ID).addListenerForSingleValueEvent(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Chat chat = dataSnapshot.getValue(Chat.class);
+                 receiver = "";
+                for (String id : chat.getUsers().keySet()) {
+                    if (id != uid) {
+                        receiver = id;
+                    }
+                }
+
+                callButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Chat chat = dataSnapshot.getValue(Chat.class);
-                        String receiver = "";
-                        for (String id : chat.getUsers().keySet()) {
-                            if (id != uid) {
-                                receiver = id;
-                            }
-                        }
+                    public void onClick(View v) {
                         Intent intent = new Intent(MessageActivity.this, CallActivity.class);
-                        intent.putExtra("caller", uid);
                         intent.putExtra("receiver", receiver);
                         startActivity(intent);
-
+                    }
+                });
+                FirebaseDatabase.getInstance().getReference("User/"+receiver).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        nameOfUser.setText(dataSnapshot.getValue(User.class).getName());
                     }
 
                     @Override
@@ -250,8 +235,25 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
 
                     }
                 });
+                nameOfUser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(uid!=null){
+                            Intent intent1 = new Intent(MessageActivity.this, UserProfileActivity.class);
+                            intent1.putExtra("USERID", receiver);
+                            startActivity(intent1);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
+
+
         messageAdapter = new MessageAdapter(tempMessageHash);
         recyclerView.setAdapter(messageAdapter);
         setImageResult(new ImageResult() {
@@ -268,7 +270,8 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
 
                         Toasty.info(MessageActivity.this, "Uploading Image..").show();
                         progressBar.setVisibility(View.VISIBLE);
-                        storageReference.child("users/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg").putFile(selectedImage).addOnSuccessListener(MessageActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        storageReference.child("users/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg")
+                                .putFile(selectedImage).addOnSuccessListener(MessageActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
@@ -314,7 +317,8 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                         public void onClick(View v) {
                             if (checkBox.isChecked()) {
                                 alertDialog.dismiss();
-                                ActivityCompat.requestPermissions(MessageActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                                ActivityCompat.requestPermissions(MessageActivity.this,
+                                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                             } else {
                                 Toasty.error(MessageActivity.this, "Please Select Report Type").show();
                             }
@@ -350,6 +354,18 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
     @Override
     public void onCancelled(DatabaseError databaseError) {
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SuperActivity.setMessageActive(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SuperActivity.setMessageActive(true);
     }
 
     public void sendMessage() {

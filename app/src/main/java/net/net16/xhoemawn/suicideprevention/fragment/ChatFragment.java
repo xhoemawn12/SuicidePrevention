@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -80,8 +81,12 @@ public class ChatFragment extends Fragment {
         final DatabaseReference databaseReference = firebaseDatabase.getReference("Chat/");
         String childKey = "users/" + firebaseUser.getUid();
         System.out.println(childKey);
-        final ChatAdapter chatAdapter = new ChatAdapter(chatHashMap);
-        recyclerView.setAdapter(chatAdapter);
+
+        final ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
+
+        final TextView textView1 = (TextView) rootView.findViewById(R.id.messageAlert);
+        textView1.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
         databaseReference.orderByChild(childKey).equalTo(true).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -90,11 +95,17 @@ public class ChatFragment extends Fragment {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     chatHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Chat.class));
                 }
+                if(chatHashMap.size()==0){
+                    textView1.setVisibility(View.VISIBLE);
+
+                }
+                else{
+                    textView1.setVisibility(View.GONE);
+                }
+                progressBar.setVisibility(View.GONE);
                 chatHashMap = sortByTimeStamp(chatHashMap);
-                chatAdapter.setChatHashMap(new LinkedHashMap<String, Chat>());
-                chatAdapter.notifyDataSetChanged();
-                chatAdapter.setChatHashMap(chatHashMap);
-                chatAdapter.notifyDataSetChanged();
+                ChatAdapter chatAdapter = new ChatAdapter(chatHashMap);
+                recyclerView.setAdapter(chatAdapter);
             }
 
 

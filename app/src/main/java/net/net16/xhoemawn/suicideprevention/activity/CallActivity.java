@@ -29,7 +29,6 @@ public class CallActivity extends SuperActivity {
 
     private Call call;
     private TextView callState;
-    private SinchClient sinchClient;
     private Button button;
     private String callerId;
     private String recipientId;
@@ -40,22 +39,8 @@ public class CallActivity extends SuperActivity {
         setContentView(R.layout.call);
 
         Intent intent = getIntent();
-        callerId = intent.getStringExtra("caller");
         recipientId = intent.getStringExtra("receiver");
 
-        sinchClient = Sinch.getSinchClientBuilder()
-                .context(this)
-                .userId(callerId)
-                .applicationKey("3793d7b1-6113-4680-b2cd-81b67317434c")
-                .applicationSecret("UL1bOGZ1lESYhYr3ygT9tQ==")
-                .environmentHost("sandbox.sinch.com")
-                .build();
-
-        sinchClient.setSupportCalling(true);
-        sinchClient.startListeningOnActiveConnection();
-        sinchClient.start();
-
-        sinchClient.getCallClient().addCallClientListener(new SinchCallClientListener());
 
         button = (Button) findViewById(R.id.callButton);
         callState = (TextView) findViewById(R.id.callState);
@@ -86,37 +71,4 @@ public class CallActivity extends SuperActivity {
         }
     }
 
-    private class SinchCallListener implements CallListener {
-        @Override
-        public void onCallEnded(Call endedCall) {
-            call = null;
-            button.setText("Call");
-            callState.setText("");
-            setVolumeControlStream(AudioManager.USE_DEFAULT_STREAM_TYPE);
-        }
-
-        @Override
-        public void onCallEstablished(Call establishedCall) {
-            callState.setText("connected");
-            setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
-        }
-
-        @Override
-        public void onCallProgressing(Call progressingCall) {
-            callState.setText("ringing");
-        }
-
-        @Override
-        public void onShouldSendPushNotification(Call call, List<PushPair> pushPairs) {}
-    }
-
-    private class SinchCallClientListener implements CallClientListener {
-        @Override
-        public void onIncomingCall(CallClient callClient, Call incomingCall) {
-            call = incomingCall;
-            call.answer();
-            call.addCallListener(new SinchCallListener());
-            button.setText("Hang Up");
-        }
-    }
 }

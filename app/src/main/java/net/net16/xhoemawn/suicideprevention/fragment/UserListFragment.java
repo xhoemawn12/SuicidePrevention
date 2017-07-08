@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,6 +82,10 @@ public class UserListFragment extends android.support.v4.app.Fragment {
 
             }
         });
+        final ProgressBar progressBar = (ProgressBar) v.findViewById(R.id.progress);
+        final TextView textView1 = (TextView) v.findViewById(R.id.messageAlert);
+
+        textView1.setVisibility(View.GONE);
         databaseReference.orderByChild("available").equalTo(true).addValueEventListener(new ValueEventListener() {
 
 
@@ -91,8 +96,16 @@ public class UserListFragment extends android.support.v4.app.Fragment {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     User user = dataSnapshot1.getValue(User.class);
                     if (currentUser != null && !currentUser.getUserType().equals(dataSnapshot1.getValue(User.class).getUserType()))
-                        if(!dataSnapshot1.getValue(User.class).getUserType().equals(UserType.ADMIN))
+                        if(!user.getUserType().equals(UserType.ADMIN))
                             userLinkedHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(User.class));
+                    if(userLinkedHashMap.size()==0){
+                        textView1.setVisibility(View.VISIBLE);
+
+                    }
+                    else{
+                        textView1.setVisibility(View.GONE);
+                    }
+                    progressBar.setVisibility(View.GONE);
                 }
                 userAdapter.notifyDataSetChanged();
             }

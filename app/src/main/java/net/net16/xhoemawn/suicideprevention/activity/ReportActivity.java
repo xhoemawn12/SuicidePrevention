@@ -1,11 +1,14 @@
 package net.net16.xhoemawn.suicideprevention.activity;
 
 import android.content.Intent;
+import android.icu.util.TimeUnit;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,11 +26,13 @@ import net.net16.xhoemawn.suicideprevention.model.User;
 
 import org.w3c.dom.Text;
 
+import es.dmoral.toasty.Toasty;
+
 /**
  * Created by xhoemawn12 on 7/1/17.
  */
 
-public class ReportActivity extends SuperActivity implements View.OnClickListener{
+public class ReportActivity extends SuperActivity implements View.OnClickListener {
     private TextView reportedBy;
     private TextView reportedTo;
     private TextView reportType;
@@ -84,25 +89,48 @@ public class ReportActivity extends SuperActivity implements View.OnClickListene
         Glide.with(ReportActivity.this).load(report.getReportImage()).into(image);
         blockUser = (Button) findViewById(R.id.blockButton);
         reportSpam = (Button) findViewById(R.id.reportSpamButton);
+        blockUser.setOnClickListener(this);
+        reportSpam.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.reportedBy:
-                Intent intent = new Intent(this,UserProfileActivity.class);
-                intent.putExtra("USERID",report.getReportedBy());
+                Intent intent = new Intent(this, UserProfileActivity.class);
+                intent.putExtra("USERID", report.getReportedBy());
                 startActivity(intent);
                 break;
             case R.id.reportedTo:
 
-                Intent intent1 = new Intent(this,UserProfileActivity.class);
-                intent1.putExtra("USERID",report.getReportedTo());
+                Intent intent1 = new Intent(this, UserProfileActivity.class);
+                intent1.putExtra("USERID", report.getReportedTo());
                 startActivity(intent1);
                 break;
             case R.id.blockButton:
-                FirebaseDatabase.getInstance().getReference("Report/"+reportId).child("/reviewed/").setValue(true);
-                FirebaseDatabase.getInstance().getReference("User/"+report.getReportedTo()).child("/disabled/").setValue(System.currentTimeMillis());
+                AlertDialog.Builder alerBuilder = new AlertDialog.Builder(ReportActivity.this);
+                alerBuilder.setView(R.layout.reporttime);
+                final AlertDialog alertDialog = alerBuilder.create();
+                alertDialog.show();
+                final EditText editText = (EditText) alertDialog.findViewById(R.id.reportDays);
+                FirebaseDatabase.getInstance().getReference("Report/" + reportId).child("/reviewed/").setValue(true);
+                Button button = (Button) alertDialog.findViewById(R.id.button3);
+                button.setOnClickListener(new View.OnClickListener() {
+                                              @Override
+                                              public void onClick(View v) {
+                                                  FirebaseDatabase.getInstance().getReference("User/" + report.getReportedTo()).
+                                                          child("/disabled/").
+                                                          setValue(System.currentTimeMillis()+java.util.concurrent.TimeUnit.DAYS.toMillis(Long.valueOf(editText.getText().toString())));
+                                                  alertDialog.dismiss();
+                                                  Toasty.success(ReportActivity.this,"Success.").show();
+                                              }
+
+                                          }
+                );
+                break;
+            case R.id.reportSpamButton:
+                FirebaseDatabase.getInstance().getReference("Report/" + reportId).child("/reviewed/").setValue(true);
+                Toasty.success(ReportActivity.this,"Success.").show();
         }
     }
 }
