@@ -50,6 +50,7 @@ public class CallActivity extends SuperActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     User user = dataSnapshot.getValue(User.class);
+
                     if(user!=null){
                         caller.setText(user.getName());
                     }
@@ -67,7 +68,7 @@ public class CallActivity extends SuperActivity {
                     if (button.getText().toString().equals("Hangup")) {
                         if (receiveCall != null) {
                             receiveCall.hangup();
-                            callState.setText(receiveCall.getDetails().getDuration()+"");
+                            //callState.setText(receiveCall.getDetails().getDuration()+"");
                         }
                     }
                     else{
