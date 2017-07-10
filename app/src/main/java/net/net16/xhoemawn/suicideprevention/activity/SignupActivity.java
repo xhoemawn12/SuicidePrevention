@@ -148,8 +148,8 @@ public class SignupActivity extends SuperActivity implements View.OnClickListene
                     progressBar.setVisibility(View.GONE);
                     progressBar.requestFocus();
                     Toasty.error(SignupActivity.this, "You cannot be registered. Sorry.", Toast.LENGTH_LONG).show();
-                    signUp.setClickable(false);
-                    cancel.setClickable(false);
+                    signUp.setClickable(true);
+                    cancel.setClickable(true);
 
                 }
             }

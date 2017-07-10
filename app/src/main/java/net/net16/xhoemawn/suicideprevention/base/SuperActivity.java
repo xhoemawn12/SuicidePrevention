@@ -164,8 +164,13 @@ public class SuperActivity extends
                                                                          if (chat.getLastMessage() != null)
                                                                              if (!chat.getLastMessage().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                                                                                  notificationManager = buildNotification("Suicide Prevention", "Unresponded messages.", new Intent(), 0, notificationManager, true);
-
                                                                              }
+                                                                             else if(chat.getLastMessage().equals(""))
+                                                                         {
+                                                                             notificationManager = buildNotification("Suicide Prevention", "New chat created", new Intent(), 0, notificationManager, true);
+
+                                                                         }
+
                                                                      }
                                                              }
 
