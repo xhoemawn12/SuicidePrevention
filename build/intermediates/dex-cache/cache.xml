@@ -11,6 +11,15 @@
         <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/classes_26143c99e3936af8a513d5e415ba4d7fd04fc4d4.jar" />
     </item>
     <item
+        is-multidex="true"
+        jar="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_062036aca8c01e73d0ae8e13243f3ca4ea571230/classes.dex" />
+    </item>
+    <item
         is-multidex="false"
         jar="/home/xhoemawn12/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/2.0.1/516c03b21d50a644d538de0f0369c620989cd8f0/jsr305-2.0.1.jar"
         jumboMode="false"
@@ -54,6 +63,15 @@
         revision="25.0.3"
         sha1="479c1e06db31c432330183f5cae684163f186146">
         <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/pre-dexed/androidTest/debug/javax.annotation-api-1.2_5af7d61f77a5e2c93e76f489bf12f9e97ee451c7.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="f53ef591125a04393f88ce75c56e1ed7e5c0e2eb">
+        <dex dex="/home/xhoemawn12/ComputingProject/SuicidePrevention/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8ae790a29ba210fd05539379f401a2822a33fe2e/classes.dex" />
     </item>
     <item
         is-multidex="false"
