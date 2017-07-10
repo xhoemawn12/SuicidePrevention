@@ -3,7 +3,9 @@ package net.net16.xhoemawn.suicideprevention.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
@@ -75,16 +77,26 @@ public class LoginActivity extends SuperActivity implements View.OnClickListener
                                     if (user.getDisabled() > System.currentTimeMillis()) {
                                         Toasty.info(getBaseContext(), "You have been blocked for certain time by our moderator for violating certain rules",
                                                 Toast.LENGTH_LONG).show();
+                                        FirebaseAuth.getInstance().signOut();
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                System.exit(0);
+                                            }
+                                        },4000);
+                                        Toasty.info(getBaseContext(), "Application will end now",
+                                                Toast.LENGTH_LONG).show();
                                     } else {
                                         userType = user.getUserType();
                                         intent.putExtra("USERTYPE", userType);
                                         intent.putExtra("USERNAME", firebaseUser.getEmail());
                                         Toasty.success(LoginActivity.this, "Success..").show();
-                                        signIn.setClickable(true);
-                                        signUp.setClickable(true);
+
                                         startActivity(intent);
                                         finish();
                                     }
+                                    signIn.setClickable(true);
+                                    signUp.setClickable(true);
                                     progressBar.setVisibility(View.GONE);
                                 }
                             } catch (NullPointerException nul) {

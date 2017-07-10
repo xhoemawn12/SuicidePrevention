@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="5dp"
-    android:background="@color/colorPrimaryLight"
     android:elevation="10dp"
     android:fillViewport="true">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@null">
 
         <TextView
             android:id="@+id/deleteText"
@@ -91,10 +91,11 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:background="@drawable/button_style"
+            android:background="@android:color/white"
+            android:elevation="3dp"
             android:padding="5dp"
             android:text="TextView"
-            android:textSize="24sp"
+            android:textSize="30sp"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -103,12 +104,14 @@
         <ImageView
             android:id="@+id/postImage"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="350dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="7dp"
+            android:background="@drawable/message_style"
+            android:elevation="5dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/postBody"

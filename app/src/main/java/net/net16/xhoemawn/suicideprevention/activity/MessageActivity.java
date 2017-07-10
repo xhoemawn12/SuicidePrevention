@@ -202,7 +202,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
                 Chat chat = dataSnapshot.getValue(Chat.class);
                 receiver = "";
                 for (String id : chat.getUsers().keySet()) {
-                    if (id != uid) {
+                    if (!id.equals(uid)) {
                         receiver = id;
                     }
                 }
@@ -356,7 +356,7 @@ public class MessageActivity extends SuperActivity implements ValueEventListener
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SuperActivity.setMessageActive(true);
+        SuperActivity.setMessageActive(false);
     }
 
     public void sendMessage() {

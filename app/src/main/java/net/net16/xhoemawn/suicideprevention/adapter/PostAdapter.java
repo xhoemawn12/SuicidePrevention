@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 
@@ -49,7 +50,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
     @Override
     public PostHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item, parent, false);
-        dateFormat = new SimpleDateFormat("YY:MM HH:mm");
+        dateFormat = new SimpleDateFormat("YY:MM HH:mm", Locale.US);
         return new PostHolder(v);
     }
 
@@ -76,7 +77,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
         if (tempPost.getImageURL() == null) {
             holder.imageBody.setVisibility(View.GONE);
         } else {
-            Glide.with(holder.imageBody).load(posts.get(position).getImageURL()).into(holder.imageBody);
+            Glide.with(holder.imageBody).load(tempPost.getImageURL()).into(holder.imageBody);
         }
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(Long.valueOf(tempPost.getTimeStamp()));

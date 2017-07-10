@@ -73,15 +73,14 @@ public class UserListFragment extends android.support.v4.app.Fragment {
 
         textView1.setVisibility(View.GONE);
         databaseReference.orderByChild("available").equalTo(true).addValueEventListener(new ValueEventListener() {
-
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userLinkedHashMap.clear();
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     User user = dataSnapshot1.getValue(User.class);
-                    if (currentUser != null && !currentUser.getUserType().equals(dataSnapshot1.getValue(User.class).getUserType()))
+                    if (currentUser != null && user!=null &&user.getUserType()!=null
+                            && !currentUser.getUserType().equals(dataSnapshot1.getValue(User.class).getUserType()))
                         if (!user.getUserType().equals(UserType.ADMIN))
                             userLinkedHashMap.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(User.class));
                     if (userLinkedHashMap.size() == 0) {

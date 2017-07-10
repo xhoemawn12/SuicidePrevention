@@ -4,7 +4,6 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
@@ -34,9 +33,10 @@ import com.sinch.android.rtc.calling.Call;
 import com.sinch.android.rtc.calling.CallClient;
 import com.sinch.android.rtc.calling.CallClientListener;
 import com.sinch.android.rtc.calling.CallListener;
+import com.sinch.android.rtc.calling.CallState;
 
 import net.net16.xhoemawn.suicideprevention.R;
-import net.net16.xhoemawn.suicideprevention.activity.WelcomeActivity;
+import net.net16.xhoemawn.suicideprevention.activity.CallActivity;
 import net.net16.xhoemawn.suicideprevention.callbacks.ImageResult;
 import net.net16.xhoemawn.suicideprevention.model.Chat;
 
@@ -46,9 +46,19 @@ import es.dmoral.toasty.Toasty;
 
 public class SuperActivity extends
         AppCompatActivity {
+    public static SinchClient sinchClient;
+    public static Call receiveCall = null;
     private static boolean shouldShowNotification = true;
     private static boolean firstRun = true;
     private static boolean messageActive = false;
+    private static int count = 0;
+    public ImageResult imageResult;
+    AlertDialog alertDialog;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+    private StorageReference storageReference;
+    private FirebaseStorage firebaseStorage;
+    private NotificationManager notificationManager;
 
     public static boolean isMessageActive() {
         return messageActive;
@@ -57,15 +67,6 @@ public class SuperActivity extends
     public static void setMessageActive(boolean messageActive) {
         SuperActivity.messageActive = messageActive;
     }
-
-    private static int count = 0;
-    public ImageResult imageResult;
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
-    private StorageReference storageReference;
-    private FirebaseStorage firebaseStorage;
-    private NotificationManager notificationManager;
-    public static SinchClient sinchClient;
 
     public ImageResult getImageResult() {
         return imageResult;
@@ -130,7 +131,7 @@ public class SuperActivity extends
                             if (!dataSnapshot.getValue(Boolean.class)) {
                                 if (shouldShowNotification && count > 0) {
                                     Toasty.error(getApplicationContext(), "Cannot Connect to Server", Toast.LENGTH_LONG).show();
-                                    notificationManager = buildNotification("Cannot Connect To Server", "Check your Internet Connection.", new Intent(), 0, notificationManager, true);
+                                    notificationManager = buildNotification("Suicide Prevention", "Check your Internet Connection.", new Intent(), 0, notificationManager, true);
                                     shouldShowNotification = false;
                                 }
                                 count++;
@@ -150,41 +151,30 @@ public class SuperActivity extends
         }, 20000);
         if (firstRun && FirebaseAuth.getInstance().getCurrentUser() != null) {
             firebaseDatabase.getReference("User/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).child("/available/").setValue(true);
-            if (!isMessageActive())
-                firebaseDatabase.getReference("Chat/").
-                        orderByChild("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .equalTo(true).addValueEventListener(new ValueEventListener() {
-                                                                 @Override
-                                                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                     firstRun = false;
+            firebaseDatabase.getReference("Chat/").
+                    orderByChild("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .equalTo(true).addValueEventListener(new ValueEventListener() {
+                                                             @Override
+                                                             public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                 firstRun = false;
+                                                                 if (!isMessageActive())
                                                                      for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
                                                                          Chat chat = dataSnapshot1.getValue(Chat.class);
                                                                          if (chat.getLastMessage() != null)
                                                                              if (!chat.getLastMessage().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                                                                                 NotificationCompat.Builder mBuilder =
-                                                                                         new NotificationCompat.Builder(SuperActivity.this)
-                                                                                                 .setSmallIcon(R.mipmap.ic_launcher)
-                                                                                                 .setContentTitle("Suicide Prevention").setContentText("Unresponded Messages.").setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                                                                                 notificationManager = buildNotification("Suicide Prevention", "Unresponded messages.", new Intent(), 0, notificationManager, true);
 
-                                                                                 Intent resultIntent = new Intent(SuperActivity.this, WelcomeActivity.class);
-                                                                                 resultIntent.putExtra("CHAT_ID", dataSnapshot.getKey());
-                                                                                 PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
-                                                                                         resultIntent, PendingIntent.FLAG_ONE_SHOT);
-                                                                                 mBuilder.setContentIntent(resultPendingIntent);
-                                                                                 NotificationManager mNotificationManager =
-                                                                                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                                                                                 mNotificationManager.notify(0, mBuilder.build());
                                                                              }
                                                                      }
-                                                                 }
-
-                                                                 @Override
-                                                                 public void onCancelled(DatabaseError databaseError) {
-
-                                                                 }
                                                              }
-                );
+
+                                                             @Override
+                                                             public void onCancelled(DatabaseError databaseError) {
+
+                                                             }
+                                                         }
+            );
             firebaseDatabase.getReference("User/" + FirebaseAuth.getInstance().getCurrentUser().getUid()).child("/available/").onDisconnect().setValue(false);
 
             sinchClient = Sinch.getSinchClientBuilder()
@@ -203,59 +193,6 @@ public class SuperActivity extends
         }
 
     }
-
-    public class SinchCallClientListener implements CallClientListener {
-        @Override
-        public void onIncomingCall(final CallClient callClient, final Call incomingCall) {
-            final AlertDialog.Builder alBuilder = new AlertDialog.Builder(SuperActivity.this);
-            alBuilder.setMessage("You are receiving a call.");
-            alBuilder.setPositiveButton("Answer Call", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    callClient.addCallClientListener(new SinchCallClientListener());
-                    incomingCall.answer();
-                }
-            });
-            alBuilder.setNegativeButton("Hang up", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    incomingCall.hangup();
-                }
-            });
-            AlertDialog alertDialog = alBuilder.create();
-            /*call.addCallListener(new SuperActivity.SinchCallListener());
-            button.setText("Hang Up");
-        */
-        }
-    }
-
-    AlertDialog alertDialog;
-
-    public class SinchCallListener implements CallListener {
-        @Override
-        public void onCallEnded(Call endedCall) {
-            if (alertDialog != null) {
-                alertDialog.dismiss();
-            }
-            setVolumeControlStream(AudioManager.USE_DEFAULT_STREAM_TYPE);
-        }
-
-        @Override
-        public void onCallEstablished(Call establishedCall) {
-
-            setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
-        }
-
-        @Override
-        public void onCallProgressing(Call progressingCall) {
-
-        }
-
-        @Override
-        public void onShouldSendPushNotification(Call call, List<PushPair> pushPairs) {
-        }
-    }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -302,6 +239,64 @@ public class SuperActivity extends
         notificationMgr.notify(idOfNotification, mBuilder.build());
         mBuilder.setAutoCancel(shouldAutoCancel);
         return notificationMgr;
+    }
+
+    public class SinchCallClientListener implements CallClientListener {
+        @Override
+        public void onIncomingCall(final CallClient callClient, final Call incomingCall) {
+/*
+            final AlertDialog.Builder alBuilder = new AlertDialog.Builder();
+            alBuilder.setMessage("You are receiving a call.");
+            alBuilder.setPositiveButton("Answer Call", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    callClient.addCallClientListener(new SinchCallClientListener());
+                    incomingCall.answer();
+                }
+            });
+            alBuilder.setNegativeButton("Hang up", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    incomingCall.hangup();
+                }
+            });
+            alBuilder.show();
+
+*/
+            receiveCall = incomingCall;
+            Intent intent = new Intent(SuperActivity.this, CallActivity.class);
+            intent.putExtra("type", "receiving");
+
+            startActivity(intent);
+            /*call.addCallListener(new SuperActivity.SinchCallListener());
+            button.setText("Hang Up");
+        */
+        }
+    }
+
+    public class SinchCallListener implements CallListener {
+        @Override
+        public void onCallEnded(Call endedCall) {
+            if (alertDialog != null) {
+                alertDialog.dismiss();
+            }
+            setVolumeControlStream(AudioManager.USE_DEFAULT_STREAM_TYPE);
+        }
+
+        @Override
+        public void onCallEstablished(Call establishedCall) {
+
+            setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
+        }
+
+        @Override
+        public void onCallProgressing(Call progressingCall) {
+
+        }
+
+        @Override
+        public void onShouldSendPushNotification(Call call, List<PushPair> pushPairs) {
+        }
     }
 
 }
