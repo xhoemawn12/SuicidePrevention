@@ -223,7 +223,8 @@ public class PostFragment extends android.support.v4.app.Fragment implements Vie
         for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
             postsList.put(dataSnapshot1.getKey(), dataSnapshot1.getValue(Post.class));
         }
-        postAdapter.notifyDataSetChanged();
+        postAdapter = new PostAdapter(postsList);
+        recyclerView.setAdapter(postAdapter);
     }
 
     @Override
