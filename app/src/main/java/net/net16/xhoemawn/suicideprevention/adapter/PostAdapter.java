@@ -64,7 +64,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
                 User user = dataSnapshot.getValue(User.class);
                 holder.postedBy.setText(user.getName());
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -74,9 +73,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
             holder.deletebutton.setVisibility(View.GONE);
             holder.textView.setVisibility(View.GONE);
         }
+        else{
+            holder.deletebutton.setVisibility(View.VISIBLE);
+            holder.textView.setVisibility(View.VISIBLE);
+        }
         if (tempPost.getImageURL() == null) {
             holder.imageBody.setVisibility(View.GONE);
         } else {
+            holder.imageBody.setVisibility(View.VISIBLE);
             Glide.with(holder.imageBody).load(tempPost.getImageURL()).into(holder.imageBody);
         }
         Calendar calendar = Calendar.getInstance();

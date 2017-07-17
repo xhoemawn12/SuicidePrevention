@@ -208,6 +208,7 @@ public class PostFragment extends android.support.v4.app.Fragment implements Vie
                 postBody.setHint("Write Something Inspiring here.");
                 if (imageURI != null)
                     savePost.setImageURL(imageURI.toString());
+                imageURI = null;
                 saveNewPost(savePost);
                 break;
             case R.id.imageButton2:
